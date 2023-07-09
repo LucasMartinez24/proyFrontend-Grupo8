@@ -4,7 +4,7 @@
     <li><a routerLink="/inicio">Inicio</a></li>
     <li *ngIf="esAdministrador()==true"><a routerLink="/calendar">Crear un evento</a></li>
 
-    <li>
+    <li *ngIf="esAdministrador()==true">
       <a href="#">
         Paciente
       </a>
@@ -15,7 +15,7 @@
         <li><a class="dropdown-item" [routerLink]="'datosMedicos'">Datos medicos</a></li>
       </ul>
     </li>
-    <li>
+    <li *ngIf="esAdministrador()==true">
       <a href="#">
         Anuncio
       </a>
