@@ -13,8 +13,8 @@ export class PacienteComponent implements OnInit {
   pacientes:Array<Paciente>;
   pacienteDni:Array<Paciente>;
   dni!:string;
-  constructor(private pacienteService: PacienteService, private activatedRoute: ActivatedRoute, 
-    private router: Router, private toastr:ToastrService) { 
+  constructor(private pacienteService: PacienteService, private activatedRoute: ActivatedRoute,
+    private router: Router, private toastr:ToastrService) {
       this.pacientes = new Array<Paciente>();
       this.pacienteDni= new Array<Paciente>();
       this.obtenerPacientes();
@@ -23,7 +23,7 @@ export class PacienteComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
+
   obtenerPacientes(){
     console.log("entrando a obtener pacientes")
     this.pacienteService.getPacientes().subscribe(

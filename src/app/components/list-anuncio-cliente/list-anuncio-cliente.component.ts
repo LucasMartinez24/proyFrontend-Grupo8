@@ -14,7 +14,7 @@ export class ListAnuncioClienteComponent implements OnInit {
   anuncio : Anuncio
   anuncios :Array<Anuncio>
   fecha:string
-  constructor(private  anuncioServcice:AnuncioService,private pd:DatePipe,private route:Router) { 
+  constructor(private  anuncioServcice:AnuncioService,private pd:DatePipe,private route:Router) {
     this.anuncio=new Anuncio()
     this.anuncios= new Array<Anuncio>()
     this.fecha = ""
@@ -45,10 +45,10 @@ export class ListAnuncioClienteComponent implements OnInit {
   invertir(anuncio:  Array<Anuncio>){
     let ar = new Array<Anuncio>()
     for(let i = anuncio.length - 1, j=0 ;i >=0; i--,j++ ){
-      ar[j] = anuncio[i] 
+      ar[j] = anuncio[i]
     }
   this.anuncios= ar
-  } 
+  }
   verAnuncion(id:string){
     this.route.navigate(['anuncio',id])
   }

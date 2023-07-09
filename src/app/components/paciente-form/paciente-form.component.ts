@@ -14,13 +14,13 @@ export class PacienteFormComponent implements OnInit {
   paciente = new Paciente();
   accion: string="";
 
-  constructor(private pacienteService: PacienteService, private activatedRoute: ActivatedRoute, 
+  constructor(private pacienteService: PacienteService, private activatedRoute: ActivatedRoute,
     private router: Router,private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(
       params => {
-        
+
         if (params['id'] == '0') {
           this.accion = "new";
         } else {
@@ -31,7 +31,7 @@ export class PacienteFormComponent implements OnInit {
     )
   }
 
-  
+
   cargarPaciente(id: string) {
     this.pacienteService.getPaciente(id).subscribe(
       (result) => {

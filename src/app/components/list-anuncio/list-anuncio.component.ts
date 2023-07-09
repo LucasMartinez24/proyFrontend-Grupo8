@@ -16,10 +16,10 @@ export class ListAnuncioComponent implements OnInit {
   ancuncios : Array<Anuncio>
   listRecurso: Array<Recurso>
   listRecrso!:Array<Recurso>
-  constructor(private anuncioService:AnuncioService ,private route:Router,  private storageService: StorageService ) { 
+  constructor(private anuncioService:AnuncioService ,private route:Router,  private storageService: StorageService ) {
     this.ancuncios= new Array<Anuncio>()
     this.listRecurso= new Array<Recurso>()
-  
+
   }
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class ListAnuncioComponent implements OnInit {
      invertir(anuncio:  Array<Anuncio>){
           let ar = new Array<Anuncio>()
           for(let i = anuncio.length - 1, j=0 ;i >=0; i--,j++ ){
-            ar[j] = anuncio[i] 
+            ar[j] = anuncio[i]
           }
         this.ancuncios= ar
      }
@@ -98,6 +98,6 @@ elimarArchivo(ref : string){
 
 
   }
-  
+
 
 

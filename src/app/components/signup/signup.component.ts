@@ -26,7 +26,7 @@ export class SignupComponent implements OnInit {
   loadUsername:boolean=false;
   id:string=""
   selectedRole!:Rol
-  constructor(private usuarioService:LoginService, private activatedRoute:ActivatedRoute, private route:Router) { 
+  constructor(private usuarioService:LoginService, private activatedRoute:ActivatedRoute, private route:Router) {
     this.usuario = new Usuario();
     this.roles = new Array<Rol>();
   }

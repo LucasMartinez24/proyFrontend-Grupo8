@@ -15,7 +15,7 @@ export class FormcontactoComponent implements OnInit {
   accion:string
   tipo!:string
   id!:string
-  constructor(private contactoService: ContactoService,private route :Router,private activatedRoute: ActivatedRoute,private toastr:ToastrService) { 
+  constructor(private contactoService: ContactoService,private route :Router,private activatedRoute: ActivatedRoute,private toastr:ToastrService) {
     this.contacto = new Contacto()
     this.accion = ""
 
@@ -63,10 +63,10 @@ export class FormcontactoComponent implements OnInit {
       result=>{
         console.log(result);
         if (result.status == 1) {
-       
+
           this.toastr.success('Contacto agregado correctamente','Contacto Agregado')
           this.route.navigate(["list-contacto"])
-            
+
         }
       },
       error=>{

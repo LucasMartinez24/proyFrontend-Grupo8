@@ -10,14 +10,14 @@ export class LoginService {
   hostBase: string;
 
   constructor(private http: HttpClient) {
-    this.hostBase = "http://localhost:3000/api/usuario/"
+    this.hostBase = "http://3.82.255.160:3000/api/usuario/"
   }
   public getRoles():Observable<any>{
     const httpOption = {
       headers: new HttpHeaders({
       })
     }
-    return this.http.get('http://localhost:3000/api/rol/', httpOption)
+    return this.http.get('http://3.82.255.160:3000/api/rol/', httpOption)
   }
   public signUp(username:string, password:string, email:string, rol:string):Observable<any>{
     const httpOption = {
@@ -34,7 +34,7 @@ export class LoginService {
       headers: new HttpHeaders({
       })
     }
-    return this.http.get('http://localhost:3000/api/usuario/confirm/'+token, httpOption)
+    return this.http.get('http://3.82.255.160:3000/api/usuario/confirm/'+token, httpOption)
   }
   public login(username: string, password: string): Observable<any> {
     const httpOption = {
