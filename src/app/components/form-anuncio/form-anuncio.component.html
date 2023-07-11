@@ -32,7 +32,7 @@
                             La Descripcion es requerida.
                         </div>
                     </div>
-
+                
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Fecha de Desde</label>
@@ -49,7 +49,7 @@
                       </div>
                     </div>
                   </div>
-
+              
                 <div class="text-center">
                     <button type="button" class="btn btn-primary btn-lg"  (click)="guardar()" *ngIf="nextbutton=='guardar'"> Siguiente</button>
                     <button type="button" class="btn btn-primary btn-lg"  (click)="modificarAnuncio1()" *ngIf="nextbutton=='modificar'"> Siguiente</button>
@@ -61,7 +61,7 @@
 </div>
 
 <!--<div  *ngIf="controlador =='caja2'">  -->
-<div  *ngIf="controlador =='caja2'">
+<div class="container" *ngIf="controlador =='caja2'">
     <h1 class="text-center">Registrar Anuncio </h1>
     <button type="button" class="btn btn-primary btn-lg"  (click)="tipourl()" > url </button>
     <button type="button" class="btn btn-primary btn-lg"  (click)="tipoarchivo()"> archivo</button>
@@ -70,8 +70,8 @@
             <label class="form-label">Ingrese titulo</label>
             <input type="text" class="form-control" name="titulo" [(ngModel)]="recurso.titulo" #titulo="ngModel" required>
             <div *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)" class="alert alert-danger">
-
-                <div *ngIf="titulo.errors?.['required']">
+              
+                <div *ngIf="titulo.errors?.['required']"> 
                     El titulo es requerido
                 </div>
             </div>
@@ -80,27 +80,27 @@
             <label class="form-label">Ingrese descripcion </label>
             <input type="text" class="form-control" name="descripcion" [(ngModel)]="recurso.descripcion" required #descripcion="ngModel">
             <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)" class="alert alert-danger">
-
-                <div *ngIf="descripcion.errors?.['required']">
+                
+                <div *ngIf="descripcion.errors?.['required']"> 
                     La Descripcion es requerida.
                 </div>
             </div>
-
+        
         </div>
-
+       
         <div class="mb-3">
             <label for="basic-url" class="form-label">Ingrese URL</label>
-
+          
               <span class="input-group-text" >https://example.com/users/</span>
               <input type="text" class="form-control"  name="url"  [(ngModel)]="recurso.url" required #url="ngModel" >
               <div *ngIf="url.invalid && (url.dirty || url.touched)" class="alert alert-danger">
-
-                <div *ngIf="url.errors?.['required']">
+                
+                <div *ngIf="url.errors?.['required']"> 
                     La Descripcion es requerida.
                 </div>
             </div>
-
-
+        
+           
         </div>
 
         <button type="button" class="btn btn-primary btn-lg"  (click)="addRecursoP()" > guardar </button>
@@ -110,8 +110,8 @@
         <label class="form-label">Ingrese titulo</label>
         <input type="text" class="form-control" name="titulo" [(ngModel)]="recurso.titulo" #titulo="ngModel" required>
         <div *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)" class="alert alert-danger">
-
-            <div *ngIf="titulo.errors?.['required']">
+          
+            <div *ngIf="titulo.errors?.['required']"> 
                 El titulo es requerido
             </div>
         </div>
@@ -120,12 +120,12 @@
         <label class="form-label">Ingrese descripcion </label>
         <input type="text" class="form-control" name="descripcion" [(ngModel)]="recurso.descripcion" required #descripcion="ngModel">
         <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)" class="alert alert-danger">
-
-            <div *ngIf="descripcion.errors?.['required']">
+            
+            <div *ngIf="descripcion.errors?.['required']"> 
                 La Descripcion es requerida.
             </div>
         </div>
-
+    
     </div>
     <div class="mb-3">
         <label for="tipo" class="form-label">Tipo de Archivo</label>
@@ -174,10 +174,10 @@
                 </button>
             </td>
           </tr>
-
+          
         </tbody>
       </table>
-
+      
    </div>
       <br>
       <br>

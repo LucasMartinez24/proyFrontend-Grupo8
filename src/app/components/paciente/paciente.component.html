@@ -2,6 +2,7 @@
     <div class="text-center" style="background-color: #84b6f4;padding: 30px;">
         LISTADO DE PACIENTES
       </div>
+      
       <br>
       <div style="padding-left: 5%;">
         <button type="button" class="btn btn-success" (click)="agregarPaciente()">AGREGAR PACIENTE</button>
@@ -10,24 +11,14 @@
       </div>
 <br>
 <br>
-      <div style="text-align: center;
-      top: 50%;
-      padding-left: 33%;">
+      <h5>Buscar Paciente ya registrado con dni</h5>
+      <div class="mb-3" style="width:80%;">
+        <input type="text" class="form-control" id="idfecha" name="fechaNac" required
+            placeholder="Ingrese dni de paciente a buscar" [(ngModel)]="dni" (ngModelChange)="obtenerPacienteDni()">
+    </div>
 
-<div style="text-align: center; width: 50%; background-color: rgb(61,169,184); padding: 10px;">
-    <h3>Buscar Pacientes Registrados</h3>
-    <p>por dni</p>
-    <input type="text" class="form-control" id="idfecha" name="fechaNac" required
-        placeholder="Ingrese dni a buscar" [(ngModel)]="dni" (ngModelChange)="obtenerPacienteDni()">
-
-        <p>por nombre y apellido</p>
-        <div><input type="text" class="form-control" id="idnombre" name="nombre" required
-            placeholder="Ingrese nombre a buscar"  [(ngModel)]="dato" (ngModelChange)="obtenerPacienteNA()">
-  </div>
-  </div>
-      </div>
-        
     <div style="padding: 3%;">
+        <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"-->
         <table class="table table-bordered table-hover border-primary mt-5" >
             <thead class="table-primary">
                 <tr>
@@ -47,11 +38,11 @@
                     <td>
                         <button type="button" class="btn btn-warning" (click)="modificarPaciente(p)">MODIFICAR PACIENTE</button>
                         <button type="button" class="btn btn-danger" (click)="eliminarPaciente(p)">ELIMINAR PACIENTE</button>
-                        <button type="button" class="btn btn-primary" (click)="verControl(p)">Controles Medicos</button>
+                        <button type="button" class="btn btn-danger" (click)="verControl(p)">Controles Medicos</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
-
+    

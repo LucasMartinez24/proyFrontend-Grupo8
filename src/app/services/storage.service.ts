@@ -17,7 +17,7 @@ export class StorageService {
        try{
            let respuesta = await this.storageRef.child("archivo/"+nombre).putString(archivo64,'data_url');
            console.log(respuesta)
-           return await respuesta.ref.getDownloadURL();
+           return await respuesta.ref.getDownloadURL();  
        }
        catch(err){
          console.log(err)

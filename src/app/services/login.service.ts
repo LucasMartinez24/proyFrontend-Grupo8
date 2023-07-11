@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { parse } from 'path';
 import { Observable } from 'rxjs';
+import { GooService } from './goo.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +10,24 @@ import { Observable } from 'rxjs';
 export class LoginService {
   hostBase: string;
 
-  constructor(private http: HttpClient) {
-     //this.hostBase = "http://3.82.255.160:3000/api/usuario/";
-     this.hostBase = "http://localhost:3000/api/usuario/";
+  constructor(private http: HttpClient, private gooService:GooService) {
+    this.hostBase = "http://localhost:3000/api/usuario/"
   }
   public getRoles():Observable<any>{
     const httpOption = {
       headers: new HttpHeaders({
       })
     }
-    //return this.http.get('http://3.82.255.160:3000/api/rol/', httpOption)
     return this.http.get('http://localhost:3000/api/rol/', httpOption)
   }
-  public signUp(username:string, password:string, email:string, rol:string):Observable<any>{
+  public signUp(username:string, password:string, email:string, rol:string, dni:string):Observable<any>{
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     }
-    console.log(JSON.stringify({ username: username, password: password, email:email, rol:rol }))
-    let body = JSON.stringify({ username: username, password: password, email:email, rol:rol });
+    console.log(JSON.stringify({ username: username, password: password, email:email, rol:rol, dni:dni }))
+    let body = JSON.stringify({ username: username, password: password, email:email, rol:rol, dni:dni });
     return this.http.post(this.hostBase, body, httpOption)
   }
   public confirm(token:string){
@@ -36,13 +35,23 @@ export class LoginService {
       headers: new HttpHeaders({
       })
     }
-   // return this.http.get('http://3.82.255.160:3000/api/usuario/confirm/'+token, httpOption)
-   return this.http.get('http://localhost:3000/api/usuario/confirm/'+token, httpOption)
+
+    return this.http.get('http://localhost:3000/api/usuario/confirm/'+token, httpOption)
+
+  }
+  loginEmailGoogle(email:string):Observable<any>{
+    const httpOption ={
+      headers: new HttpHeaders({
+        'Content-Type':'application/json'
+      })
+    }
+    let body = JSON.stringify({email:email});
+    return this.http.post(this.hostBase +'gmail', body, httpOption);
   }
   public login(username: string, password: string): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
-        'access-control-allow-origin':'http://localhost:4200',
+        'access-control-allow-origin': 'http://localhost:4200',
         'Content-Type': 'application/json'
       })
     }
@@ -50,7 +59,16 @@ export class LoginService {
     console.log(body);
     return this.http.post(this.hostBase + 'login', body, httpOption);
   }
-
+  public loginEmail(email: string, password: string): Observable<any> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+    let body = JSON.stringify({ email: email, password: password });
+    console.log(body);
+    return this.http.post(this.hostBase + 'login-email', body, httpOption);
+  }
   public logout() {
     //borro el vble almacenado mediante el storage
     sessionStorage.removeItem("usuario");
@@ -59,6 +77,8 @@ export class LoginService {
     sessionStorage.removeItem("userid");
     //borro el token almacenado mediante el storage
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userDni");
+    sessionStorage.clear()
   }
 
   public userLoggedIn() {
@@ -86,12 +106,15 @@ export class LoginService {
     var usuario = sessionStorage.getItem("username");
     return usuario;
   }
-
-  public getUser(){
-    let isAdmin = sessionStorage.getItem("usuario");
+  public getEmailGoogle(){
+    let email = sessionStorage.getItem("emailGmail")
+    return email;
+  }
+  public getUser(): string | null {
+    const isAdmin = sessionStorage.getItem("usuario");
     const parsedAdmin = isAdmin ? JSON.stringify(isAdmin) : null;
 
-    return parsedAdmin;
+    return parsedAdmin !== null ? JSON.parse(parsedAdmin) : null;
   }
 
   public esAdmin(){ //funciona
@@ -102,7 +125,6 @@ export class LoginService {
     }
     return false;
   }
-
   public esPaciente(){ //funciona
     let isPatient = sessionStorage.getItem("usuario");
     const parsePatient = isPatient ? JSON.parse(isPatient) : null;
@@ -163,5 +185,10 @@ export class LoginService {
     let body = JSON.stringify({email:email });
     console.log(body);
     return this.http.post(this.hostBase + 'reset-ask', body, httpOption);
+  }
+
+  userLoggedDNI(){ //nose quien lo puso en el menu asi q lo tuve q poner aca
+    var dni = sessionStorage.getItem("userDni");
+    return dni;
   }
 }

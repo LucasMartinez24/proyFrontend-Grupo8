@@ -12,7 +12,7 @@ import { ContactoService } from 'src/app/services/contacto.service';
 })
 export class ListContactoComponent implements OnInit {
   contactos:Array<Contacto>
-  constructor(private contactoService:ContactoService , private route :Router, private toastr:ToastrService) {
+  constructor(private contactoService:ContactoService , private route :Router, private toastr:ToastrService) { 
     this.contactos= new Array<Contacto>()
   }
 
@@ -31,7 +31,7 @@ export class ListContactoComponent implements OnInit {
   invertir(contacto:  Array<Contacto>){
     let ar = new Array<Contacto>()
     for(let i = contacto.length - 1, j=0 ;i >=0; i--,j++ ){
-      ar[j] = contacto[i]
+      ar[j] = contacto[i] 
     }
   this.contactos= ar
 }
@@ -51,4 +51,4 @@ this.contactoService.deleteContacto(id).subscribe(
 agregarContacto(){
   this.route.navigate(['formcontacto/0'])
 }
-}
+} 

@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Rol } from 'src/app/models/rol';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { Usuario } from 'src/app/models/usuario';
+import { GooService } from 'src/app/services/goo.service';
 import { LoginService } from 'src/app/services/login.service';
 @Component({
   selector: 'app-login',
@@ -16,18 +17,31 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginRef', { static: true }) loginElement!: ElementRef;
   msglogin!: string; // mensaje que indica si no paso el loguin
   constructor(
+    private readonly oAuthService: OAuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private loginService: LoginService) {
+    private loginService: LoginService,
+    private gooService: GooService) { 
   }
 
   ngOnInit() {
-    this.googleAuthSDK();
+  
+    this.gooService.configureSingleSignOne();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/reset';
+    //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/reset';
   }
-
+  verificarTexto(texto:any):boolean {
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (emailRegex.test(texto)) {
+      console.log('El texto ingresado corresponde a un email');
+      return true;
+    } else {
+      console.log('El texto ingresado corresponde a un texto normal');
+      return false;
+    }
+  }
   login() {
+    if(!this.verificarTexto(this.userform.username)){
     this.loginService.login(this.userform.username, this.userform.password)
       .subscribe(
         (result) => {
@@ -35,12 +49,14 @@ export class LoginComponent implements OnInit {
           console.log("usuarioooooooooooooooooooooooLOGIN"+JSON.stringify(result)
           );
           if (user.status == 1) {
+            console.log(user.usuario.dni)
             //guardamos el user en cookies en el cliente
             sessionStorage.setItem("usuario", JSON.stringify(user));
             sessionStorage.setItem("token", user.token);
             sessionStorage.setItem("user", user.username);
             sessionStorage.setItem("userid", user.userid);
             sessionStorage.setItem("rol", JSON.stringify(user.rol));
+            sessionStorage.setItem("userDni",user.usuario.dni);
             //redirigimos a home o a pagina que llamo
             this.router.navigateByUrl(this.returnUrl);
           } else {
@@ -54,25 +70,50 @@ export class LoginComponent implements OnInit {
           console.log(error);
         });
   }
+  else if(this.verificarTexto(this.userform.username)){
+    this.loginService.loginEmail(this.userform.username, this.userform.password)
+      .subscribe(
+        (result) => {
+          var user = result;
+          console.log("usuarioooooooooooooooooooooooLOGIN"+JSON.stringify(result)
+          );
+          if (user.status == 1) {
+            console.log(user.usuario.dni)
+            //guardamos el user en cookies en el cliente
+            sessionStorage.setItem("usuario", JSON.stringify(user));
+            sessionStorage.setItem("token", user.token);
+            sessionStorage.setItem("user", user.username);
+            sessionStorage.setItem("userid", user.userid);
+            sessionStorage.setItem("rol", JSON.stringify(user.rol));
+            sessionStorage.setItem("userDni",user.usuario.dni);
+            //redirigimos a home o a pagina que llamo
+            this.router.navigateByUrl(this.returnUrl);
+          } else {
+            //usuario no encontrado muestro mensaje en la vista
+            this.msglogin = "Credenciales incorrectas..";
+          }
+        },
+        error => {
+          alert("Error de conexion");
+          console.log("error en conexion");
+          console.log(error);
+        });
+
+  }
+}
   signup(){
     this.router.navigate(['signUp',0]);
   }
   callLogin(){
-    this.auth2.attachClickHandler(this.loginElement.nativeElement, {},
-      (googleAuthUser: any) => {
-        // Código para obtener los detalles del perfil de Google
-        let profile = googleAuthUser.getBasicProfile();
-        console.log('Token || ' + googleAuthUser.getAuthResponse().id_token);
-        console.log('ID: ' + profile.getId());
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail());
-        let rol = "visitante";
-        sessionStorage.setItem("rol", rol)
-        this.router.navigateByUrl(this.returnUrl);
-      }, (error: any) => {
-        alert(JSON.stringify(error, undefined, 2)+ 'HOLAAAAAAAAAAAAAAAAA');
-      });
+    this.gooService.login()
+  }
+  cortarStringPorEspacio(texto: string): string {
+    const indiceEspacio = texto.indexOf(' ');
+    if (indiceEspacio !== -1) {
+      return texto.substring(0, indiceEspacio);
+    } else {
+      return texto;
+    }
   }
   googleAuthSDK() {
 
@@ -105,4 +146,5 @@ export class LoginComponent implements OnInit {
       console.error('Error: Google Auth library not loaded');
     }
   }
+
 }
