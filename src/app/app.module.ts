@@ -41,6 +41,7 @@ import { MenuComponent } from './components/menu/menu.component';
 
 
 
+
     registerLocaleData(localeEsAr);
 
 
@@ -81,7 +82,7 @@ import { MenuComponent } from './components/menu/menu.component';
         BrowserAnimationsModule, // required animations module
         ToastrModule,
 
-        ToastrModule.forRoot({ //agregado agus 4/7/2023
+        ToastrModule.forRoot({ //agregado 4/7/2023
           positionClass :'toast-bottom-right'
         })
       ],

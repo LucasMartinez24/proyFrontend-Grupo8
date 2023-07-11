@@ -10,14 +10,16 @@ export class LoginService {
   hostBase: string;
 
   constructor(private http: HttpClient) {
-    this.hostBase = "http://3.82.255.160:3000/api/usuario/"
+     //this.hostBase = "http://3.82.255.160:3000/api/usuario/";
+     this.hostBase = "http://localhost:3000/api/usuario/";
   }
   public getRoles():Observable<any>{
     const httpOption = {
       headers: new HttpHeaders({
       })
     }
-    return this.http.get('http://3.82.255.160:3000/api/rol/', httpOption)
+    //return this.http.get('http://3.82.255.160:3000/api/rol/', httpOption)
+    return this.http.get('http://localhost:3000/api/rol/', httpOption)
   }
   public signUp(username:string, password:string, email:string, rol:string):Observable<any>{
     const httpOption = {
@@ -34,11 +36,13 @@ export class LoginService {
       headers: new HttpHeaders({
       })
     }
-    return this.http.get('http://3.82.255.160:3000/api/usuario/confirm/'+token, httpOption)
+   // return this.http.get('http://3.82.255.160:3000/api/usuario/confirm/'+token, httpOption)
+   return this.http.get('http://localhost:3000/api/usuario/confirm/'+token, httpOption)
   }
   public login(username: string, password: string): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
+        'access-control-allow-origin':'http://localhost:4200',
         'Content-Type': 'application/json'
       })
     }
@@ -70,6 +74,18 @@ export class LoginService {
     var usuario = sessionStorage.getItem("user");
     return usuario;
   }
+  public userLoggedInGoogle() {
+    var resultado = false;
+    var usuario = sessionStorage.getItem("googleIsLoggedIn");
+    if(usuario === 'true'){
+      resultado = true
+    }
+    return resultado;
+  }
+  public userLoggedGoogle() {
+    var usuario = sessionStorage.getItem("username");
+    return usuario;
+  }
 
   public getUser(){
     let isAdmin = sessionStorage.getItem("usuario");
@@ -82,6 +98,22 @@ export class LoginService {
     let isAdmin = sessionStorage.getItem("usuario");
     const parsedAdmin = isAdmin ? JSON.parse(isAdmin) : null;
     if(parsedAdmin && parsedAdmin.rol && parsedAdmin.rol.descripcion === "administrador"){
+        return true;
+    }
+    return false;
+  }
+
+  public esPaciente(){ //funciona
+    let isPatient = sessionStorage.getItem("usuario");
+    const parsePatient = isPatient ? JSON.parse(isPatient) : null;
+    if(parsePatient && parsePatient.rol && parsePatient.rol.descripcion === "paciente"){
+        return true;
+    }
+    return false;
+  }
+  public esVisitante(){ //funciona
+    let isVisitante = sessionStorage.getItem("rol");
+    if(isVisitante === "visitante"){
         return true;
     }
     return false;
