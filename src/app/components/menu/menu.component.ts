@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ActivatedRoute, NavigationEnd, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { VigilanteGuard } from 'src/app/vigilante.guard';
 
@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit{
   activo: boolean = false;
   bothLogin:boolean=false;
   isUserVerified!:boolean;
-
+  activeRoute: string = '';
   //NAVBAR
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -48,6 +48,15 @@ export class MenuComponent implements OnInit{
   }
   ngOnInit(): void {
     this.isUserVerified = this.loginService.getUserStatus();
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.activeRoute = event.url;
+        console.log(this.activeRoute)
+      }
+    });
+
+
     this.loginGmailLocal();
     console.log(this.esLoggedGoogle());
     console.log(this.bothLogin);
@@ -56,7 +65,7 @@ export class MenuComponent implements OnInit{
   loginGmailLocal(){
     let email = this.loginService.getEmailGoogle()
     console.log(email)
-    if(email!==null){
+    if(email!=null){
       this.loginService.loginEmailGoogle(email).subscribe(
         result=>{
           console.log(result)
@@ -101,6 +110,7 @@ export class MenuComponent implements OnInit{
   }
   esLoggedGoogle(){
     return this.loginService.userLoggedInGoogle();
+
   }
   esAdministrador(){
     return this.loginService.esAdmin();
