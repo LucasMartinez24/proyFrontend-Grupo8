@@ -3,7 +3,7 @@
     <div class="form-container sign-in-container">
         <!--FORM-->
         <form class="">
-            <h1 class=" mb-4">Iniciar Sesión</h1>
+            <h1 class=" mb-4 mt-4">Iniciar Sesión</h1>
             <div class="mb-3">
                 <label for="username">Nombre de Usuario</label>
                 <input type="text" class="form-control" name="username" [(ngModel)]="userform.username" />
@@ -14,6 +14,10 @@
             </div>
             <button class="" (click)="login()">Login</button>
             <div class="alert-danger">{{msglogin}}</div>
+                <button class="login-google" #loginRef>
+                    <span>Iniciar sesion con google</span> <i class='bx bxl-google' style='color:rgba(210,213,217,0.99)'  ></i>
+                </button>
+                <button (click)="signup()" class="btnRegistrarse">Registrarse</button>
             <div class="link">
             <a [routerLink]="'/reset/0'">¿No recuerda su contraseña?</a>
         </div>
