@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Rol } from 'src/app/models/rol';
 import { Usuario } from 'src/app/models/usuario';
 import { LoginService } from 'src/app/services/login.service';
 @Component({
@@ -11,6 +12,8 @@ export class LoginComponent implements OnInit {
   userform: Usuario = new Usuario(); //usuario mapeado al formulario
   returnUrl!: string;
   resetUrl!:string;
+  auth2: any;
+  @ViewChild('loginRef', { static: true }) loginElement!: ElementRef;
   msglogin!: string; // mensaje que indica si no paso el loguin
   constructor(
     private route: ActivatedRoute,
@@ -19,6 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.googleAuthSDK();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/reset';
   }
@@ -52,5 +56,53 @@ export class LoginComponent implements OnInit {
   }
   signup(){
     this.router.navigate(['signUp',0]);
+  }
+  callLogin(){
+    this.auth2.attachClickHandler(this.loginElement.nativeElement, {},
+      (googleAuthUser: any) => {
+        // Código para obtener los detalles del perfil de Google
+        let profile = googleAuthUser.getBasicProfile();
+        console.log('Token || ' + googleAuthUser.getAuthResponse().id_token);
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+        let rol = "visitante";
+        sessionStorage.setItem("rol", rol)
+        this.router.navigateByUrl(this.returnUrl);
+      }, (error: any) => {
+        alert(JSON.stringify(error, undefined, 2)+ 'HOLAAAAAAAAAAAAAAAAA');
+      });
+  }
+  googleAuthSDK() {
+
+    (<any>window)['googleSDKLoaded'] = () => {
+      (<any>window)['gapi'].load('auth2', () => {
+        this.auth2 = (<any>window)['gapi'].auth2.init({
+          client_id: '989832783745-cp1uiv1g4hhf3qh0bkgcilbls624cpb7.apps.googleusercontent.com',
+          plugin_name:'login',
+          cookiepolicy: 'single_host_origin',
+          scope: 'profile email'
+        });
+        this.loadGoogleAuth();
+      });
+    }
+
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement('script');
+      js.id = id;
+      js.src = "https://apis.google.com/js/platform.js?onload=googleSDKLoaded";
+      fjs?.parentNode?.insertBefore(js, fjs);
+    }(document, 'script', 'google-jssdk'));
+  }
+  loadGoogleAuth() {
+    if (this.auth2) {
+      this.callLogin();
+    } else {
+      // La biblioteca de autenticación de Google no se cargó correctamente
+      console.error('Error: Google Auth library not loaded');
+    }
   }
 }
