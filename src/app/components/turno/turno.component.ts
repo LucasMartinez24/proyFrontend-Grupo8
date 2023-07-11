@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Turno } from 'src/app/models/turno';
 import { LoginService } from 'src/app/services/login.service';
 import { TurnoService } from 'src/app/services/turno.service';
+
 
 @Component({
   selector: 'app-turno',
@@ -14,7 +16,7 @@ export class TurnoComponent implements OnInit {
   misTurnos: Array<Turno>;
   pacienteService: any;
 
-  constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService) {
+  constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService,private toastr:ToastrService) {
     this.turnos = new Array<Turno>();
     this.misTurnos = new Array<Turno>();
     this.obtenerTurnos();
@@ -52,7 +54,7 @@ export class TurnoComponent implements OnInit {
     this.turnoService.deleteTurno(ticket._id).subscribe(
       result => {
         if (result.status == 1) {
-          alert(result.msg);
+          this.toastr.warning('Paciente eliminado correctamente','Paciente Eliminado')
           window.location.reload();
         }
       },

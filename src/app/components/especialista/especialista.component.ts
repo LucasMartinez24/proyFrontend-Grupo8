@@ -53,7 +53,7 @@ export class EspecialistaComponent implements OnInit {
         console.log("SALIENDO  DE   especialista POR DNI");
       },
       error => {
-        alert(error+"error al bucar especailista por dni");
+        this.toastr.warning('Error al buscar especialista por dni','Error')
       }
     )
   }
