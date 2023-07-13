@@ -13,7 +13,7 @@
     cursor: pointer;
 }
 .btnExcel{
-    margin-top: 15%;
+    margin-top: 2%;
     background-color: #007f5f;
     padding: 0.8%;
     font-weight: 600;
@@ -27,7 +27,7 @@
     text-align: center;
 }
 .btnPdf{
-    margin-top: 15%;
+    margin-top: 2%;
     background-color: #bf0603;
     padding: 0.8%;
     font-weight: 600;

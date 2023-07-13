@@ -17,6 +17,7 @@ export class ListAnuncioComponent implements OnInit {
   ancuncios : Array<Anuncio>
   listRecurso: Array<Recurso>
   listRecrso!:Array<Recurso>
+  searchText:string = ''
   constructor(private anuncioService:AnuncioService ,private route:Router,  private storageService: StorageService,private toastr:ToastrService ) { 
     this.ancuncios= new Array<Anuncio>()
     this.listRecurso= new Array<Recurso>()

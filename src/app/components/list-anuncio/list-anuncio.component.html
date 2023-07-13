@@ -1,40 +1,39 @@
-<div>
-    <div class="text-center" style="background-color: #84b6f4;padding: 30px;">
-        LISTADO DE Anuncio 
-      </div>
+<div class="container">
       <br>
       <div style="padding-left: 5%;">
-        <button type="button" class="btn btn-success" (click)="direcionar()" >AGREGAR ANUNCIO</button>  
+        <button type="button" class="btnAgregar mt-1 ms-2 mb-2" (click)="direcionar()" >Agregar Anuncio</button>  
       </div>
-<br>
-<br>
-     
+
+<h5 class="ms-4 mt-2">Buscar Anuncio</h5>
+<div class="mb-3 ms-4" style="width:80%;">
+  <input class="form-control ms-2 mt-4" type="text" placeholder="Buscar" [(ngModel)]="searchText">
+</div>
     <div style="padding: 3%;">
         <table class="table table-bordered table-hover border-primary mt-5" >
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">TITULO</th>
-                    <th scope="col">DESCRIPCION</th>
-                    <th scope="col">ESTADO</th>
-                    <th scope="col">FECHA DE DESDE</th>
-                    <th scope="col">FECHA DE HASTA</th>
-                    <th scope="col">RECURSO</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Fecha desde</th>
+                    <th scope="col">Fecha hasta</th>
+                    <th scope="col">Recurso</th>
                     <th scope="col">Operaciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor=" let  a  of ancuncios">
+                <tr *ngFor=" let  a  of ancuncios | search:searchText">
                     <td>{{a.titulo}}</td>
                     <td>{{a.descripcion}}</td>
                     <td>{{a.estado}}</td>
                     <td>{{a.fechaDesde}}</td>
                     <td>{{a.fechaHasta}}</td>
                     <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="clickRecurso(a)">
-                        recurso
+                        Recurso
                       </button>
-                    <td>
-                        <button type="button" class="btn btn-warning" (click)="modificarAnuncio(a._id)">MODIFICAR ANUNCIO</button>
-                        <button type="button" class="btn btn-danger" (click)="eliminarAnuncio(a._id)">ELIMINAR ANUNCIO</button>
+                    <td class="d-flex justify-content-around">
+                        <button type="button" class="btn btn-warning" (click)="modificarAnuncio(a._id)">Modificar</button>
+                        <button type="button" class="btn btn-danger" (click)="eliminarAnuncio(a._id)">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
@@ -57,10 +56,10 @@
             <table class="table table-bordered table-hover border-primary mt-5" >
                 <thead class="table-primary">
                     <tr>
-                        <th scope="col">TITULO</th>
-                        <th scope="col">DESCRIPCION</th>
-                        <th scope="col">TIPO</th>
-                        <th scope="col">URL</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Url</th>
                        
                     </tr>
                 </thead>
