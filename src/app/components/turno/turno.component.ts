@@ -13,14 +13,14 @@ import { TurnoService } from 'src/app/services/turno.service';
 })
 export class TurnoComponent implements OnInit {
   turnos: Array<Turno>;
-  misTurnos: Array<Turno>;
+  //misTurnos: Array<Turno>;
   pacienteService: any;
 
   constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService,private toastr:ToastrService) {
     this.turnos = new Array<Turno>();
-    this.misTurnos = new Array<Turno>();
+    //this.misTurnos = new Array<Turno>();
     this.obtenerTurnos();
-    this.obtenerMisTurnos();
+    //this.obtenerMisTurnos();
   }
 
   ngOnInit(): void {
@@ -72,30 +72,30 @@ export class TurnoComponent implements OnInit {
     return this.loginService.esAdmin();
   }
 
-  obtenerMisTurnos() {
-    this.misTurnos = new Array<Turno>();
-    const pacienteString = this.loginService.getUser();
-    let paciente = null;
+//   obtenerMisTurnos() {
+//     this.misTurnos = new Array<Turno>();
+//     const pacienteString = this.loginService.getUser();
+//     let paciente = null;
 
-    if (pacienteString !== null) {
-      paciente = JSON.parse(pacienteString);
-    }
+//     if (pacienteString !== null) {
+//       paciente = JSON.parse(pacienteString);
+//     }
 
-    this.turnoService.getMisTurnos(paciente.usuario.dni).subscribe(
-      (result)=>{
-        let unTurno = new Turno();
+//     this.turnoService.getMisTurnos(paciente.usuario.dni).subscribe(
+//       (result)=>{
+//         let unTurno = new Turno();
 
-        result.forEach((element: any) => {
+//         result.forEach((element: any) => {
 
-          if (element.paciente != null) {
-            Object.assign(unTurno, element);
-            this.misTurnos.push(unTurno);
-            unTurno = new Turno();
-          }
+//           if (element.paciente != null) {
+//             Object.assign(unTurno, element);
+//             this.misTurnos.push(unTurno);
+//             unTurno = new Turno();
+//           }
 
-        });
-      }
-    )
-}
+//         });
+//       }
+//     )
+// }
 
 }
