@@ -115,14 +115,13 @@ input[type="checkbox"]:checked ~ .accordion-content {
     width: 100vw;
 }
 .main-cv{
-    padding-top: 15em;
+    padding-top: 5em;
     height: 60vh;
     width: 40%;
     background-color: #fefeff;
     position: absolute;
-    margin: auto;
     margin-bottom: 4vh;
-    border-radius: 8px;
+    border-radius: 20px;
 }
 .info{
     height: 100%;
@@ -163,19 +162,22 @@ input[type="checkbox"]:checked ~ .accordion-content {
     margin-top: 4vh;
 
 }
-
 .btnVolver{
     padding: 1em;
     border: #f2715a 0.1em solid;
-    border-radius: 12px;
+    border-radius: 20px;
     background-color: #f2715a;
     font-weight: 400;
     color: #fefeff;
     text-decoration: none;
 }
 .container{
-    margin-bottom: 80vh;
-    height: 100%;
+    width: 100vw;
+    margin: 0;
+    margin-top: 6vh;
+    margin-right: 2%;
+    margin-bottom: 60vh;
+    height: 100vh;
 }
 input {
 	background-color: #eee;
@@ -194,6 +196,8 @@ input {
     font-size: 16px;
 }
 .caution{
+    width: 150%;
+    word-wrap: normal;
     background-color: #f2715a;
     padding: 0.8em;
     border: #f2715a 0.1em solid;
@@ -215,15 +219,64 @@ input {
     margin-top: 4%;
     margin-bottom: 4%;
 }
+.caution{
+    margin-right: 8vw;
+    width: 80vw;
+    word-wrap: normal;
+}
+}@media(max-widt:430px){
+    .section-left{
+        width: 100%;
+    }
+    .section-right{
+        width: 100%;
+    }
+    .container{
+        margin-bottom: 0;
+        margin-top: 4vh;
+    }
+    .layout{
+        margin-top: 0;
+    }
+    .text-diagnostico{
+        width: 80%;
+        margin-right: 4%;
+        word-wrap: break-word;
+        margin-bottom: 2%;
+    }
+    .caution{
+        width: 80vw;
+        word-wrap: normal;
+    }
+}
+@media(max-widt:268px){
+    .container{
+        height: 50%;
+        margin-bottom: 2vh;
+    }
+    .layout{
+        margin-top: 2vh;
+    }
+    .text-diagnostico{
+        width: 80%;
+        margin-right: 4%;
+        word-wrap: break-word;
+        margin-bottom: 20%;
+    }
+    .caution{
+        width: 80vw;
+        word-wrap: normal;
+    }
 }
 .btnExcel{
     margin-top: 15%;
     background-color: #007f5f;
-    padding: 1%;
+    padding: 3%;
+    margin-left: 10%;
     border: #007f5f 0.1em solid;
     border-radius: 12px;
     letter-spacing: 0.028;
-    font-weight: 500;
+    font-weight: 700;
     color: #fefeff;
     text-decoration: none;
     align-items: center;

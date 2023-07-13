@@ -1,5 +1,4 @@
 
-<br><br><br>
 <div class="container ms-2 layout" *ngIf="!noData && !noPatient">
     <div class="section-left">
     <h1 class="title-leftSection mt-2 mb-2">Ultimo control medico</h1>
@@ -17,7 +16,7 @@
             <p class="card-text">IMC: {{' '+datoMedicoVer.imc}}</p>
             <hr class="mt-2 mb-2">
             <div class="descripcion">
-                <p >
+                <p class="text-diagnostico">
                     {{datoMedicoVer.diagnostico}}
                 </p>
             </div>
@@ -89,7 +88,7 @@
             </section>
         </div>
     </div>
-    <div class="sign" *ngIf="noPatient">
+    <div class="sign ms-4 my-4" *ngIf="noPatient">
         <div class="box2">
             <section class="main-cv ">
                 <div class="info">
@@ -103,3 +102,4 @@
             </section>
         </div>
     </div>
+    <br><br><br><br><br><br>

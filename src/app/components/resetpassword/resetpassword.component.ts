@@ -29,8 +29,22 @@ export class ResetpasswordComponent implements OnInit {
     });
     this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/home';
   }
+  verificarTexto(texto:any):boolean {
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,9}$/;
+    if (emailRegex.test(texto)) {
+      console.log('El texto ingresado corresponde a un email');
+      return true;
+    } else {
+      console.log('El texto ingresado corresponde a un texto normal');
+      return false;
+    }
+  }
   resetAsk(){
     console.log(this.email)
+    if(!this.verificarTexto(this.email)){
+      this.toastr.error('El email ingresado no cumple con el formato')
+      this.email = ''
+    }else{
     this.loginService.resetAsk(this.email).subscribe(
       result=>{
         console.log(result);
@@ -60,6 +74,7 @@ export class ResetpasswordComponent implements OnInit {
       }
     )
   }
+}
 
 
   reset(){
