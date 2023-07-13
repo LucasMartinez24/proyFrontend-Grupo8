@@ -44,10 +44,10 @@
           disponibles</a></li>
       <li *ngIf="esPaciente()"><a [routerLink]="'/datosMedicosHome/'+loginService.userLoggedDNI()">Mis Controles</a></li>
       <li class="logins">
-        <a routerLink="/login" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !bothLogin ">Login</a>
-        <a (click)="logOutComponent()" class="login" *ngIf="loginService.userLoggedIn() && !bothLogin">User:{{loginService.userLogged()}} LogOut</a>
-        <a (click)="logoutGoogle()" class="login" *ngIf="esLoggedGoogle()  && !bothLogin">User:{{loginService.userLoggedGoogle()}} LogOut</a>
-        <a (click)="bothLogOut()" class="login" *ngIf="bothLogin">User:{{loginService.userLoggedGoogle()}} LogOut</a>
+        <a routerLink="/login" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !esAmbas() ">Login</a>
+        <a (click)="logOutComponent()" class="login" *ngIf="loginService.userLoggedIn() && !esAmbas()">User:{{loginService.userLogged()}} LogOut</a>
+        <a (click)="logoutGoogle()" class="login" *ngIf="esLoggedGoogle()  && !esAmbas()">User:{{loginService.userLoggedGoogle()}} LogOut</a>
+        <a (click)="bothLogOut()" class="login" *ngIf="esAmbas()">User:{{loginService.userLoggedGoogle()}} LogOut</a>
       </li>
     </ul>
   </nav>

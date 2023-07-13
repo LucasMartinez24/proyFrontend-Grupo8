@@ -3,9 +3,10 @@ import { Injectable, Injector } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
 import { authCodeFlowConfig } from './../sso.config';
-import { Console } from 'console';
+//import { Console } from 'console';
 //import { LoginService } from './login.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MenuComponent } from '../components/menu/menu.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -41,6 +42,41 @@ export class GooService {
             sessionStorage.setItem('googleIsLoggedIn', 'true')
             console.log(sessionStorage.getItem('googleIsLoggedIn'))
             sessionStorage.setItem('emailGmail',usuarioPerfil.info.email)
+            let email = sessionStorage.getItem("emailGmail")
+            this.loginEmailGoogle(usuarioPerfil.info.email).subscribe(
+              result=>{
+                console.log(result)
+                if(result.status === 487){
+                  console.log(result.usuario.dni)
+                  //guardamos el user en cookies en el cliente
+                  sessionStorage.setItem("usuario", JSON.stringify(result));
+                  sessionStorage.setItem("token", result.token);
+                  sessionStorage.setItem("user", result.username);
+                  sessionStorage.setItem("userid", result.userid);
+                  sessionStorage.setItem("userDni",result.usuario.dni);
+                  sessionStorage.setItem("rol", JSON.stringify(result.rol));
+                  sessionStorage.setItem("bothLogin", true.toString());
+                }
+              },
+              error=>{
+                if(error.status === 487){
+                  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                  console.log(error.error.usuario)
+                  //guardamos el user en cookies en el cliente
+                  sessionStorage.setItem("usuario", JSON.stringify(error.error.usuario));
+                  let user = error.error.usuario;
+                  sessionStorage.setItem("token", user.token);
+                  sessionStorage.setItem("user", user.username);
+                  sessionStorage.setItem("userid", user.userid);
+                  sessionStorage.setItem("userDni", user.dni);
+                  sessionStorage.setItem("rol", JSON.stringify(user.rol));
+                  sessionStorage.setItem("bothLogin", true.toString());
+                  //window.location.reload();
+                }
+                console.log(error)
+              }
+            )
+            //window.location.reload()
             //ya tengo el email de quien se logueo puedo
             //llamar desde aqui al loginService.login() para buscar el email en
             //la bd y si corresponde para guardar
@@ -60,6 +96,13 @@ export class GooService {
         }
       }
     )
+  }
+  bothLogin(){
+    let isBothLogin = sessionStorage.getItem("bothLogin");
+    if(isBothLogin === "true"){
+        return true;
+    }
+    return false;
   }
   login() {
     console.log("AAAAAAAAAAA")
@@ -145,5 +188,14 @@ export class GooService {
     }
 
     return false;
+  }
+  loginEmailGoogle(email:string):Observable<any>{
+    const httpOption ={
+      headers: new HttpHeaders({
+        'Content-Type':'application/json'
+      })
+    }
+    let body = JSON.stringify({email:email});
+    return this._http.post('http://localhost:3000/api/usuario/' +'gmail', body, httpOption);
   }
 }
