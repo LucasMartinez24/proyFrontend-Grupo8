@@ -72,7 +72,6 @@ export class PacienteComponent implements OnInit {
       }` ,
     })
   }
- 
   imprimirXlsx():void{
     const worksheet= XLSX.utils.json_to_sheet(this.pacientes)//definimos hojas de trabajo y le asignamos los pacientes
     const workbook =XLSX.utils.book_new();

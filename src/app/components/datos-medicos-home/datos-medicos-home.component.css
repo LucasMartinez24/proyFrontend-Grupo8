@@ -46,7 +46,7 @@ input[type="checkbox"]:checked ~ label .arrow {
     transform: rotate(90deg);
 }
 input[type="checkbox"]:checked ~ label {
-    color: #0083e9;
+    color: #3da9b8;
 }
 input[type="checkbox"] ~ .accordion-content {
     max-height: 0;
@@ -77,9 +77,14 @@ input[type="checkbox"]:checked ~ .accordion-content {
     font-size: 18px;
     letter-spacing: 0.08em;
 }
+
 .container{
-    margin-bottom: 40vh;
+    width: 100vw;
     margin-left: 5%;
+    margin-top: 15vh;
+    margin-right: 2%;
+    margin-bottom: 60vh;
+    height: 100vh;
 }
 .layout {
     margin-top: 15vh;
@@ -170,14 +175,6 @@ input[type="checkbox"]:checked ~ .accordion-content {
     font-weight: 400;
     color: #fefeff;
     text-decoration: none;
-}
-.container{
-    width: 100vw;
-    margin: 0;
-    margin-top: 6vh;
-    margin-right: 2%;
-    margin-bottom: 60vh;
-    height: 100vh;
 }
 input {
 	background-color: #eee;
@@ -283,6 +280,37 @@ input {
     justify-content: center;
     text-align: center;
 }
-.btnExcel a, .btnExcel i{
+.btnPdf{
+    margin-top: 15%;
+    background-color: #bf0603;
+    padding: 3%;
+    font-weight: 600;
+    margin-left: 10%;
+    border: #bf0603 0.1em solid;
+    border-radius: 12px;
+    letter-spacing: 0.028;
+    color: #fefeff;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.btnExcel a, .btnExcel i, .btnPdf a{
     font-size: 16px;
+}
+.btnExcel i, .btnPdf i{
+    font-size: 20px;
+}
+.btnDetalle{
+    background-color: #f7d9ab;
+    padding: 3%;
+    font-weight: 600;
+    border: #f7d9ab 0.1em solid;
+    border-radius: 12px;
+    letter-spacing: 0.028;
+    color: #353535;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
