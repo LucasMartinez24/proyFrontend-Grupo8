@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component'; //usado para el login
-import { MenuComponent } from './components/menu/menu.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 
@@ -62,7 +61,6 @@ registerLocaleData(localeEsAr);
   declarations: [
     AppComponent,
     LoginComponent,
-    MenuComponent,
     FooterComponent,
     HomeComponent,
     PacienteComponent,

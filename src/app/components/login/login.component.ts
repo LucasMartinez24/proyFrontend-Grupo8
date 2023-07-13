@@ -4,7 +4,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { Usuario } from 'src/app/models/usuario';
 import { GooService } from 'src/app/services/goo.service';
 import { LoginService } from 'src/app/services/login.service';
-import { MenuComponent } from '../menu/menu.component';
+import { NavComponent } from '../nav/nav.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,11 +22,11 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private loginService: LoginService,
-    private gooService: GooService) { 
+    private gooService: GooService) {
   }
 
   ngOnInit() {
-  
+
     this.gooService.configureSingleSignOne();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
     //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/reset';

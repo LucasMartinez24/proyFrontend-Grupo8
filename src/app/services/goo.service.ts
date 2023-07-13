@@ -6,7 +6,7 @@ import { authCodeFlowConfig } from './../sso.config';
 //import { Console } from 'console';
 //import { LoginService } from './login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuComponent } from '../components/menu/menu.component';
+import { NavComponent } from '../components/nav/nav.component';
 @Injectable({
   providedIn: 'root',
 })
