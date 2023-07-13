@@ -44,10 +44,10 @@
           disponibles</a></li>
       <li *ngIf="esPaciente()"><a [routerLink]="'/datosMedicosHome/'+loginService.userLoggedDNI()">Mis Controles</a></li>
       <li class="logins">
-        <a routerLink="/login" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !esAmbas() ">Iniciar Sesion</a>
-        <a (click)="logOutComponent()" class="login" *ngIf="loginService.userLoggedIn() && !esAmbas()">Usuario:{{loginService.userLogged()}} Cerrar Sesion</a>
-        <a (click)="logoutGoogle()" class="login" *ngIf="esLoggedGoogle()  && !esAmbas()">Usuario:{{loginService.userLoggedGoogle()}} Cerrar Sesion</a>
-        <a (click)="bothLogOut()" class="login" *ngIf="esAmbas()">Usuario:{{loginService.userLoggedGoogle()}} Cerrar Sesion</a>
+        <a routerLink="/login" style="color: black;" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !esAmbas() ">Iniciar Sesion</a>
+        <a (click)="logOutComponent()" class="logout" *ngIf="loginService.userLoggedIn() && !esAmbas()"><span>Usuario:{{loginService.userLoggedGoogle()}}</span><p>Cerrar Sesion</p></a>
+        <a (click)="logoutGoogle()" class="logout" *ngIf="esLoggedGoogle()  && !esAmbas()"><span>Usuario:{{loginService.userLoggedGoogle()}}</span><p>Cerrar Sesion</p></a>
+        <a (click)="bothLogOut()" class="logout" *ngIf="esAmbas()"><span>Usuario:{{loginService.userLoggedGoogle()}}</span><p>Cerrar Sesion</p></a>
       </li>
     </ul>
   </nav>

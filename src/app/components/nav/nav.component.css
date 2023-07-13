@@ -16,9 +16,12 @@ header{
   font-size: 25px;
   font-weight: 400;
 }
-.login{
+.logout{
   text-decoration: none;
   cursor: pointer;
+  color: #000;
+  display: flex;
+  flex-direction: column;
 }
 header .logo{
   color: #fff;
