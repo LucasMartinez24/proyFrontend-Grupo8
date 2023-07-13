@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DatosMedicos } from 'src/app/models/datos-medicos';
 import { DatosMedicosServiceService } from 'src/app/services/datos-medicos-service.service';
 import * as ExcelJS from 'exceljs'
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-datosmedicos-lis',
   templateUrl: './datosmedicos-lis.component.html',
@@ -13,7 +14,7 @@ export class DatosmedicosLisComponent implements OnInit{
   datoMed!:DatosMedicos;
   fecha!:string;
   searchText = '';
-  constructor(private datosMedicosService:DatosMedicosServiceService, private router:Router){
+  constructor(private datosMedicosService:DatosMedicosServiceService, private router:Router,private toastr:ToastrService){
     this.datosMedicos=new Array<DatosMedicos>();
     this.fecha = String(new Date().toLocaleDateString('es-ar'));
   }
@@ -51,7 +52,8 @@ export class DatosmedicosLisComponent implements OnInit{
     this.datosMedicosService.deleteDatosMedicos(data.idDatoMedico).subscribe(
       result=>{
         console.log(result)
-        alert('Datos Medicos eliminados correctamente')
+        
+        this.toastr.success('Control medico eliminado correctamente')
         const index = this.datosMedicos.findIndex(t => t.idDatoMedico === data.idDatoMedico);
         if (index !== -1) {
           this.datosMedicos.splice(index, 1);
@@ -59,7 +61,7 @@ export class DatosmedicosLisComponent implements OnInit{
       },
       error=>{
         console.log(error)
-        alert('Datos medicos no pudieron ser eliminados')
+        this.toastr.error('Control medico no pudo ser elminiado')
       }
     )
   }

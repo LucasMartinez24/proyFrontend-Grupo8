@@ -3,7 +3,8 @@
     <div class="form-container sign-in-container">
 <form  #signUpForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="mb-3 ms-2">
-        <h1 class="text-center p-2">Registrarse</h1>
+        <h1 class="text-center p-2" *ngIf="esAdministrador()">Registrar un usuario</h1>
+        <h1 class="text-center p-2" *ngIf="!esAdministrador()">Registrarse</h1>
         <label for="username" class="form-label">Nombre de usuario</label>
         <input type="text" class="form-control form" [(ngModel)]="usuario.username" id="username" min="0.01" name="username" required #usernameInput="ngModel" placeholder="Ingrese su nombre de usuario">
         <div *ngIf="usernameInput.invalid && !loadUsername && (usernameInput.dirty || usernameInput.touched)" class="alert alert-danger my-1 p-1">
@@ -23,7 +24,7 @@
         <input type="text" class="form-control form" [(ngModel)]="usuario.dni" id="dni" min="0.01" name="udni" required #dniInput="ngModel" placeholder="Ingrese su dni">
         <div *ngIf="dniInput.invalid && (dniInput.dirty || dniInput.touched)" class="alert alert-danger my-1 p-1">
             <div *ngIf="dniInput.errors?.['required']">
-                El nombre de usuario es requerida
+                El nombre de usuario es requerido
             </div>
             <div *ngIf="dniInput.errors?.['min']">
                 El nombre de usuario debe ser mayor a 0
@@ -52,6 +53,33 @@
         </div>
         <div *ngIf="repeatedEmail" class="alert alert-danger my-1 p-1">
             Ya existe una cuenta con ese email
+        </div>
+    </div>
+    <div class="mb-3 ms-2"  *ngIf="esAdministrador()">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control form" [(ngModel)]="nombre" id="nombre" min="0.01" name="nombre" required #nombreInput="ngModel" placeholder="Ingrese su nombre">
+        <div *ngIf="nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)" class="alert alert-danger my-1 p-1">
+            <div *ngIf="nombreInput.errors?.['required']">
+                El nombre es requerido
+            </div>
+        </div>
+    </div>
+    <div class="mb-3 ms-2"  *ngIf="esAdministrador()">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input type="text" class="form-control form" [(ngModel)]="apellido" id="apellido" min="0.01" name="apellido" required #apellidoInput="ngModel" placeholder="Ingrese su apellido">
+        <div *ngIf="apellidoInput.invalid && (apellidoInput.dirty || apellidoInput.touched)" class="alert alert-danger my-1 p-1">
+            <div *ngIf="apellidoInput.errors?.['required']">
+                El apellido es requerido
+            </div>
+        </div>
+    </div>
+    <div class="mb-3 ms-2" *ngIf="esAdministrador()">
+        <label for="fecha" class="form-label">Fecha de Nacimiento</label>
+        <input type="date" class="form-control form" [(ngModel)]="fecha" id="fecha" min="0.01" name="fecha" required #fechaInput="ngModel" placeholder="Ingrese su fecha de nacimiento">
+        <div *ngIf="fechaInput.invalid && (fechaInput.dirty || fechaInput.touched)" class="alert alert-danger my-1 p-1">
+            <div *ngIf="fechaInput.errors?.['required']">
+                La fecha de nacimiento es requerida
+            </div>
         </div>
     </div>
     <div *ngIf="!modifica && esAdministrador()" class="mb-3 ms-2" [ngClass]="{'is-invalid': rolInput.invalid && (rolInput.dirty || rolInput.touched)}">

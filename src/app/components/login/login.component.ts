@@ -4,6 +4,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { Usuario } from 'src/app/models/usuario';
 import { GooService } from 'src/app/services/goo.service';
 import { LoginService } from 'src/app/services/login.service';
+import { MenuComponent } from '../menu/menu.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
     //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/reset';
   }
   verificarTexto(texto:any):boolean {
-    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,9}$/;
     if (emailRegex.test(texto)) {
       console.log('El texto ingresado corresponde a un email');
       return true;
@@ -105,7 +106,7 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['signUp',0]);
   }
   callLogin(){
-    this.gooService.login()
+    this.gooService.login();
   }
   cortarStringPorEspacio(texto: string): string {
     const indiceEspacio = texto.indexOf(' ');

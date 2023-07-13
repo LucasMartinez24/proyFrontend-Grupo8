@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -15,7 +16,7 @@ export class ResetpasswordComponent implements OnInit {
   notFound!:boolean;
   notVerified:boolean=false;
   form:boolean=false;
-  constructor(private loginService:LoginService, private activatedRoute: ActivatedRoute, private route:Router) { }
+  constructor(private loginService:LoginService, private activatedRoute: ActivatedRoute, private route:Router, private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -34,7 +35,7 @@ export class ResetpasswordComponent implements OnInit {
       result=>{
         console.log(result);
         this.returnUrl;
-        alert("Se envio un correo a su email para reestablecer su contraseña, Verifique tambien la categoria Spam")
+        this.toastr.success("Se envio un correo a su email para reestablecer su contraseña, Verifique tambien la categoria Spam")
         // setTimeout(() => {
         //   window.location.reload(); // Recargar la página actual
         // }, 5000);
@@ -67,7 +68,7 @@ export class ResetpasswordComponent implements OnInit {
     this.loginService.resetPassword(this.password, this.id).subscribe(
       result=>{
         console.log(result)
-        alert("contraseña restablecida correctamente");
+        this.toastr.success("Contraseña restablecida correctamente");
         this.route.navigateByUrl(this.returnUrl);
       },
       error=>{
