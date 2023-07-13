@@ -1,12 +1,12 @@
 <br>
 <div class="mt-5">
     <div style="padding-left:30%; padding-top: 2%;padding-bottom: 2%;">
-
+     
       <form #pacienteForm="ngForm" class="formstyle" style="padding: 5%;">
         <h1>Formulario para cargar un Contacto</h1>
-
+  
         <div class="mb-3">
-            <label for="descripcion" class="form-label"></label>
+            <label for="descripcion" class="form-label">Descripcion</label>
             <input name="descripcion" type="text" class="form-control" id="descripcion"[(ngModel)]="contacto.descripcion"
             placeholder="Ingrese descripcion" required #descripcion="ngModel" >
                    <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div *ngIf="contacto.tipo === 'celular'"  >
-
+            
                 <div class="mb-3 ms-2">
                     <label for="Celular" class="form-label">Ingrese Numero de Celular</label>
                     <input type="number" class="form-control form" [(ngModel)]="contacto.valor" id="telefono" min="0.01" name="Celular" required #Celular="ngModel"  placeholder="Ingrese numero de Celular">
@@ -55,8 +55,8 @@
                         </div>
                     </div>
                 </div>
-
-        </div>
+            
+        </div>   
         <div *ngIf="contacto.tipo === 'gmail'"  >
             <div class="mb-3 ms-2">
                 <label for="email" class="form-label">Correo electronico</label>
@@ -66,15 +66,16 @@
                         El email es requerido
                     </div>
                 </div>
-
+                
             </div>
-        </div>
-
-
+        </div>   
+    
+          
         <button *ngIf="accion=='new'" type="submit" class="btn btn-success" (click)="guardarContato()">Registrar Contacto</button>
-          <button *ngIf="accion=='update'" type="submit" class="btn btn-warning" (click)="modificarContacto()">Modificar Contacto</button>
-          <button type="submit" class="btn btn-danger ms-2" (click)="cancelar()">Cancelar</button>
+          <button *ngIf="accion=='update'" type="submit" class="btn btn-warning" (click)="modificarContacto()">Modificar Contacto</button>  
+          <button type="submit" class="btn btn-danger ms-2" (click)="cancelar()">Cancelar</button>         
     </form>
-
+      
   </div>s
   </div>
+  

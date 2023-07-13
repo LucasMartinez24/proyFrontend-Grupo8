@@ -2,10 +2,10 @@ import { Recurso } from "./recurso"
 
 export class Anuncio {
     _id !:string
-    titulo !:string
+    titulo !:string 
     descripcion!:string
     fechaDesde!: string
-    fechaHasta!:string
+    fechaHasta!:string 
     estado!: string
     recursos!:Array<Recurso>
     constructor(){

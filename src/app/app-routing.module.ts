@@ -18,6 +18,12 @@ import { ListAnuncioClienteComponent } from './components/list-anuncio-cliente/l
 import { AnuncioComponent } from './components/anuncio/anuncio.component';
 import { FormcontactoComponent } from './components/formcontacto/formcontacto.component';
 import { ListContactoComponent } from './components/list-contacto/list-contacto.component';
+import { EspecialistaFormComponent } from './components/especialista-form/especialista-form.component';
+import { EspecialistaComponent } from './components/especialista/especialista.component';
+import { CalendarclienteComponent } from './components/calendarcliente/calendarcliente.component';
+import { TurnoComponent } from './components/turno/turno.component';
+import { TurnoFormComponent } from './components/turno-form/turno-form.component';
+import { TurnosDisponiblesComponent } from './components/turnos-disponibles/turnos-disponibles.component';
 const routes: Routes = [
 {
     path:'login',
@@ -35,7 +41,7 @@ const routes: Routes = [
     path:'reset/:id',
     component:ResetpasswordComponent
   },
-  {
+  { 
     path:'paciente',
     component:PacienteComponent,
     data:{
@@ -68,7 +74,7 @@ const routes: Routes = [
     canActivate:[VigilanteGuard]
   },
   {
-    path:'datosMedicosHome/:id',
+    path:'datosMedicosHome/:dni',
     component:DatosMedicosHomeComponent
   },
   {
@@ -81,7 +87,11 @@ const routes: Routes = [
     data:{
       rol: 'administrador'
     },
-    canActivate:[VigilanteGuard]
+    //canActivate:[VigilanteGuard]
+  },
+  {
+    path:'calendarVisitante',
+    component:CalendarclienteComponent
   },
   {
     path:'form-anuncio/:id',component:FormAnuncioComponent,
@@ -113,17 +123,48 @@ const routes: Routes = [
   },
   {
     path:'list-anuncio-cliente',component:ListAnuncioClienteComponent,
+    // data:{
+    //   rol: 'administrador'
+    // },
+    // canActivate:[VigilanteGuard]
+  },
+  {
+    path:'anuncio/:id',component:AnuncioComponent,
+    // data:{
+    //   rol: 'administrador'
+    // },
+    // canActivate:[VigilanteGuard]
+  },
+  {
+    path:'especialista-form/:id',component:EspecialistaFormComponent,
     data:{
       rol: 'administrador'
     },
     canActivate:[VigilanteGuard]
   },
   {
-    path:'anuncio/:id',component:AnuncioComponent,
+    path:'especialista',component:EspecialistaComponent,
     data:{
       rol: 'administrador'
     },
     canActivate:[VigilanteGuard]
+  },
+  {
+    path:'turno',component:TurnoComponent,
+    // data:{
+    //   rol: 'administrador'
+    // },
+    // canActivate:[VigilanteGuard]
+  },
+  {
+    path:'turno-form/:id',component:TurnoFormComponent,
+    data:{
+      rol: 'administrador'
+    },
+    canActivate:[VigilanteGuard]
+  },
+  {
+    path:'turnos-disponibles',component:TurnosDisponiblesComponent,
   },
   //lo siguiente siempre va al final
   {
@@ -131,7 +172,7 @@ const routes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full'
   },
-
+  
  /*
   {path:'form-anuncio/:id',component:FormAnuncioComponent},
    {path:'list-anuncio',component:ListAnuncioComponent}*/

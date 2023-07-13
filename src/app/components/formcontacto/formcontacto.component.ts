@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { error } from 'console';
+//import { error } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { Contacto } from 'src/app/models/contacto';
 import { ContactoService } from 'src/app/services/contacto.service';
@@ -15,7 +15,7 @@ export class FormcontactoComponent implements OnInit {
   accion:string
   tipo!:string
   id!:string
-  constructor(private contactoService: ContactoService,private route :Router,private activatedRoute: ActivatedRoute,private toastr:ToastrService) {
+  constructor(private contactoService: ContactoService,private route :Router,private activatedRoute: ActivatedRoute,private toastr:ToastrService) { 
     this.contacto = new Contacto()
     this.accion = ""
 
@@ -63,10 +63,10 @@ export class FormcontactoComponent implements OnInit {
       result=>{
         console.log(result);
         if (result.status == 1) {
-
+       
           this.toastr.success('Contacto agregado correctamente','Contacto Agregado')
           this.route.navigate(["list-contacto"])
-
+            
         }
       },
       error=>{
@@ -91,19 +91,20 @@ export class FormcontactoComponent implements OnInit {
      }
   }
   cancelar(){
-
+    this.route.navigate(['list-contacto'])
   }
   validarContacto():boolean{
     if(this.contacto.descripcion == null){
-      alert("Ingrse Descriopcion")
+      this.toastr.error("Ingrese Descripcion")
       return false
     }
     if(this.contacto.tipo == null){
-      alert("Elija el tipo Contacto")
+      this.toastr.error("Elija un contacto")
        return false
      }
      if(this.contacto.valor == null){
-      alert("Ingrese un valor")
+      this.toastr.error("Ingrese un valor")
+      
       return false
      }
      return true;

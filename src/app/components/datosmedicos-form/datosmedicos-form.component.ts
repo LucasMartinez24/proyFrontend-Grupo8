@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { DatosMedicos } from 'src/app/models/datos-medicos';
 import { Paciente } from 'src/app/models/paciente';
 import { DatosMedicosServiceService } from 'src/app/services/datos-medicos-service.service';
@@ -20,16 +21,20 @@ export class DatosmedicosFormComponent implements OnInit{
   filterText: string = '';
   myDropDown!: string;
   modifica!:boolean
+  existOther:boolean = false
   filtroPacientes!:string;
+  latestMedicalData!:DatosMedicos;
+  asign:boolean=false;
+  selectedPaciente:boolean=false;
   pacientesFiltrados: any[] = [];
   @ViewChild('selectList', { static: false }) selectList!: ElementRef;
-  constructor(private pacienteService:PacienteService, private datosMedicosService: DatosMedicosServiceService,
-    private activatedRoute: ActivatedRoute, private router:Router){
-  this.datosMedicos = new Array<DatosMedicos>()
-  this.datoMedico = new DatosMedicos()
-  this.filtroPacientes=""
+  constructor(private pacienteService:PacienteService, private datosMedicosService: DatosMedicosServiceService, 
+    private activatedRoute: ActivatedRoute, private router:Router,private toastr:ToastrService){
+  this.datosMedicos = new Array<DatosMedicos>();
+  this.datoMedico = new DatosMedicos();
+  this.latestMedicalData = new DatosMedicos();
+  this.filtroPacientes="";
     this.getAllPacientes();
-    //console.log(this.pacientes.length + 'longitud');
     this.datoMedico.fecha = String(new Date().toLocaleDateString('es-ar'));
     //console.log(this.datoMedico.fecha);
   }
@@ -54,11 +59,24 @@ export class DatosmedicosFormComponent implements OnInit{
       this.addMedicalData();
     }
   }
+  isSelected(){
+    console.log(this.datoMedico.paciente)
+    let cont:number=0;
+    this.selectedPaciente = false
+    if(this.datoMedico.paciente != '' && !this.selectedPaciente && cont===0){
+      console.log('AAAAAAAAAAAAAAAAAAAAAAa')
+      this.selectedPaciente = true
+      cont=1;
+      this.searchPacienteObj();
+    }
+  }
   searchPacienteObj(){
-    this.datosMedicosService.getDatosMedicosId(this.datoMedico.paciente).subscribe(
+    console.log(this.datoMedico.paciente)
+    this.pacienteService.getPacienteById(this.datoMedico.paciente).subscribe(
       result=>{
         console.log(result)
         this.datoMedico.pacienteObj = result
+        this.getLatestMedicalData();
       },
       error=>{
         console.log(error)
@@ -79,7 +97,7 @@ export class DatosmedicosFormComponent implements OnInit{
     console.log(this.pacientes.length);
     this.selectList.nativeElement.size = this.pacientes.length + 1;
   }
-
+  
   onChangeofOptions(newGov:any) {
     console.log(newGov);
   }
@@ -89,6 +107,7 @@ export class DatosmedicosFormComponent implements OnInit{
         console.log(result);
         this.datoMedico = result;
         this.datoMedico.pacienteObj = result.paciente
+        console.log(this.datoMedico.pacienteObj.dni)
       },
       error=>{
         console.log(error)
@@ -113,6 +132,38 @@ export class DatosmedicosFormComponent implements OnInit{
       }
     )
   }
+  async getLatestMedicalData() {
+    console.log(this.datoMedico.pacienteObj.dni);
+    
+    if (this.datoMedico.pacienteObj.dni !== undefined) {
+      setTimeout(() => {
+        this.datosMedicosService.getLatest(this.datoMedico.pacienteObj.dni).subscribe(
+          result => {
+            console.log(result);
+            console.log(this.datoMedico);
+            this.latestMedicalData = result[0];
+            if(result.length === 0){
+              console.log(result.length + ' Entro condicional')
+              this.existOther= false
+            }else{
+              this.existOther = true
+            }
+          },
+          error => {
+            console.log(error);
+            this.existOther = false
+          }
+        );
+      }, 0);
+    } else {
+      console.log('NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOooo');
+    }
+  }
+  asignLatest(){
+    this.datoMedico = this.latestMedicalData
+    this.datoMedico.fecha = String(new Date().toLocaleDateString('es-ar'));
+  }
+  
   addMedicalData() {
     this.datoMedico.imc = +(this.datoMedico.peso / ((this.datoMedico.talla / 100) ** 2)).toFixed(3);
     console.log(this.datoMedico.paciente)
@@ -121,17 +172,18 @@ export class DatosmedicosFormComponent implements OnInit{
       this.datoMedico.diagnostico).subscribe(
       result=>{
         if(result.status == 1){
-          this.datoMedico.idDatoMedico = result._id
-          alert('Guardado correctamente')
+          this.datoMedico.idDatoMedico = result._id;
+          this.toastr.success('Control medico eliminado correctamente')
+          this.router.navigate(["/datosMedicos"]);
         } else {
-          alert(result)
+          this.toastr.success(result)
         }
       },
       error => {
-        alert(error)
+        this.toastr.error(error)
       }
     )
-  }
+}
   modifyMedicalData(){
     this.datoMedico.imc = +(this.datoMedico.peso / ((this.datoMedico.talla / 100) ** 2)).toFixed(3);
     console.log('Entro a modificar' + this.id)
@@ -140,13 +192,14 @@ export class DatosmedicosFormComponent implements OnInit{
       this.datoMedico.diagnostico).subscribe(
       result=>{
         if(result.status == 1){
-          alert('Editado Correctamente')
+          this.toastr.success('Editado Correctamente')
+          this.router.navigate(["/datosMedicos"]);
         }else{
-          alert(result)
+          this.toastr.success(result)
         }
       },
       error=>{
-        alert(error)
+        this.toastr.error(error)
       }
     )
   }

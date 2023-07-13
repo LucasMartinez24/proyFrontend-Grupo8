@@ -11,11 +11,13 @@ import { AnuncioService } from 'src/app/services/anuncio.service';
 })
 export class AnuncioComponent implements OnInit {
   anuncio:Anuncio
+  pdfSrc = "https://www.uv.mx/pozarica/caa-conta/files/2016/02/REGULAR-AND-IRREGULAR-VERBS.pdf";
   constructor(private anuncioService: AnuncioService,private route :Router,private activatedRoute: ActivatedRoute) {
     this.anuncio= new Anuncio()
+   
    }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
    this.activatedRoute.params.subscribe(params=>{
  if(params['id']!='0'){
    this.getAnuncio(params['id'])
@@ -28,6 +30,7 @@ export class AnuncioComponent implements OnInit {
       result=>{
            this.anuncio=result
            console.log(this.anuncio)
+           
       },
        error=>{
         console.log(error)
