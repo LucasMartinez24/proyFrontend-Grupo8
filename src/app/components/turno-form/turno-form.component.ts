@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { Especialista } from 'src/app/models/especialista';
 import { Paciente } from 'src/app/models/paciente';
 import { Turno } from 'src/app/models/turno';
@@ -90,29 +91,29 @@ export class TurnoFormComponent implements OnInit {
   }
 
   guardarTurno() {
-    console.log(this.turno);
-
-    // this.turno.paciente={
-    //   nombre: "",
-    //   apellido: "",
-    //   dni: "",
-    //   _id: "",
-    //   fechaNac:""
-    // };
-
-    this.turno.paciente;
-
-    this.turnoService.createTurno(this.turno).subscribe(
-      result => {
-        if (result.status == 1) {
-          alert(result.msg);
-          this.router.navigate(["turnos-disponibles"])
+    this.turno.paciente = new Paciente();
+    let fechaTurno = moment(this.turno.hora, "HH:mm:ss");
+  
+    for (let i = 0; i < this.turno.cantidadTurnos; i++) {
+      let horaFormateada = fechaTurno.format("HH:mm:ss");
+      this.turno.hora = horaFormateada;
+  
+      console.log(this.turno);
+  
+      this.turnoService.createTurno(this.turno).subscribe(
+        result => {
+          if (result.status == 1) {
+            alert(result.msg);
+            this.router.navigate(["turnos-disponibles"]);
+          }
+        },
+        error => {
+          alert(error.msg);
         }
-      },
-      error => {
-        alert(error.msg);
-      }
-    )
+      );
+  
+      fechaTurno.add(this.turno.lapso, 'minutes');
+    }
   }
 
   modificarTurno() {

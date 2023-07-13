@@ -15,32 +15,36 @@ export class TurnosDisponiblesComponent implements OnInit {
   turnos: Array<Turno>;
   turno: Turno = new Turno();
 
-  constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService) {
-    this.turnos = new Array<Turno>();
+
+  cantidadTurnosCreados: number;
+
+  constructor(
+    private router: Router,
+    private turnoService: TurnoService,
+    private loginService: LoginService,
+    private pacienteService: PacienteService
+  ) {
+    this.turnos = [];
+    this.cantidadTurnosCreados = 0;
     this.obtenerTurnos();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   obtenerTurnos() {
     this.turnoService.getTurnosDisponibles().subscribe(
       result => {
-        let unTicket = new Turno();
-        result.forEach((element: any) => {
-          Object.assign(unTicket, element);
-          this.turnos.push(unTicket);
-          unTicket = new Turno();
-        });
+        this.turnos = result;
+        this.cantidadTurnosCreados = this.turnos.length;
       },
       error => {
-        console.log(error);
+        console.error('Error al obtener los turnos disponibles:', error);
       }
-    )
+    );
   }
 
-  eliminarTurno(ticket: Turno) {
-    this.turnoService.deleteTurno(ticket._id).subscribe(
+  eliminarTurno(turno: Turno) {
+    this.turnoService.deleteTurno(turno._id).subscribe(
       result => {
         if (result.status == 1) {
           alert(result.msg);
@@ -50,11 +54,11 @@ export class TurnosDisponiblesComponent implements OnInit {
       error => {
         alert(error.msg);
       }
-    )
+    );
   }
 
-  modificarTurno(ticket: Turno) {
-    this.router.navigate(["turno-form", ticket._id])
+  modificarTurno(turno: Turno) {
+    this.router.navigate(['turno-form', turno._id]);
   }
 
   async reservarTurno(turno: Turno) {
