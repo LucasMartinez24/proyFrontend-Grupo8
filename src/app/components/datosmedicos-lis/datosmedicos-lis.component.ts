@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { DatosMedicos } from 'src/app/models/datos-medicos';
 import { DatosMedicosServiceService } from 'src/app/services/datos-medicos-service.service';
 import * as ExcelJS from 'exceljs'
+import * as printJS from 'print-js'
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-datosmedicos-lis',
   templateUrl: './datosmedicos-lis.component.html',
@@ -13,7 +15,7 @@ export class DatosmedicosLisComponent implements OnInit{
   datoMed!:DatosMedicos;
   fecha!:string;
   searchText = '';
-  constructor(private datosMedicosService:DatosMedicosServiceService, private router:Router){
+  constructor(private datosMedicosService:DatosMedicosServiceService, private router:Router,private toastr:ToastrService){
     this.datosMedicos=new Array<DatosMedicos>();
     this.fecha = String(new Date().toLocaleDateString('es-ar'));
   }
@@ -51,7 +53,8 @@ export class DatosmedicosLisComponent implements OnInit{
     this.datosMedicosService.deleteDatosMedicos(data.idDatoMedico).subscribe(
       result=>{
         console.log(result)
-        alert('Datos Medicos eliminados correctamente')
+        
+        this.toastr.success('Control medico eliminado correctamente')
         const index = this.datosMedicos.findIndex(t => t.idDatoMedico === data.idDatoMedico);
         if (index !== -1) {
           this.datosMedicos.splice(index, 1);
@@ -59,11 +62,49 @@ export class DatosmedicosLisComponent implements OnInit{
       },
       error=>{
         console.log(error)
-        alert('Datos medicos no pudieron ser eliminados')
+        this.toastr.error('Control medico no pudo ser elminiado')
       }
     )
   }
-  
+  imprimirPdf(){
+    printJS({
+      printable: this.datosMedicos, 
+      properties: [
+        {field:'pacienteObj.dni',displayName:'DNI'},
+        {field:'pacienteObj.nombre',displayName:'Nombre'},
+        {field:'pacienteObj.apellido',displayName:'Apellido'},
+        {field:'pacienteObj.fechaNac',displayName:'Fecha de Nacimiento'},
+        {field:'motivo',displayName:'Motivo Control'},
+        {field:'peso',displayName:'Peso'},
+        {field:'talla',displayName:'Altura'},
+        {field:'tension_arterial',displayName:'Tension Arterial'},
+        {field:'diagnostico',displayName:'Diagnostico'},
+        {field:'fecha',displayName:'Fecha control'}
+      ], 
+      type: 'json',
+      header:`<h2 class="print-header">Controles Registrados</h2> <hr/>`,
+      style:`
+      .print-header{
+        text-align: center;
+        color:withe;
+        font-weight: bold;
+        background-color:lightblue;
+        padding: 10px 0;
+        margin:0;
+      }
+      table{
+        width:100%;
+        text-align: center;
+      }
+      th, td{
+        padding:8px;
+      }
+      th{
+        background-color:lightgray;
+        color:white;
+      }` ,
+    })
+  }
   excelTable(){
     const workbook = new ExcelJS.Workbook();
     const creat = workbook.creator = ('Centro de Salud');

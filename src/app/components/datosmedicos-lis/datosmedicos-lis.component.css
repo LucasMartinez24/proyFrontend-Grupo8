@@ -13,7 +13,7 @@
     cursor: pointer;
 }
 .btnExcel{
-    margin-top: 15%;
+    margin-top: 2%;
     background-color: #007f5f;
     padding: 0.8%;
     font-weight: 600;
@@ -26,9 +26,23 @@
     justify-content: center;
     text-align: center;
 }
-.btnExcel a, .btnExcel i{
+.btnPdf{
+    margin-top: 2%;
+    background-color: #bf0603;
+    padding: 0.8%;
+    font-weight: 600;
+    border: #bf0603 0.1em solid;
+    border-radius: 12px;
+    letter-spacing: 0.028;
+    color: #fefeff;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.btnExcel a, .btnExcel i, .btnPdf a{
     font-size: 16px;
 }
-.btnExcel i{
+.btnExcel i, .btnPdf i{
     font-size: 20px;
 }

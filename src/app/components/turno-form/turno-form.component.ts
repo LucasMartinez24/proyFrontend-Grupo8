@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { Especialista } from 'src/app/models/especialista';
 import { Paciente } from 'src/app/models/paciente';
 import { Turno } from 'src/app/models/turno';
@@ -15,14 +16,15 @@ import { TurnoService } from 'src/app/services/turno.service';
 })
 export class TurnoFormComponent implements OnInit {
   turno: Turno;
-  especialistas:Array<Especialista>;
-  accion: string="";
-  pacientes:Array<Paciente>;
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private turnoService:TurnoService, private especialistaService:EspecialistaService, private pacienteService:PacienteService) {
+  especialistas: Array<Especialista>;
+  accion: string = "";
+  pacientes: Array<Paciente>;
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private turnoService: TurnoService,
+    private especialistaService: EspecialistaService, private pacienteService: PacienteService, private toastr: ToastrService) {
     this.turno = new Turno();
     this.especialistas = new Array<Especialista>();
     this.pacientes = new Array<Paciente>();
-   }
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(
@@ -60,7 +62,7 @@ export class TurnoFormComponent implements OnInit {
     )
   }
 
-  cargarPacientes(){
+  cargarPacientes() {
     this.pacienteService.getPacientes().subscribe(
       result => {
         let unEspectador = new Paciente();
@@ -82,7 +84,7 @@ export class TurnoFormComponent implements OnInit {
       (result) => {
         Object.assign(this.turno, result); //en paciente va a tener null
         this.turno.especialista = this.especialistas.find((item) => (item._id == this.turno.especialista._id))!;
-        this.turno.paciente = this.pacientes.find((item) => (item._id == this.turno.paciente._id))!;
+        this.turno.paciente = this.pacientes.find((item) => (item._id == this.turno.paciente?._id))!;
       },
       error => {
         console.log(error);
@@ -91,41 +93,35 @@ export class TurnoFormComponent implements OnInit {
   }
 
   guardarTurno() {
-    this.turno.paciente = new Paciente();
-    let fechaTurno = moment(this.turno.hora, "HH:mm:ss");
-  
-    for (let i = 0; i < this.turno.cantidadTurnos; i++) {
-      let horaFormateada = fechaTurno.format("HH:mm:ss");
-      this.turno.hora = horaFormateada;
-  
-      console.log(this.turno);
-  
-      this.turnoService.createTurno(this.turno).subscribe(
-        result => {
-          if (result.status == 1) {
-            alert(result.msg);
-            this.router.navigate(["turnos-disponibles"]);
-          }
-        },
-        error => {
-          alert(error.msg);
+
+    this.turno.paciente = null;
+
+    console.log(this.turno);
+
+    this.turnoService.createTurno(this.turno).subscribe(
+      result => {
+        if (result.status == 1) {
+          this.toastr.success('Turno agregado correctamente','Turno Creado')
+          this.router.navigate(["turnos-disponibles"])
         }
-      );
-  
-      fechaTurno.add(this.turno.lapso, 'minutes');
-    }
+      },
+      error => {
+        this.toastr.warning(error)
+      }
+    )
+
   }
 
   modificarTurno() {
     this.turnoService.editTurno(this.turno).subscribe(
       result => {
         if (result.status == 1) {
-          alert(result.msg);
+          this.toastr.success('Turno modificado correctamente', 'Turno Modificado')
           this.router.navigate(["turno"])
         }
       },
       error => {
-        alert(error.msg);
+        this.toastr.warning(error)
       }
     )
   }

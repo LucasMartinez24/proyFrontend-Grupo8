@@ -17,7 +17,7 @@
         <div class="mb-3 ms-2"  *ngIf="modifica">
             <label>{{datoMedico.pacienteObj.nombre + '  '+ datoMedico.pacienteObj.apellido}}</label>
         </div>
-        <button type="button" class="btnCopy mb-3 ms-2" (click)="asignLatest()" *ngIf="selectedPaciente">
+        <button type="button" class="btnCopy mb-3 ms-2" (click)="asignLatest()" *ngIf="existOther">
             Copiar datos del anterior control
         </button>
     <div class="mb-3 ms-2">

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { error } from 'console';
+//import { error } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { Contacto } from 'src/app/models/contacto';
 import { ContactoService } from 'src/app/services/contacto.service';

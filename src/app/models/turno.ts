@@ -7,7 +7,7 @@ export class Turno {
     cantidadTurnos!:number;
     hora!:string;
     lapso!:string;
-    paciente: Paciente = new Paciente();
+    paciente: Paciente | null = null;
     especialista: Especialista=new Especialista();
     estado!:string;
 }

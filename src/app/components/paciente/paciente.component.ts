@@ -14,18 +14,18 @@ import { Subject } from 'rxjs';
   styleUrls: ['./paciente.component.css']
 })
 export class PacienteComponent implements OnInit {
-  pacientes:Array<Paciente>;
-  pacienteDni:Array<Paciente>;
-  dni!:string;
+  pacientes: Array<Paciente>;
+  pacienteDni: Array<Paciente>;
+  dni!: string;
   //dtOptions : DataTables.Settings = {}; 
   //dtTrigger =new Subject<any>();
 
-  constructor(private pacienteService: PacienteService, private activatedRoute: ActivatedRoute, 
-    private router: Router, private toastr:ToastrService) { 
-      this.pacientes = new Array<Paciente>();
-      this.pacienteDni= new Array<Paciente>();
-      this.obtenerPacientes();
-    }
+  constructor(private pacienteService: PacienteService, private activatedRoute: ActivatedRoute,
+    private router: Router, private toastr: ToastrService) {
+    this.pacientes = new Array<Paciente>();
+    this.pacienteDni = new Array<Paciente>();
+    this.obtenerPacientes();
+  }
 
   ngOnInit(): void {
     /*this.dtOptions={
@@ -35,22 +35,22 @@ export class PacienteComponent implements OnInit {
     this.obtenerPacientes();*/
   }
 
- /*ngOnDestroy():void{
-    this.dtTrigger.unsubscribe();
-}*/
+  /*ngOnDestroy():void{
+     this.dtTrigger.unsubscribe();
+ }*/
 
-  imprimirPdf(){
+  imprimirPdf() {
     printJS({
-      printable: this.pacientes, 
+      printable: this.pacientes,
       properties: [
-        {field:'dni',displayName:'DNI'},
-        {field:'nombre',displayName:'Nombre'},
-        {field:'apellido',displayName:'Apellido'},
-        {field:'fechaNac',displayName:'Fecha de Nacimiento'}
-      ], 
+        { field: 'dni', displayName: 'DNI' },
+        { field: 'nombre', displayName: 'Nombre' },
+        { field: 'apellido', displayName: 'Apellido' },
+        { field: 'fechaNac', displayName: 'Fecha de Nacimiento' }
+      ],
       type: 'json',
-      header:`<h2 class="print-header">Pacientes Registrados</h2> <hr/>`,
-      style:`
+      header: `<h2 class="print-header">Pacientes Registrados</h2> <hr/>`,
+      style: `
       .print-header{
         text-align: center;
         color:withe;
@@ -72,86 +72,85 @@ export class PacienteComponent implements OnInit {
       }` ,
     })
   }
- 
   imprimirXlsx():void{
     const worksheet= XLSX.utils.json_to_sheet(this.pacientes)//definimos hojas de trabajo y le asignamos los pacientes
     const workbook =XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, `Pacientes Registrados`) //nombre de la hoja de excel
     XLSX.writeFile(workbook, `ListaPacientes.xlsx`);
-    
-    }
 
-  obtenerPacientes(){
+  }
+
+  obtenerPacientes() {
     console.log("entrando a obtener pacientes")
     this.pacienteService.getPacientes().subscribe(
-      result=>{
+      result => {
         let unPaciente = new Paciente();
-        result.forEach((element:any) => {
-          Object.assign(unPaciente,element);
+        result.forEach((element: any) => {
+          Object.assign(unPaciente, element);
           this.pacientes.push(unPaciente);
           unPaciente = new Paciente();
         });
       },
-      error=>{
+      error => {
         console.log(error);
       }
     )
   }
 
 
-  obtenerPacienteDni(){
+  obtenerPacienteDni() {
     console.log("ENTRANDO A PACIENTE POR DNI");
-    this.pacientes=new Array<Paciente>();
+    this.pacientes = new Array<Paciente>();
     this.pacienteService.getPacienteDni(this.dni).subscribe(
-      (result:any)=>{
-        this.pacienteDni=result;
-        
+      (result: any) => {
+        this.pacienteDni = result;
+
         let unPaciente = new Paciente();
-        result.forEach((element:any) => {
-          Object.assign(unPaciente,element);
+        result.forEach((element: any) => {
+          Object.assign(unPaciente, element);
           this.pacientes.push(unPaciente);
           unPaciente = new Paciente();
         });
       },
-      error=>{
-        alert(error);
+      error => {
+        this.toastr.warning('Error al buscar paciente por dni', 'Error')
       }
     )
   }
 
-  eliminarPaciente(paciente:Paciente){
+  eliminarPaciente(paciente: Paciente) {
     this.pacienteService.deletePaciente(paciente._id).subscribe(
-      result=>{
-        if(result.status == 1){
-          this.toastr.warning('Paciente eliminado correctamente','Paciente Eliminado')
+      result => {
+        if (result.status == 1) {
+          this.toastr.warning('Paciente eliminado correctamente', 'Paciente Eliminado')
           window.location.reload();
         }
       },
-      error=>{
-        alert(error.msg);
+      error => {
+        this.toastr.warning('Error al buscar paciente por dni', 'Error')
       }
     )
   }
 
-  modificarPaciente(paciente:Paciente){
+  modificarPaciente(paciente: Paciente) {
     console.log(paciente);
-    this.router.navigate(["paciente-form",paciente._id])
+    this.router.navigate(["paciente-form", paciente._id])
   }
 
-  agregarPaciente(){
-    this.router.navigate(["paciente-form",0])
+  agregarPaciente() {
+    this.router.navigate(["paciente-form", 0])
   }
-  verControl(paciente:Paciente){
-    this.router.navigate(['datosMedicosHome',paciente.dni])
+  verControl(paciente: Paciente) {
+    this.router.navigate(['datosMedicosHome', paciente.dni])
   }
-  generarExcel(paciente:Paciente){
+  generarExcel(paciente: Paciente) {
     console.log('entrando a generar excel')
     const workbook = new ExcelJS.Workbook(); //creamos una nueva hojja 
     const create = workbook.creator = ('Centro de Salud Huaicos') //agregamos el autor del excel
-    const worksheet =workbook.addWorksheet ('Listado de Pacientes') //nombre del excel
+    const worksheet = workbook.addWorksheet('Listado de Pacientes') //nombre del excel
 
     //agregar datos al archivo de excel
-    worksheet.addRow(['DNI','Nombre', 'Apellido', 'Fecha de Nacimiento']);
-    worksheet.addRow([paciente.dni,paciente.nombre,paciente.apellido,paciente.fechaNac ]);
+    worksheet.addRow(['DNI', 'Nombre', 'Apellido', 'Fecha de Nacimiento']);
+    worksheet.addRow([paciente.dni, paciente.nombre, paciente.apellido, paciente.fechaNac]);
   }
 }

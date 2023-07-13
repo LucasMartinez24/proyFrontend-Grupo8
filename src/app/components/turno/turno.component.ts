@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Turno } from 'src/app/models/turno';
 import { LoginService } from 'src/app/services/login.service';
 import { TurnoService } from 'src/app/services/turno.service';
+
 
 @Component({
   selector: 'app-turno',
@@ -11,14 +13,15 @@ import { TurnoService } from 'src/app/services/turno.service';
 })
 export class TurnoComponent implements OnInit {
   turnos: Array<Turno>;
-  misTurnos: Array<Turno>;
+  //misTurnos: Array<Turno>;
   pacienteService: any;
+  //hayTurnos: boolean = true;
 
-  constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService) {
+  constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private toastr: ToastrService) {
     this.turnos = new Array<Turno>();
-    this.misTurnos = new Array<Turno>();
+    //this.misTurnos = new Array<Turno>();
     this.obtenerTurnos();
-    this.obtenerMisTurnos();
+    //this.obtenerMisTurnos();
   }
 
   ngOnInit(): void {
@@ -29,6 +32,7 @@ export class TurnoComponent implements OnInit {
 
     this.turnoService.getTurnos().subscribe(
       result => {
+        console.log(result);
 
         let unTurno = new Turno();
 
@@ -38,9 +42,12 @@ export class TurnoComponent implements OnInit {
             Object.assign(unTurno, element);
             this.turnos.push(unTurno);
             unTurno = new Turno();
+          }else{
+            //this.hayTurnos = false;
           }
 
         });
+
       },
       error => {
         console.log(error);
@@ -52,7 +59,7 @@ export class TurnoComponent implements OnInit {
     this.turnoService.deleteTurno(ticket._id).subscribe(
       result => {
         if (result.status == 1) {
-          alert(result.msg);
+          this.toastr.warning('Paciente eliminado correctamente', 'Paciente Eliminado')
           window.location.reload();
         }
       },
@@ -70,30 +77,30 @@ export class TurnoComponent implements OnInit {
     return this.loginService.esAdmin();
   }
 
-  obtenerMisTurnos() {
-    this.misTurnos = new Array<Turno>();
-    const pacienteString = this.loginService.getUser();
-    let paciente = null;
+  //   obtenerMisTurnos() {
+  //     this.misTurnos = new Array<Turno>();
+  //     const pacienteString = this.loginService.getUser();
+  //     let paciente = null;
 
-    if (pacienteString !== null) {
-      paciente = JSON.parse(pacienteString);
-    }
+  //     if (pacienteString !== null) {
+  //       paciente = JSON.parse(pacienteString);
+  //     }
 
-    this.turnoService.getMisTurnos(paciente.usuario.dni).subscribe(
-      (result)=>{
-        let unTurno = new Turno();
+  //     this.turnoService.getMisTurnos(paciente.usuario.dni).subscribe(
+  //       (result)=>{
+  //         let unTurno = new Turno();
 
-        result.forEach((element: any) => {
+  //         result.forEach((element: any) => {
 
-          if (element.paciente != null) {
-            Object.assign(unTurno, element);
-            this.misTurnos.push(unTurno);
-            unTurno = new Turno();
-          }
+  //           if (element.paciente != null) {
+  //             Object.assign(unTurno, element);
+  //             this.misTurnos.push(unTurno);
+  //             unTurno = new Turno();
+  //           }
 
-        });
-      }
-    )
-}
+  //         });
+  //       }
+  //     )
+  // }
 
 }

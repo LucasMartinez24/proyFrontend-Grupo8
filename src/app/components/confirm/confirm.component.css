@@ -1,3 +1,4 @@
+
 .box{
     overflow-x: hidden;
     display: flex;
@@ -8,7 +9,7 @@
     width: 100vw;
 }
 .main-cv{
-    padding-top: 15em;
+    padding-top: 5em;
     height: 60vh;
     width: 40%;
     background-color: #fefeff;
@@ -75,4 +76,10 @@ button:hover{
 button a:hover {
     color: #fefeff;
     transition: all 5ms;
+}
+@media(min-height:406px){
+    .main-cv{
+        padding-top: 0;
+        padding-bottom: 5em;
+    }
 }

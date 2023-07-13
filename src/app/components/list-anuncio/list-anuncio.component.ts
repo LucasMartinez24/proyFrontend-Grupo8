@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { error } from 'console';
+//import { error } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { observable } from 'rxjs';
 import { Anuncio } from 'src/app/models/anuncio';
@@ -17,6 +17,7 @@ export class ListAnuncioComponent implements OnInit {
   ancuncios : Array<Anuncio>
   listRecurso: Array<Recurso>
   listRecrso!:Array<Recurso>
+  searchText:string = ''
   constructor(private anuncioService:AnuncioService ,private route:Router,  private storageService: StorageService,private toastr:ToastrService ) { 
     this.ancuncios= new Array<Anuncio>()
     this.listRecurso= new Array<Recurso>()

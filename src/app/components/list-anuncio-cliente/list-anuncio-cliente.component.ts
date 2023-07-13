@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { error } from 'console';
+//import { error } from 'console';
 import { Anuncio } from 'src/app/models/anuncio';
 import { Recurso } from 'src/app/models/recurso';
 import { AnuncioService } from 'src/app/services/anuncio.service';

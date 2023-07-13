@@ -67,7 +67,11 @@ export class PacienteService {
       ),
       params: new HttpParams()
     }
+<<<<<<< HEAD
     return this.http.get('http://localhost:3000/api/paciente/dniOne/'+dni, httpOptions)
+=======
+    return this.http.get(this.hostBase+'/dniOne/'+dni, httpOptions)
+>>>>>>> c1484c80a4b093c3ce94f61043ab864f9f4f0bcc
   }
   getPacienteById(id:string):Observable<any>{
     let httpOptions={
