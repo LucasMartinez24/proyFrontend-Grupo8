@@ -66,7 +66,7 @@ export class EspecialistaFormComponent implements OnInit {
     this.especialistaService.editEspecialista(this.especialista).subscribe(
       result => {
         if (result.status == 1) {
-          this.toastr.success('Especialista Modificado Correctamente')
+          this.toastr.success('Especialista Modificado Correctamente', 'Especialista Modificado')
           this.router.navigate(["especialista"])
         }
       },
