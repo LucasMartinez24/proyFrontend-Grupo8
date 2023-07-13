@@ -192,7 +192,7 @@ nav.sticky ul li:hover ul.dropdown {
     transition: all .3s ease-in-out;
   }
   .celular ul li a span{
-    font-size: 15px;
+    font-size: 12px;
   }
   .celular li::before,.celular li::after{
     content: "";

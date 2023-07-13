@@ -2,7 +2,7 @@
 <div class="mt-5">
     <div style="padding-left:30%; padding-top: 2%;padding-bottom: 2%;">
 
-        <form #pacienteForm="ngForm" class="formstyle" style="padding: 5%;">
+        <form #pacienteForm="ngForm" class="formstyle" style="padding: 5%;" #especialistaForm="ngForm">
             <h1>Formulario para Registrar un Especialista</h1>
 
             <div class="mb-3">
@@ -66,7 +66,7 @@
 
 
             <button *ngIf="accion=='new'" type="submit" class="btn btn-success"
-                (click)="guardarEspecialista()">Registrar
+                (click)="guardarEspecialista()" [disabled]="especialistaForm.invalid">Registrar
                 Especialista</button>
             <button *ngIf="accion=='update'" type="submit" class="btn btn-warning"
                 (click)="modificarEspecialista()">Modificar Especialista</button>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Especialista } from 'src/app/models/especialista';
 import { Paciente } from 'src/app/models/paciente';
 import { Turno } from 'src/app/models/turno';
@@ -17,7 +18,8 @@ export class TurnoFormComponent implements OnInit {
   especialistas:Array<Especialista>;
   accion: string="";
   pacientes:Array<Paciente>;
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private turnoService:TurnoService, private especialistaService:EspecialistaService, private pacienteService:PacienteService) {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private turnoService:TurnoService, 
+    private especialistaService:EspecialistaService, private pacienteService:PacienteService,private toastr:ToastrService) {
     this.turno = new Turno();
     this.especialistas = new Array<Especialista>();
     this.pacientes = new Array<Paciente>();
@@ -105,12 +107,12 @@ export class TurnoFormComponent implements OnInit {
     this.turnoService.createTurno(this.turno).subscribe(
       result => {
         if (result.status == 1) {
-          alert(result.msg);
+          this.toastr.success('Turno agregado correctamente','Turno Creado')
           this.router.navigate(["turnos-disponibles"])
         }
       },
       error => {
-        alert(error.msg);
+        this.toastr.warning(error)
       }
     )
   }
@@ -119,12 +121,12 @@ export class TurnoFormComponent implements OnInit {
     this.turnoService.editTurno(this.turno).subscribe(
       result => {
         if (result.status == 1) {
-          alert(result.msg);
+          this.toastr.success('Turno modificado correctamente','Turno Modificado')
           this.router.navigate(["turno"])
         }
       },
       error => {
-        alert(error.msg);
+        this.toastr.warning(error)
       }
     )
   }
