@@ -23,7 +23,7 @@
       </a>
       <ul class="dropdown">
         <li><a class="dropdown-item" [routerLink]="'turno-form/0'">Formulario para Turnos</a></li>
-        <li><a class="dropdown-item" [routerLink]="'turno'">Listado de Turnos</a></li>
+        <li><a class="dropdown-item" [routerLink]="'/turno'">Listado de Turnos</a></li>
       </ul>
     </li>
 
@@ -61,10 +61,10 @@
 
   </ul>
   <div class="nav-icons">
-    <a routerLink="/login" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !bothLogin ">Login</a>
-    <a (click)="logOutComponent()" class="login" *ngIf="loginService.userLoggedIn() && !bothLogin">User:{{loginService.userLogged()}} LogOut1</a>
-    <a (click)="logoutGoogle()" class="login" *ngIf="esLoggedGoogle()  && !bothLogin">User:{{loginService.userLoggedGoogle()}} LogOut2</a>
-      <a (click)="bothLogOut()" class="login" *ngIf="bothLogin">User:{{loginService.userLoggedGoogle()}} LogOut3</a>
+    <a routerLink="/login" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !esAmbas() ">Login</a>
+    <a (click)="logOutComponent()" class="login" *ngIf="loginService.userLoggedIn() && !esAmbas()">User:{{loginService.userLogged()}} LogOut1</a>
+    <a (click)="logoutGoogle()" class="login" *ngIf="esLoggedGoogle()  && !esAmbas()">User:{{loginService.userLoggedGoogle()}} LogOut2</a>
+      <a (click)="bothLogOut()" class="login" *ngIf="esAmbas()">User:{{loginService.userLoggedGoogle()}} LogOut3</a>
     <button id="menu-icon" class="menu-icon" #menuIcon (click)="toggleMenu()"><i class='bx bx-menu'></i></button>
   </div>
 

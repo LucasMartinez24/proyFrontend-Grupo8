@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router, ActivatedRouteSnapshot } from '@
 import { Subscription, filter } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { VigilanteGuard } from 'src/app/vigilante.guard';
+import { GooService } from 'src/app/services/goo.service';
 
 @Component({
   selector: 'app-menu',
@@ -18,12 +19,13 @@ export class MenuComponent implements OnInit{
   logout() {
     this.loginService.logout();
   }
-  cont!:number;
+  cont:number=0;
   googleCoincidence: boolean = false;
   stickyHeader = false;
+  loggedInGoogle!:boolean
   activo: boolean = false;
   execOnce: boolean = false;
-  bothLogin:boolean=false;
+  public bothLogin:boolean=false;
   isUserVerified!:boolean;
   activeRoute: string = '';
   //NAVBAR
@@ -39,9 +41,9 @@ export class MenuComponent implements OnInit{
     private readonly oAuthService: OAuthService,
     public loginService: LoginService,
     private router: Router,
-    private http: HttpClient,
     private esAdmin:VigilanteGuard,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute:ActivatedRoute,
+    private googleService: GooService
   ) {
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -51,82 +53,31 @@ export class MenuComponent implements OnInit{
   }
   ngOnInit(): void {
     this.isUserVerified = this.loginService.getUserStatus();
-
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.activeRoute = event.url;
         console.log(this.activeRoute)
       }
     });
-    if(!this.execOnce){
-    this.loginGmailLocal();
+    console.log(this.execOnce)
+    console.log(this.cont)
+    if(this.cont ==0 || !this.execOnce){
+      this.cont=1;
+      this.execOnce = true;
+      console.log(this.cont + ' CONTADOR')
+      //window.location.reload()
     }
     //this.googledCheck();
     console.log(this.esLoggedGoogle());
     console.log(this.bothLogin);
     console.log(this.loginService.userLoggedIn())
   }
-  public loginGmailLocal(){
-    let email = this.loginService.getEmailGoogle()
-    console.log(email)
-    if(email!=null){
-      this.loginService.loginEmailGoogle(email).subscribe(
-        result=>{
-          this.googleCoincidence=true
-          console.log(result)
-          if(result.status === 487){
-            console.log(result.usuario.dni)
-            //guardamos el user en cookies en el cliente
-            sessionStorage.setItem("usuario", JSON.stringify(result));
-            sessionStorage.setItem("token", result.token);
-            sessionStorage.setItem("user", result.username);
-            sessionStorage.setItem("userid", result.userid);
-            sessionStorage.setItem("userDni",result.usuario.dni);
-            sessionStorage.setItem("rol", JSON.stringify(result.rol));
-            this.bothLogin = true;
-            this.googleCoincidence = true;
-            console.log(this.googleCoincidence)
-            console.log(this.bothLogin);
-            console.log(sessionStorage.getItem("rol"));
-            this.execOnce = true;
-            if(!this.googleCoincidence){
-            window.location.reload();
-            }
-          }
-        },
-        error=>{
-          this.googleCoincidence = true;
-          console.log(error)
-          console.log(this.googleCoincidence)
-          if(error.status === 487){
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-            console.log(error.error.usuario)
-            //guardamos el user en cookies en el cliente
-            sessionStorage.setItem("usuario", JSON.stringify(error.error.usuario));
-            let user = error.error.usuario;
-            sessionStorage.setItem("token", user.token);
-            sessionStorage.setItem("user", user.username);
-            sessionStorage.setItem("userid", user.userid);
-            sessionStorage.setItem("userDni", user.dni);
-            sessionStorage.setItem("rol", JSON.stringify(user.rol));
-            this.bothLogin = true;
-            console.log(this.googleCoincidence)
-            console.log(this.bothLogin);
-            console.log(sessionStorage.getItem("rol"));
-            console.log(sessionStorage.getItem("rol"));
-            this.execOnce = true;
-            console.log(this.execOnce + ' 121231231321')
-            if(!this.googleCoincidence){
-            window.location.reload();
-            }
-          }
-        }
-      )
-    }
-  }
   esLoggedGoogle(){
     return this.loginService.userLoggedInGoogle();
 
+  }
+  esAmbas(){
+    return this.googleService.bothLogin()
   }
   esAdministrador(){
     return this.loginService.esAdmin();

@@ -2,7 +2,7 @@
     <div class="form-container sign-in-container">
         <!--FORM-->
         <form class="">
-            <h1 class=" mb-4">Iniciar Sesión</h1>
+            <h1 class=" mb-4 mt-1">Iniciar Sesión</h1>
             <div class="mb-3">
                 <label for="username">Nombre de Usuario o Email</label>
                 <input type="text" class="form-control" name="username" [(ngModel)]="userform.username" />
@@ -18,7 +18,7 @@
             </button>
             <button (click)="signup()" class="btnRegistrarse">Registrarse</button>
             <div class="link">
-                <a [routerLink]="'/reset/0'">¿No recuerda su contraseña?</a>
+                <a class="mb-1" [routerLink]="'/reset/0'">¿No recuerda su contraseña?</a>
             </div>
         </form>
         <!--FORM-->
