@@ -58,7 +58,7 @@
         <tbody>
             <tr *ngFor="let t of misTurnos">
                 <th scope="row">{{t._id}}</th>
-                <td>{{t.paciente.apellido}},{{t.paciente.nombre}}</td>
+                <td>{{t.paciente?.apellido}},{{t.paciente?.nombre}}</td>
                 <td>{{t.especialista.apellido}},{{t.especialista.nombre}} - {{t.especialista.profesion}}</td>
                 <td>{{t.fecha | date: 'dd/MM/yyyy'}}</td>
                 <td>{{t.hora}}</td>

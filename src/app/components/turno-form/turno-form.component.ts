@@ -15,15 +15,15 @@ import { TurnoService } from 'src/app/services/turno.service';
 })
 export class TurnoFormComponent implements OnInit {
   turno: Turno;
-  especialistas:Array<Especialista>;
-  accion: string="";
-  pacientes:Array<Paciente>;
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private turnoService:TurnoService, 
-    private especialistaService:EspecialistaService, private pacienteService:PacienteService,private toastr:ToastrService) {
+  especialistas: Array<Especialista>;
+  accion: string = "";
+  pacientes: Array<Paciente>;
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private turnoService: TurnoService,
+    private especialistaService: EspecialistaService, private pacienteService: PacienteService, private toastr: ToastrService) {
     this.turno = new Turno();
     this.especialistas = new Array<Especialista>();
     this.pacientes = new Array<Paciente>();
-   }
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(
@@ -61,7 +61,7 @@ export class TurnoFormComponent implements OnInit {
     )
   }
 
-  cargarPacientes(){
+  cargarPacientes() {
     this.pacienteService.getPacientes().subscribe(
       result => {
         let unEspectador = new Paciente();
@@ -83,7 +83,7 @@ export class TurnoFormComponent implements OnInit {
       (result) => {
         Object.assign(this.turno, result); //en paciente va a tener null
         this.turno.especialista = this.especialistas.find((item) => (item._id == this.turno.especialista._id))!;
-        this.turno.paciente = this.pacientes.find((item) => (item._id == this.turno.paciente._id))!;
+        this.turno.paciente = this.pacientes.find((item) => (item._id == this.turno.paciente?._id))!;
       },
       error => {
         console.log(error);
@@ -92,17 +92,10 @@ export class TurnoFormComponent implements OnInit {
   }
 
   guardarTurno() {
+
+    this.turno.paciente = null;
+
     console.log(this.turno);
-
-    // this.turno.paciente={
-    //   nombre: "",
-    //   apellido: "",
-    //   dni: "",
-    //   _id: "",
-    //   fechaNac:""
-    // };
-
-    this.turno.paciente;
 
     this.turnoService.createTurno(this.turno).subscribe(
       result => {
@@ -121,7 +114,7 @@ export class TurnoFormComponent implements OnInit {
     this.turnoService.editTurno(this.turno).subscribe(
       result => {
         if (result.status == 1) {
-          this.toastr.success('Turno modificado correctamente','Turno Modificado')
+          this.toastr.success('Turno modificado correctamente', 'Turno Modificado')
           this.router.navigate(["turno"])
         }
       },
