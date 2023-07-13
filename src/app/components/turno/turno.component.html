@@ -18,7 +18,7 @@
         <tbody>
             <tr *ngFor="let t of turnos">
                 <th scope="row">{{t._id}}</th>
-                <td>{{t.paciente.apellido}},{{t.paciente.nombre}}</td>
+                <td>{{t.paciente?.apellido}},{{t.paciente?.nombre}}</td>
                 <td>{{t.especialista.apellido}},{{t.especialista.nombre}} - {{t.especialista.profesion}}</td>
                 <td>{{t.fecha | date: 'dd/MM/yyyy'}}</td>
                 <td>{{t.hora}}</td>
@@ -31,6 +31,10 @@
             </tr>
         </tbody>
     </table>
+
+    <!-- <div *ngIf="hayTurnos==false" class="mt-5">
+        <h2 class="bg-danger p-2 text-white text-center ">NO HAY TURNOS DISPONIBLES POR EL MOMENTO</h2>
+    </div> -->
 
 </div>
 

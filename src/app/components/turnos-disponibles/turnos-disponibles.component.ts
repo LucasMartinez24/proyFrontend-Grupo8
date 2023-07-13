@@ -78,15 +78,16 @@ export class TurnosDisponiblesComponent implements OnInit {
   async reservarTurno(turno: Turno) {
     this.turno = turno;
 
-    //console.log("TURNO INICIAL:",this.turno)
+    console.log("TURNO INICIAL:",this.turno)
     const pacienteString = this.loginService.getUser();
+    
     let paciente = null;
 
     if (pacienteString !== null) {
       paciente = JSON.parse(pacienteString);
     }
 
-    //console.log("PACIENTE en sesion:",paciente)
+    console.log("PACIENTE en sesion:",paciente)
 
     try {
       const result: any = await this.pacienteService.getPacienteDni(paciente.usuario.dni).toPromise();
@@ -109,7 +110,8 @@ export class TurnosDisponiblesComponent implements OnInit {
               // if(paciente.rol.descripcion == "paciente"){
               //   this.router.navigate(["/home"])
               // }else{
-                this.router.navigate(["/turno"])
+                //this.router.navigate(["/turnos-disponibles"])
+                window.location.reload();
               //}
 
             }

@@ -5,7 +5,7 @@ export class Turno {
     _id!: string;
     fecha!:string;
     hora!:string;
-    paciente: Paciente = new Paciente();
+    paciente: Paciente | null = null;
     especialista: Especialista=new Especialista();
     estado!:string;
 }
