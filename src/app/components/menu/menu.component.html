@@ -62,9 +62,9 @@
   </ul>
   <div class="nav-icons">
     <a routerLink="/login" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !bothLogin ">Login</a>
-    <a (click)="logOutComponent()" class="login" *ngIf="loginService.userLoggedIn() && !bothLogin">User:{{loginService.userLogged()}} LogOut</a>
-    <a (click)="logoutGoogle()" class="login" *ngIf="esLoggedGoogle()  && !bothLogin">User:{{loginService.userLoggedGoogle()}} LogOut</a>
-      <a (click)="bothLogOut()" class="login" *ngIf="bothLogin">User:{{loginService.userLoggedGoogle()}} LogOut</a>
+    <a (click)="logOutComponent()" class="login" *ngIf="loginService.userLoggedIn() && !bothLogin">User:{{loginService.userLogged()}} LogOut1</a>
+    <a (click)="logoutGoogle()" class="login" *ngIf="esLoggedGoogle()  && !bothLogin">User:{{loginService.userLoggedGoogle()}} LogOut2</a>
+      <a (click)="bothLogOut()" class="login" *ngIf="bothLogin">User:{{loginService.userLoggedGoogle()}} LogOut3</a>
     <button id="menu-icon" class="menu-icon" #menuIcon (click)="toggleMenu()"><i class='bx bx-menu'></i></button>
   </div>
 

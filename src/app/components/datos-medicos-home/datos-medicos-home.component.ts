@@ -116,17 +116,6 @@ export class DatosMedicosHomeComponent implements OnInit {
   seeData(data:DatosMedicos){
     this.datoMedicoVer = data
   }
-  // searchPacienteObj(){
-  //   this.datosMedicosService.getDatosMedicosId(this.datoMedicoReciente.paciente).subscribe(
-  //     result=>{
-  //       console.log(result)
-  //       this.datoMedicoReciente.pacienteObj = result
-  //     },
-  //     error=>{
-  //       console.log(error)
-  //     }
-  //   )
-  // }
   excelTable(){
     const workbook = new ExcelJS.Workbook();
     const creat = workbook.creator = ('Centro de Salud');

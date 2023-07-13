@@ -1,11 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Rol } from 'src/app/models/rol';
 import { Usuario } from 'src/app/models/usuario';
 import { LoginService } from 'src/app/services/login.service';
 import { HomeComponent } from '../home/home.component';
 import { LoginComponent } from '../login/login.component';
+import { PacienteService } from 'src/app/services/paciente.service';
+import { Paciente } from 'src/app/models/paciente';
+import { error } from 'console';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +20,12 @@ import { LoginComponent } from '../login/login.component';
 export class SignupComponent implements OnInit {
   usuario!:Usuario;
   roles!:Array<Rol>;
+  fechaBoolean!:boolean;
+  emailBoolean!:boolean;
   returnUrl!:string;
+  fecha!:string;
+  nombre!:string;
+  apellido!:string;
   returnUrlLogin!:string
   modifica:boolean=false;
   repeatedEmail!:boolean;
@@ -24,11 +33,16 @@ export class SignupComponent implements OnInit {
   loadPassword:boolean=false;
   loadEmail:boolean=false;
   loadUsername:boolean=false;
+  paciente!:Paciente;
+  fechaActual!:string;
   id:string=""
   selectedRole!:Rol
-  constructor(private usuarioService:LoginService, private activatedRoute:ActivatedRoute, private route:Router) { 
+  constructor(private usuarioService:LoginService, private activatedRoute:ActivatedRoute, private route:Router, private toastr:ToastrService,
+    private pacienteService:PacienteService) { 
+    this.paciente = new Paciente();
     this.usuario = new Usuario();
     this.roles = new Array<Rol>();
+    this.fechaActual = String(new Date().toLocaleDateString('es-ar'));
   }
   ngOnInit(): void {
     this.getRoles()
@@ -70,49 +84,92 @@ export class SignupComponent implements OnInit {
   onChangeOptions(rol:Rol){
     console.log(rol._id)
   }
-  createUser(){
-    console.log(this.usuario.rol.descripcion +  '  '+ JSON.stringify(this.usuario.rol))
-    if(!this.esAdministrador()){
-      this.usuario.rol._id = '649de3a7583b9ab931caaa6c'
+  verificarTexto() {
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,9}$/;
+    if (emailRegex.test(this.usuario.email)) {
+      console.log('El texto ingresado corresponde a un email');
+      this.emailBoolean=true;
+    } else {
+      console.log('El texto ingresado corresponde a un texto normal');
+      this.emailBoolean=false;
     }
-    this.usuarioService.signUp(this.usuario.username, this.usuario.password, this.usuario.email, this.usuario.rol._id, this.usuario.dni).subscribe(
-      result=>{
-        console.log(result);
-        alert('Registrado correctamente')
-        this.login();
-      },
-      error=>{
-        console.log(error);
-        if (error.error.message === 'Este email ya está en uso') {
-          console.log("Este email ya fue registrado");
-          this.usuario.email="";
-          this.usuario.password="";
-          this.usuario.dni=""
-          this.repeatedEmail=true;
-          [this.loadPassword, this.loadEmail] = [true, true];
-        }
-        if (error.error.message === 'Este nombre de usuario ya está en uso') {
-          console.log("Este nombre de usuario ya fue registrado");
-          this.usuario.username="";
-          this.usuario.password="";
-          this.usuario.dni=""
-          this.repeatedUsername=true;
-          [this.loadPassword, this.loadUsername] = [true, true];
-        }
-        if (error.status==448) {
-          console.log("Tanto el email como el nombre de usuario ya estan registrados");
-          this.usuario.email="";
-          this.usuario.username="";
-          this.usuario.password="";
-          this.usuario.dni=""
-          this.repeatedEmail=true;
-          this.repeatedUsername=true;
-          [this.loadPassword, this.loadEmail, this.loadUsername] = [true, true, true];
-
-        }
-      }
-    )
   }
+  comprobarFecha():boolean{
+    const fechaActualObj = new Date(this.fechaActual);
+    const fechaIngresadaObj = new Date(this.fecha);
+    console.log("Estableci fechas")
+    if (fechaIngresadaObj <= fechaActualObj) {
+      console.log("Mayor")
+      this.fechaBoolean = true
+      return true;
+    } else {
+      console.log("Menor")
+      this.fechaBoolean = false
+      return false
+    }
+  }
+  createUser(){
+    this.comprobarFecha();
+  if(!this.emailBoolean){
+    this.toastr.error("El email que ingreso no se corresponde con el formato requerido")
+  }else{
+  if(this.fechaBoolean){
+    this.toastr.error("No se puede ingresar una fecha de nacimiento mayor a la fecha actual")
+  }else{
+  console.log(this.usuario.rol.descripcion +  '  '+ JSON.stringify(this.usuario.rol))
+  if(!this.esAdministrador()){
+    this.usuario.rol._id = '649de3a7583b9ab931caaa6c'
+  }
+  this.usuarioService.signUp(this.usuario.username, this.usuario.password, this.usuario.email, this.usuario.rol._id, this.usuario.dni).subscribe(
+    result=>{
+      console.log(result);
+      this.paciente.apellido = this.apellido; this.paciente.dni = this.usuario.dni
+      this.paciente.nombre = this.nombre; this.paciente.fechaNac = this.fecha
+      this.pacienteService.createPaciente(this.paciente).subscribe(
+        result=>{
+          console.log(result)
+        },
+        error=>{
+          console.log(error)
+        }
+      )
+      this.toastr.success('Registrado correctamente')
+      this.login();
+    },
+    error=>{
+      console.log(error);
+      if (error.error.message === 'Este email ya está en uso') {
+        console.log("Este email ya fue registrado");
+        this.usuario.email="";
+        this.usuario.password="";
+        this.usuario.dni=""
+        this.repeatedEmail=true;
+        [this.loadPassword, this.loadEmail] = [true, true];
+      }
+      if (error.error.message === 'Este nombre de usuario ya está en uso') {
+        console.log("Este nombre de usuario ya fue registrado");
+        this.usuario.username="";
+        this.usuario.password="";
+        this.usuario.dni=""
+        this.repeatedUsername=true;
+        [this.loadPassword, this.loadUsername] = [true, true];
+      }
+      if (error.status==448) {
+        console.log("Tanto el email como el nombre de usuario ya estan registrados");
+        this.usuario.email="";
+        this.usuario.username="";
+        this.usuario.password="";
+        this.usuario.dni=""
+        this.repeatedEmail=true;
+        this.repeatedUsername=true;
+        [this.loadPassword, this.loadEmail, this.loadUsername] = [true, true, true];
+
+      }
+    }
+  )
+  }
+}
+}
   login() {
     this.usuarioService.login(this.usuario.username, this.usuario.password)
       .subscribe(
@@ -131,7 +188,7 @@ export class SignupComponent implements OnInit {
           }
         },
         error => {
-          alert("Error de conexion");
+          this.toastr.error("Error de conexion");
           console.log("error en conexion");
           console.log(error);
         });
@@ -140,11 +197,11 @@ export class SignupComponent implements OnInit {
     this.usuarioService.signUp(this.usuario.username, this.usuario.password, this.usuario.email, this.usuario.rol._id, this.usuario.dni).subscribe(
       result=>{
         console.log(result);
-        alert('Registrado correctamente')
+        this.toastr.success('Registrado correctamente')
       },
       error=>{
         console.log(error);
-        alert('No pudo ser registrado')
+        this.toastr.error('No pudo ser registrado')
       }
     )
   }

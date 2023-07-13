@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { error } from 'console';
+//import { error } from 'console';
 import { Contacto } from 'src/app/models/contacto';
 import { ContactoService } from 'src/app/services/contacto.service';
 

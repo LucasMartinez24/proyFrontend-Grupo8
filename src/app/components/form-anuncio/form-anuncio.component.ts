@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { error } from 'console';
-import { url } from 'inspector';
+//import { error } from 'console';
+//import { url } from 'inspector';
 import { Anuncio } from 'src/app/models/anuncio';
 import { Recurso } from 'src/app/models/recurso';
 import { AnuncioService } from 'src/app/services/anuncio.service';

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { DatosMedicos } from 'src/app/models/datos-medicos';
 import { Paciente } from 'src/app/models/paciente';
 import { DatosMedicosServiceService } from 'src/app/services/datos-medicos-service.service';
@@ -20,6 +21,7 @@ export class DatosmedicosFormComponent implements OnInit{
   filterText: string = '';
   myDropDown!: string;
   modifica!:boolean
+  existOther:boolean = false
   filtroPacientes!:string;
   latestMedicalData!:DatosMedicos;
   asign:boolean=false;
@@ -27,7 +29,7 @@ export class DatosmedicosFormComponent implements OnInit{
   pacientesFiltrados: any[] = [];
   @ViewChild('selectList', { static: false }) selectList!: ElementRef;
   constructor(private pacienteService:PacienteService, private datosMedicosService: DatosMedicosServiceService, 
-    private activatedRoute: ActivatedRoute, private router:Router){
+    private activatedRoute: ActivatedRoute, private router:Router,private toastr:ToastrService){
   this.datosMedicos = new Array<DatosMedicos>();
   this.datoMedico = new DatosMedicos();
   this.latestMedicalData = new DatosMedicos();
@@ -60,6 +62,7 @@ export class DatosmedicosFormComponent implements OnInit{
   isSelected(){
     console.log(this.datoMedico.paciente)
     let cont:number=0;
+    this.selectedPaciente = false
     if(this.datoMedico.paciente != '' && !this.selectedPaciente && cont===0){
       console.log('AAAAAAAAAAAAAAAAAAAAAAa')
       this.selectedPaciente = true
@@ -139,9 +142,16 @@ export class DatosmedicosFormComponent implements OnInit{
             console.log(result);
             console.log(this.datoMedico);
             this.latestMedicalData = result[0];
+            if(result.length === 0){
+              console.log(result.length + ' Entro condicional')
+              this.existOther= false
+            }else{
+              this.existOther = true
+            }
           },
           error => {
             console.log(error);
+            this.existOther = false
           }
         );
       }, 0);
@@ -151,6 +161,7 @@ export class DatosmedicosFormComponent implements OnInit{
   }
   asignLatest(){
     this.datoMedico = this.latestMedicalData
+    this.datoMedico.fecha = String(new Date().toLocaleDateString('es-ar'));
   }
   
   addMedicalData() {
@@ -162,14 +173,14 @@ export class DatosmedicosFormComponent implements OnInit{
       result=>{
         if(result.status == 1){
           this.datoMedico.idDatoMedico = result._id;
-          alert('Guardado correctamente');
-          this.router.navigate(["home"]);
+          this.toastr.success('Control medico eliminado correctamente')
+          this.router.navigate(["/datosMedicos"]);
         } else {
-          alert(result)
+          this.toastr.success(result)
         }
       },
       error => {
-        alert(error)
+        this.toastr.error(error)
       }
     )
 }
@@ -181,14 +192,14 @@ export class DatosmedicosFormComponent implements OnInit{
       this.datoMedico.diagnostico).subscribe(
       result=>{
         if(result.status == 1){
-          alert('Editado Correctamente')
-          this.router.navigate(["home"]);
+          this.toastr.success('Editado Correctamente')
+          this.router.navigate(["/datosMedicos"]);
         }else{
-          alert(result)
+          this.toastr.success(result)
         }
       },
       error=>{
-        alert(error)
+        this.toastr.error(error)
       }
     )
   }
