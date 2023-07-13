@@ -1,0 +1,14 @@
+.container{
+    margin-top: 15vh;
+}
+.btnAgregar{
+    margin-top: 2%;
+    padding: 0.8%;
+    border: #3da9b8 0.1em solid;
+    border-radius: 12px;
+    background-color: #3da9b8;
+    font-weight: 600;
+    color: #fefeff;
+    text-decoration: none;
+    cursor: pointer;
+}
