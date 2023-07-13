@@ -23,7 +23,7 @@ export class VigilanteGuard implements CanActivate {
     if(scopes.includes(route.data["rol"])){
       return true;
     }else{
-      alert("no tienes lo permisos para acceder a esta seccion")
+      //alert("no tienes lo permisos para acceder a esta seccion")
       this.router.navigate(["/home"])
       return false;
     }

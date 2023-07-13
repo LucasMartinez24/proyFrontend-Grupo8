@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Paciente } from 'src/app/models/paciente';
 import { Turno } from 'src/app/models/turno';
 import { LoginService } from 'src/app/services/login.service';
@@ -14,27 +15,44 @@ import { TurnoService } from 'src/app/services/turno.service';
 export class TurnosDisponiblesComponent implements OnInit {
   turnos: Array<Turno>;
   turno: Turno = new Turno();
+  hayTurnos:boolean=true;
+  misTurnos: Array<Turno>;
+  tengoTurnos:boolean=true;
 
-  constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService) {
+  constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService,private toastr:ToastrService) {
     this.turnos = new Array<Turno>();
+    this.misTurnos = new Array<Turno>();
     this.obtenerTurnos();
+    this.obtenerMisTurnos();
   }
 
   ngOnInit(): void {
   }
 
+  esAdmin(){
+    if(this.loginService.esAdmin()==true){
+      return true;
+    }
+    return false;
+  }
+
   obtenerTurnos() {
     this.turnoService.getTurnosDisponibles().subscribe(
       result => {
-        let unTicket = new Turno();
-        result.forEach((element: any) => {
-          Object.assign(unTicket, element);
-          this.turnos.push(unTicket);
-          unTicket = new Turno();
-        });
+        console.log(result);
+        if(result.length==0){
+          this.hayTurnos=false;
+        }else{
+          let unTicket = new Turno();
+          result.forEach((element: any) => {
+            Object.assign(unTicket, element);
+            this.turnos.push(unTicket);
+            unTicket = new Turno();
+          });
+        }
       },
       error => {
-        console.log(error);
+        this.toastr.warning(error)
       }
     )
   }
@@ -48,7 +66,7 @@ export class TurnosDisponiblesComponent implements OnInit {
         }
       },
       error => {
-        alert(error.msg);
+        this.toastr.warning(error)
       }
     )
   }
@@ -86,7 +104,7 @@ export class TurnosDisponiblesComponent implements OnInit {
         this.turnoService.editTurno(this.turno).subscribe(
           result => {
             if (result.status == 1) {
-              alert(result.msg);
+              this.toastr.success('Turno reservado correctamente','Turno reservado')
 
               // if(paciente.rol.descripcion == "paciente"){
               //   this.router.navigate(["/home"])
@@ -97,7 +115,7 @@ export class TurnosDisponiblesComponent implements OnInit {
             }
           },
           error => {
-            alert(error.msg);
+            this.toastr.warning(error)
           }
         )
       }
@@ -108,5 +126,37 @@ export class TurnosDisponiblesComponent implements OnInit {
     }
 
   }
+
+  obtenerMisTurnos() {
+    this.misTurnos = new Array<Turno>();
+    const pacienteString = this.loginService.getUser();
+    let paciente = null;
+
+    if (pacienteString !== null) {
+      paciente = JSON.parse(pacienteString);
+    }
+
+    this.turnoService.getMisTurnos(paciente.usuario.dni).subscribe(
+      (result)=>{
+
+        if(result.length==0){
+          this.tengoTurnos=false;
+        }else{
+          let unTurno = new Turno();
+
+          result.forEach((element: any) => {
+  
+            if (element.paciente != null) {
+              Object.assign(unTurno, element);
+              this.misTurnos.push(unTurno);
+              unTurno = new Turno();
+            }
+  
+          });
+        }
+        
+      }
+    )
+}
 
 }
