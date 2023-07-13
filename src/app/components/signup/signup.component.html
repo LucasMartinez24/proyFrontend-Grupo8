@@ -1,7 +1,7 @@
 
 <div class="container" id="container">
-    <div class="form-container sign-in-container">
-<form  #signUpForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-container sign-in-container" >
+<form  #signUpForm="ngForm" (ngSubmit)="onSubmit()"  #signupForm="ngForm">
     <div class="mb-3 ms-2">
         <h1 class="text-center p-2" *ngIf="esAdministrador()">Registrar un usuario</h1>
         <h1 class="text-center p-2" *ngIf="!esAdministrador()">Registrarse</h1>

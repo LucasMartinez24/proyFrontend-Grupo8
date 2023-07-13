@@ -65,7 +65,7 @@
       </div>
 
           
-        <button *ngIf="accion=='new'" type="submit" class="btn btn-success" (click)="guardarPaciente()">Registrar Paciente</button>
+        <button *ngIf="accion=='new'" type="submit" class="btn btn-success" (click)="guardarPaciente()" [disabled]="pacienteForm.invalid">Registrar Paciente</button>
           <button *ngIf="accion=='update'" type="submit" class="btn btn-warning" (click)="modificarPaciente()">Modificar Paciente</button>  
           <button type="submit" class="btn btn-danger ms-2" (click)="cancelar()">Cancelar</button>         
     </form>
