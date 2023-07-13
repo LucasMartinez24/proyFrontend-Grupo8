@@ -7,11 +7,11 @@
         <thead class="table-dark">
             <tr>
                 <th scope="col">IDTURNO</th>
-                <th scope="col">PACIENTE</th>
-                <th scope="col">ESPECIALISTA</th>
-                <th scope="col">FECHA</th>
-                <th scope="col">HORA</th>
-                <th scope="col">ESTADO DEL TURNO</th>
+                <th scope="col">Paciente</th>
+                <th scope="col">Especialista</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Hora</th>
+                <th scope="col">Estado del turno</th>
                 <th scope="col">Operaciones</th>
             </tr>
         </thead>
@@ -23,10 +23,10 @@
                 <td>{{t.fecha | date: 'dd/MM/yyyy'}}</td>
                 <td>{{t.hora}}</td>
                 <td>{{t.estado}}</td>
-                <td>
+                <td  class="d-flex justify-content-around">
                     <!-- <button type="button" class="btn btn-primary" (click)="modificarTurno(t)">RESERVAR TURNO</button> -->
-                    <button type="button" class="btn btn-warning" (click)="modificarTurno(t)">MODIFICAR TURNO</button>
-                    <button type="button" class="btn btn-danger" (click)="eliminarTurno(t)">ELIMINAR TURNO</button>
+                    <button type="button" class="btn btn-warning" (click)="modificarTurno(t)">Modificar</button>
+                    <button type="button" class="btn btn-danger" (click)="eliminarTurno(t)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
