@@ -18,8 +18,11 @@ export class MenuComponent implements OnInit{
   logout() {
     this.loginService.logout();
   }
+  cont!:number;
+  googleCoincidence: boolean = false;
   stickyHeader = false;
   activo: boolean = false;
+  execOnce: boolean = false;
   bothLogin:boolean=false;
   isUserVerified!:boolean;
   activeRoute: string = '';
@@ -55,19 +58,21 @@ export class MenuComponent implements OnInit{
         console.log(this.activeRoute)
       }
     });
-
-
+    if(!this.execOnce){
     this.loginGmailLocal();
+    }
+    //this.googledCheck();
     console.log(this.esLoggedGoogle());
     console.log(this.bothLogin);
     console.log(this.loginService.userLoggedIn())
   }
-  loginGmailLocal(){
+  public loginGmailLocal(){
     let email = this.loginService.getEmailGoogle()
     console.log(email)
     if(email!=null){
       this.loginService.loginEmailGoogle(email).subscribe(
         result=>{
+          this.googleCoincidence=true
           console.log(result)
           if(result.status === 487){
             console.log(result.usuario.dni)
@@ -78,13 +83,21 @@ export class MenuComponent implements OnInit{
             sessionStorage.setItem("userid", result.userid);
             sessionStorage.setItem("userDni",result.usuario.dni);
             sessionStorage.setItem("rol", JSON.stringify(result.rol));
-            this.bothLogin = true
+            this.bothLogin = true;
+            this.googleCoincidence = true;
+            console.log(this.googleCoincidence)
             console.log(this.bothLogin);
             console.log(sessionStorage.getItem("rol"));
+            this.execOnce = true;
+            if(!this.googleCoincidence){
+            window.location.reload();
+            }
           }
         },
         error=>{
+          this.googleCoincidence = true;
           console.log(error)
+          console.log(this.googleCoincidence)
           if(error.status === 487){
             console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
             console.log(error.error.usuario)
@@ -97,12 +110,15 @@ export class MenuComponent implements OnInit{
             sessionStorage.setItem("userDni", user.dni);
             sessionStorage.setItem("rol", JSON.stringify(user.rol));
             this.bothLogin = true;
+            console.log(this.googleCoincidence)
             console.log(this.bothLogin);
             console.log(sessionStorage.getItem("rol"));
-            if(sessionStorage.getItem("rol") === "649de387583b9ab931caaa68"){
-              sessionStorage.setItem("rol", "administrador")
-            }
             console.log(sessionStorage.getItem("rol"));
+            this.execOnce = true;
+            console.log(this.execOnce + ' 121231231321')
+            if(!this.googleCoincidence){
+            window.location.reload();
+            }
           }
         }
       )
@@ -125,11 +141,14 @@ export class MenuComponent implements OnInit{
     this.logout()
     this.router.navigate(['/home'])
   }
-  logoutGoogle(){
+  logoutGoogle() {
+    this.googleCoincidence = false;
+    this.execOnce = false;
     this.oAuthService.logOut();
-    sessionStorage.clear()
-    this.router.navigate(['/home'])
+    sessionStorage.clear();
+    this.router.navigate(['/home']);
   }
+  
   ngOnDestroy() {
     this.routerSubscription.unsubscribe();
   }
@@ -150,12 +169,14 @@ export class MenuComponent implements OnInit{
     }
   }
 
-  bothLogOut(){
-  this.logout();
-  console.log("primer logout")
-  this.logoutGoogle();
-  this.bothLogin = false;
-  console.log("Segundo logout")
+  bothLogOut() {
+    this.googleCoincidence = false;
+    this.logout();
+    this.execOnce = false;
+    console.log("primer logout");
+    this.logoutGoogle();
+    this.bothLogin = false;
+    console.log("Segundo logout");
   }
   resetClasses() {
     const iconElement = document.querySelector('i');

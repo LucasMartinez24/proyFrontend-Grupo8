@@ -12,7 +12,7 @@
     </div>
     <div class="row g-1 justify-content-center mt-3">
         <div class="col-8">
-            <form class="mb-3">
+            <form class="mb-3" #anuncioForm="ngForm">
                 <div class="mb-3">
                     <label class="form-label">Ingrese titulo</label>
                     <input type="text" class="form-control" name="titulo" [(ngModel)]="anuncio.titulo" #titulo="ngModel" required>
@@ -51,7 +51,7 @@
                   </div>
               
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-lg"  (click)="guardar()" *ngIf="nextbutton=='guardar'"> Siguiente</button>
+                    <button type="button" class="btn btn-primary btn-lg"  (click)="guardar()" *ngIf="nextbutton=='guardar'" [disabled]="anuncioForm.invalid"> Siguiente</button>
                     <button type="button" class="btn btn-primary btn-lg"  (click)="modificarAnuncio1()" *ngIf="nextbutton=='modificar'"> Siguiente</button>
                     <button type="button" class="btn btn-primary btn-lg"  (click)="cancelarVolver()" *ngIf="can=='yes'"> Cancelar</button>
                 </div>
