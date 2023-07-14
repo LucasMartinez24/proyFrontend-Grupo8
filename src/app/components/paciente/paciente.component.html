@@ -26,11 +26,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let p of pacientes">
-                    <td>{{p.dni}}</td>
-                    <td>{{p.nombre}}</td>
-                    <td>{{p.apellido}}</td>
-                    <td>{{p.fechaNac}}</td>
-                    <td class="d-flex justify-content-around">
+                    <td data-label="Dni">{{p.dni}}</td>
+                    <td data-label="nombre">{{p.nombre}}</td>
+                    <td data-label="apellido">{{p.apellido}}</td>
+                    <td data-label="Fecha de Nacimiento">{{p.fechaNac}}</td>
+                    <td data-label="Operaciones" class="d-flex justify-content-around">
                         <button type="button" class="btn btn-warning" (click)="modificarPaciente(p)">Modificar</button>
                         <button type="button" class="btn btn-danger" (click)="eliminarPaciente(p)">Eliminar</button>
                         <button type="button" class="btn btn-primary" (click)="verControl(p)">Controles Medicos</button>

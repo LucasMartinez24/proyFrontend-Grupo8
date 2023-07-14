@@ -20,12 +20,12 @@
         </thead>
         <tbody>
             <tr *ngFor="let d of datosMedicos | search: searchText">
-                <td>{{d.motivo}}</td>
-                <td>{{d.pacienteObj.dni}}</td>
-                <td>{{d.pacienteObj.nombre + ' ' + d.pacienteObj.apellido}}</td>
-                <td>{{d.fecha}}</td>
-                <td>{{d.diagnostico}}</td>
-                <td class="d-flex justify-content-around">
+                <td data-label="Motivo">{{d.motivo}}</td>
+                <td data-label="Dni">{{d.pacienteObj.dni}}</td>
+                <td data-label="Paciente">{{d.pacienteObj.nombre + ' ' + d.pacienteObj.apellido}}</td>
+                <td data-label="Fecha">{{d.fecha}}</td>
+                <td data-label="diagnostico">{{d.diagnostico}}</td>
+                <td data-label="Operaciones" class="d-flex justify-content-around">
                     <button type="button" class="btn btn-warning" (click)="modificarDatoMedico(d)">Modificar</button>
                     <button type="button" class="btn btn-danger" (click)="eliminarDatoMedico(d)">Eliminar</button>
                     <button type="button" class="btn btn-primary" (click)="verControl(d.pacienteObj.dni)">Controles Medicos</button>
