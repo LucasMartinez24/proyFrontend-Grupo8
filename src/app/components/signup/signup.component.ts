@@ -89,9 +89,11 @@ export class SignupComponent implements OnInit {
     if (emailRegex.test(this.usuario.email)) {
       console.log('El texto ingresado corresponde a un email');
       this.emailBoolean=true;
+      console.log("a true")
     } else {
       console.log('El texto ingresado corresponde a un texto normal');
       this.emailBoolean=false;
+      console.log("a false")
     }
   }
   comprobarFecha():boolean{
@@ -109,6 +111,7 @@ export class SignupComponent implements OnInit {
     }
   }
   createUser(){
+    this.verificarTexto();
     this.comprobarFecha();
   if(!this.emailBoolean){
     this.toastr.error("El email que ingreso no se corresponde con el formato requerido")

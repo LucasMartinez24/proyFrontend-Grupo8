@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component'; //usado para el login
-import { MenuComponent } from './components/menu/menu.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 
@@ -47,6 +46,7 @@ import { ContactoComponent } from './components/contacto/contacto.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 import { TurnosDisponiblesComponent } from './components/turnos-disponibles/turnos-disponibles.component';
+import { NavComponent } from './components/nav/nav.component';
 
 //datatable
 //import { DataTablesModule } from "angular-datatables";
@@ -61,7 +61,6 @@ registerLocaleData(localeEsAr);
   declarations: [
     AppComponent,
     LoginComponent,
-    MenuComponent,
     FooterComponent,
     HomeComponent,
     PacienteComponent,
@@ -87,7 +86,8 @@ registerLocaleData(localeEsAr);
     CalendarclienteComponent,
 
     ContactoComponent,
-    TurnosDisponiblesComponent
+    TurnosDisponiblesComponent,
+    NavComponent
 
   ],
   imports:[
@@ -95,7 +95,7 @@ registerLocaleData(localeEsAr);
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    OAuthModule.forRoot(), 
+    OAuthModule.forRoot(),
     //DataTablesModule,
     //toast
     CommonModule,
@@ -105,7 +105,7 @@ registerLocaleData(localeEsAr);
       positionClass :'toast-bottom-right'
     }),
     // //datatable
-    // DataTablesModule 
+    // DataTablesModule
     NgxDocViewerModule
   ],
 

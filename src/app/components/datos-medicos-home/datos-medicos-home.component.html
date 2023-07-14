@@ -1,5 +1,4 @@
 
-<br><br><br>
 <div class="container ms-2 layout" *ngIf="!noData && !noPatient">
     <div class="section-left">
     <h1 class="title-leftSection mt-2 mb-2">Ultimo control medico</h1>
@@ -17,7 +16,7 @@
             <p class="card-text">IMC: {{' '+datoMedicoVer.imc}}</p>
             <hr class="mt-2 mb-2">
             <div class="descripcion">
-                <p >
+                <p class="text-diagnostico">
                     {{datoMedicoVer.diagnostico}}
                 </p>
             </div>
@@ -66,13 +65,14 @@
                     <td>{{d.fecha}}</td>
                     <td>{{d.diagnostico}}</td>
                     <td>
-                        <button type="button" class="btn btn-warning" (click)="seeData(d)">Ver control</button>
+                        <button type="button" class="btnDetalle" (click)="seeData(d)">Ver control</button>
                     </td>
                 </tr>
             </tbody>
         </table>
         <h4 class="ms-4 mt-4 caution" *ngIf="!moreThan1">No existen otros registros de este paciente</h4>
         <button class="btnExcel" (click)="excelTable()">Descargar Excel <i class='bx bx-table bx-flip-horizontal'></i></button>
+        <button class="btnPdf" (click)="imprimirPdf()">Imprimir PDF<i class=' bx bxs-file-pdf'></i></button>
     </div>
     </div>
     <div class="sign" *ngIf="noData">
@@ -89,7 +89,7 @@
             </section>
         </div>
     </div>
-    <div class="sign" *ngIf="noPatient">
+    <div class="sign ms-4 my-4" *ngIf="noPatient">
         <div class="box2">
             <section class="main-cv ">
                 <div class="info">
@@ -103,3 +103,4 @@
             </section>
         </div>
     </div>
+    <br><br><br><br><br><br>

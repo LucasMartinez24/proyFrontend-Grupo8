@@ -110,7 +110,7 @@ p{
 	position: relative;
 	width: 768px;
 	max-width: 125%;
-	min-height: 558px;
+	min-height: 550px;
 }
 
 .form-container {
@@ -206,7 +206,12 @@ p{
 }
 @media(max-width:705px){
 	.container{
-		min-height: 620px;
+		min-height: 480px;
+		z-index: 0;
+		margin-top: 20%;
+		margin-bottom: 10%;
+		width: 100%;
+		box-shadow: none;
 	}
 	.overlay-container{
 		width: 0;
@@ -215,7 +220,13 @@ p{
 	.sign-in-container{
 		width: 100%;
 	}
-
+@media(max-width:607px){
+	.container{
+		margin-top: 2%;
+		min-height: 615px;
+		margin-bottom: 8%;
+	}
+}
 }	.btnLogin{
 	margin-top: 2%;
 	width: auto;

@@ -5,6 +5,7 @@ import { Paciente } from 'src/app/models/paciente';
 import { DatosMedicosServiceService } from 'src/app/services/datos-medicos-service.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import * as ExcelJS from 'exceljs';
+import * as printJS from 'print-js';
 
 @Component({
   selector: 'app-datos-medicos-home',
@@ -115,6 +116,46 @@ export class DatosMedicosHomeComponent implements OnInit {
   }
   seeData(data:DatosMedicos){
     this.datoMedicoVer = data
+  }
+  
+  imprimirPdf(){
+    printJS({
+      printable: this.datosMedicos, 
+      properties: [
+        {field:'pacienteObj.dni',displayName:'DNI'},
+        {field:'pacienteObj.nombre',displayName:'Nombre'},
+        {field:'pacienteObj.apellido',displayName:'Apellido'},
+        {field:'pacienteObj.fechaNac',displayName:'Fecha de Nacimiento'},
+        {field:'motivo',displayName:'Motivo Control'},
+        {field:'peso',displayName:'Peso'},
+        {field:'talla',displayName:'Altura'},
+        {field:'tension_arterial',displayName:'Tension Arterial'},
+        {field:'diagnostico',displayName:'Diagnostico'},
+        {field:'fecha',displayName:'Fecha control'}
+      ], 
+      type: 'json',
+      header:`<h2 class="print-header">Controles Registrados</h2> <hr/>`,
+      style:`
+      .print-header{
+        text-align: center;
+        color:white;
+        font-weight: bold;
+        background-color:#333;
+        padding: 10px 0;
+        margin:0;
+      }
+      table{
+        width:100%;
+        text-align: center;
+      }
+      th, td{
+        padding:8px;
+      }
+      th{
+        background-color:lightgray;
+        color:white;
+      }` ,
+    })
   }
   excelTable(){
     const workbook = new ExcelJS.Workbook();
