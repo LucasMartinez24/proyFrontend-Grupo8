@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as moment from 'moment';
+//import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Especialista } from 'src/app/models/especialista';
 import { Paciente } from 'src/app/models/paciente';
@@ -142,7 +142,6 @@ export class TurnoFormComponent implements OnInit {
   }
 
   guardarTurno() {
-
     // Convert the initial hour from string to Date object
     const initialHour = new Date(`1970-01-01T${this.turno.hora}`);
     // Calculate the time interval in milliseconds based on the selected lapso
