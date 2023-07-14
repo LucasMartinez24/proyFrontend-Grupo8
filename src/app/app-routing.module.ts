@@ -24,6 +24,7 @@ import { CalendarclienteComponent } from './components/calendarcliente/calendarc
 import { TurnoComponent } from './components/turno/turno.component';
 import { TurnoFormComponent } from './components/turno-form/turno-form.component';
 import { TurnosDisponiblesComponent } from './components/turnos-disponibles/turnos-disponibles.component';
+import { UsuariosRegistradosComponent } from './components/usuarios-registrados/usuarios-registrados.component';
 const routes: Routes = [
 {
     path:'login',
@@ -165,6 +166,14 @@ const routes: Routes = [
   },
   {
     path:'turnos-disponibles',component:TurnosDisponiblesComponent,
+  },
+
+  {
+    path:'usuarios',component:UsuariosRegistradosComponent,
+    data:{
+      rol: 'administrador'
+    },
+    canActivate:[VigilanteGuard]
   },
   //lo siguiente siempre va al final
   {

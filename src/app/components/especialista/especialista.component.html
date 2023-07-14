@@ -12,8 +12,54 @@
         <input type="text" class="form-control" id="idfecha" name="fechaNac" required placeholder="Ingrese dni a buscar"
             [(ngModel)]="dni" (ngModelChange)="obtenerEspecialistaPorDNI()">
     </div>
+    <!--<h5 class="ms-4">Buscar Especialista por nombre o apellido</h5>
+    <div class="mb-3 ms-4" style="width:80%;">
+      <input type="text" class="form-control" id="idfecha" name="fechaNac" required
+          placeholder="Ingrese nombre o apellido de paciente a buscar" [(ngModel)]="dato" (ngModelChange)="obtenerPacienteNA()">
+  </div>-->
+  <button type="button" class="btn btn-warning w-100 mt-3" (click)="filtro=true">BUSCAR POR NOMBRE Y APELLIDO</button>
+  
+  <div *ngIf="filtro==true">
+    <form class="p-3 m-3 bg-success-subtle">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Ingresar Nombre a Buscar:</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                name="nombre" [(ngModel)]="nombre"> 
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Ingresar Apellido a Buscar:</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                name="apellido" [(ngModel)]="apellido"> 
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="obtenerEspecialistaNA()">Filtrar</button>
+    </form>
 
-    <div style="padding: 3%;">
+    <div *ngIf="especialistaFiltro.length==0 && click==true">
+        <h2 class="bg-danger p-2 text-white text-center">No se encontraron transacciones con ese filtro</h2>
+    </div>
+
+    <table class="table table-striped table-hover mt-5" *ngIf="especialistaFiltro.length!=0">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">NOMBRE</th>
+                <th scope="col">APELLIDO</th>
+                <th scope="col">PROFESION</th>
+                <th scope="col">DNI</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let t of especialistaFiltro">
+                <td>{{t.nombre}}</td>
+                <td>{{t.apellido}}</td>
+                <td>{{t.profesion}}</td>
+                <td>{{t.dni}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+    <div style="padding: 3%;" >
         <table class="table table-bordered table-hover border-primary mt-5">
             <thead class="table-primary">
                 <tr>
@@ -39,4 +85,5 @@
             </tbody>
         </table>
     </div>
+
 </div>

@@ -19,23 +19,10 @@ export class TurnosDisponiblesComponent implements OnInit {
   misTurnos: Array<Turno>;
   tengoTurnos:boolean=true;
 
-<<<<<<< HEAD
-
-  cantidadTurnosCreados: number;
-
-  constructor(
-    private router: Router,
-    private turnoService: TurnoService,
-    private loginService: LoginService,
-    private pacienteService: PacienteService
-  ) {
-    this.turnos = [];
-    this.cantidadTurnosCreados = 0;
-=======
-  constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService,private toastr:ToastrService) {
+    constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService,private toastr:ToastrService) {
     this.turnos = new Array<Turno>();
     this.misTurnos = new Array<Turno>();
->>>>>>> c1484c80a4b093c3ce94f61043ab864f9f4f0bcc
+
     this.obtenerTurnos();
     this.obtenerMisTurnos();
   }
@@ -52,13 +39,6 @@ export class TurnosDisponiblesComponent implements OnInit {
   obtenerTurnos() {
     this.turnoService.getTurnosDisponibles().subscribe(
       result => {
-<<<<<<< HEAD
-        this.turnos = result;
-        this.cantidadTurnosCreados = this.turnos.length;
-      },
-      error => {
-        console.error('Error al obtener los turnos disponibles:', error);
-=======
         console.log(result);
         if(result.length==0){
           this.hayTurnos=false;
@@ -73,7 +53,7 @@ export class TurnosDisponiblesComponent implements OnInit {
       },
       error => {
         this.toastr.warning(error)
->>>>>>> c1484c80a4b093c3ce94f61043ab864f9f4f0bcc
+
       }
     );
   }
