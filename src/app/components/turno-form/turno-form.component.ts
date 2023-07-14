@@ -144,50 +144,59 @@ export class TurnoFormComponent implements OnInit {
   }
 
   guardarTurno() {
+
     // Convert the initial hour from string to Date object
     const initialHour = new Date(`1970-01-01T${this.turno.hora}`);
     // Calculate the time interval in milliseconds based on the selected lapso
     const timeInterval = parseInt(this.lapso) * 60000;
-    let i = 0;
+       if(this.comprobarFecha()){
+    for (let i = 0; i < this.cantidadTurnos; i++) {
 
-    const guardarSiguienteTurno = () => {
-      if (i < this.cantidadTurnos) {
-        if (i !== 0) {
-          const nextStartTime = new Date(initialHour.getTime() + i * timeInterval);
-          const hourStr = nextStartTime.getHours().toString().padStart(2, '0');
-          const minutesStr = nextStartTime.getMinutes().toString().padStart(2, '0');
+      if (i != 0) {
+        const nextStartTime = new Date(initialHour.getTime() + i * timeInterval);
+        const hourStr = nextStartTime.getHours().toString().padStart(2, '0');
+        const minutesStr = nextStartTime.getMinutes().toString().padStart(2, '0');
 
-          this.turno.hora = `${hourStr}:${minutesStr}`;
-        }
-
-        console.log(this.turno);
-        console.log(this.comprobarFecha());
-        if (this.comprobarFecha()) {
-          console.log("Paso");
-          this.turnoService.createTurno(this.turno).subscribe(
-            result => {
-              if (result.status === 1) {
-                this.toastr.success('Turno agregado correctamente', 'Turno Creado');
-
-                // Guardar el siguiente turno
-                i++;
-                guardarSiguienteTurno();
-              }
-            },
-            error => {
-              console.log(error);
-              alert(error);
-              //this.toastr.warning(error)
-            }
-          );
-        } else {
-          this.toastr.error("La fecha del turno no debe ser menor a la actual");
-        }
+        this.turno.hora = `${hourStr}:${minutesStr}`;
+        console.log(this.turno.hora)
       }
-    };
 
-    // Iniciar el proceso de guardar los turnos
-    guardarSiguienteTurno();
+     // console.log(this.turno);
+      //console.log(this.comprobarFecha());
+
+      console.log("Paso")
+      this.turnoService.createTurno(this.turno).subscribe(
+        result => {
+          if (result.status == 1) {
+
+            //console.log("turno guardado"+i);
+          }
+        },
+        error => {
+          console.log(error)
+          alert(error)
+          //this.toastr.warning(error)
+        }
+      )
+
+    }
+      this.toastr.success('Turno agregado correctamente', 'Turno Creado')
+       this.router.navigate(["turnos-disponibles"])
+
+    }else{
+      this.toastr.error("La fecha del turno no debe ser menor a la actual")
+    }
+
+
+    // if(resultadoService==true){
+    //   this.toastr.success('Turnos registrados correctamente', 'Turnos Creados')
+
+    //   this.router.navigate(["turnos-disponibles"])
+
+
+    // }else{
+    //   this.toastr.warning('Error en registrar los Turnos ', 'Error')
+    // }
   }
 
     // if(resultadoService==true){
