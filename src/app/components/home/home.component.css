@@ -64,10 +64,15 @@ ul{
   height: 500px;
   width: 500px;
 }
-@media screen and (max-width: 600px) {
-  .image{
-    margin-top: 75px;
+@media screen and (max-width: 1400px){
+  .mapas iframe:nth-child(2){
+    margin-top: 50px;
   }
+  .mapas{
+    width:60%;
+  }
+}
+@media screen and (max-width: 600px) {
   .image img{
     width: 100%;
     height: 200px;
@@ -76,9 +81,7 @@ ul{
   .mapas{
     width: 90%;
   }
-  .mapas iframe:nth-child(2){
-    margin-top: 50px;
-  }
+
 }
 
 
