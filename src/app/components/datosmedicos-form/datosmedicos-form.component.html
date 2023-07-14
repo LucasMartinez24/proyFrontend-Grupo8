@@ -1,10 +1,10 @@
-<br><br><br>
-<div class="container formstyle">
+
+<div class="container mt-4 mb-4 formstyle">
 <form  #datosMedicosForm="ngForm"  (ngSubmit)="onSubmit()">
         <div *ngIf="!modifica" class="mb-3 ms-2">
             <label for="paciente" class="form-label">Elija un paciente</label>
                 <input type="text" class="form-control" [(ngModel)]="filtroPacientes" id="filtroPacientes" name="filtroPacientes" (input)="filtrarPacientes()" #filtroInput="ngModel" placeholder="Busque el paciente por el nombre"> 
-                    <select  name="paciente" id=""  aria-label="select pacient" [(ngModel)]="datoMedico.paciente" #selectList class="form-select select-scrollable" style="max-height: 200px;" (ngModelChange)="onChangeofOptions($event)" #pacienteInput="ngModel" required>
+                    <select size="4" name="paciente" id=""  aria-label="select pacient" [(ngModel)]="datoMedico.paciente" #selectList class="form-select select-scrollable" style="max-height: 200px;" (ngModelChange)="onChangeofOptions($event)" #pacienteInput="ngModel" required>
                             <option value="" disabled selected >Seleccione un paciente</option>
                             <option *ngFor="let item of pacientes" (click)="isSelected()" [value]="item._id">N y A: {{ item.nombre + ' ' + item.apellido }}    dni: {{ item.dni }}</option>
                     </select>

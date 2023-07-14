@@ -32,6 +32,7 @@ export class TurnoFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(new Date().toISOString().split('T')[0]);
     this.activatedRoute.params.subscribe(
       params => {
 
@@ -84,16 +85,18 @@ export class TurnoFormComponent implements OnInit {
     )
   }
   comprobarFecha():boolean{
+    this.fechaActual = new Date().toISOString().split('T')[0];
+    console.log(new Date().toLocaleDateString('es-ar'))
     const fechaActualObj = new Date(this.fechaActual);
     const fechaIngresadaObj = new Date(this.turno.fecha);
+    console.log(fechaActualObj + ' Actual')
+    console.log(fechaIngresadaObj +  ' Ingresada')
     console.log("Estableci fechas")
     if (fechaIngresadaObj >= fechaActualObj) {
       console.log("Mayor")
-      this.fechaBoolean = true
       return true;
     } else {
       console.log("Menor")
-      this.fechaBoolean = false
       return false
     }
   }
@@ -135,33 +138,13 @@ export class TurnoFormComponent implements OnInit {
     this.router.navigate(["turno"]);
   }
 
-  // guardarTurno() {
-  //   console.log(this.turno);
-
-  //   this.turnoService.createTurno(this.turno).subscribe(
-  //     result => {
-  //       if (result.status == 1) {
-
-  //         this.toastr.success('Turno agregado correctamente', 'Turno Creado')
-  //         //this.router.navigate(["turnos-disponibles"])
-  //         //console.log("turno guardado");
-  //       }
-  //     },
-  //     error => {
-  //       this.toastr.warning(error)
-  //     }
-  //   )
-  // }
-
   guardarTurno() {
     let resultadoService;
 
     // Convert the initial hour from string to Date object
     const initialHour = new Date(`1970-01-01T${this.turno.hora}`);
-
     // Calculate the time interval in milliseconds based on the selected lapso
     const timeInterval = parseInt(this.lapso) * 60000;
-
     for (let i = 0; i < this.cantidadTurnos; i++) {
 
       if (i != 0) {
@@ -173,9 +156,9 @@ export class TurnoFormComponent implements OnInit {
       }
 
       console.log(this.turno);
-      this.comprobarFecha();
-      console.log(this.turno);
-    if(this.fechaBoolean){
+      console.log(this.comprobarFecha());
+    if(this.comprobarFecha()){
+      console.log("Paso")
       this.turnoService.createTurno(this.turno).subscribe(
         result => {
           if (result.status == 1) {

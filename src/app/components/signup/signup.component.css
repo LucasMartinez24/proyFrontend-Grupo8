@@ -99,6 +99,7 @@ p{
 }
 
 .container {
+	z-index: 0;
 	display: flex;
 	align-self: center;
 	justify-self: center;
