@@ -149,33 +149,37 @@ export class TurnoFormComponent implements OnInit {
         this.turno.hora = `${hourStr}:${minutesStr}`;
       }
 
-      console.log(this.turno);
+      //console.log(this.turno);
 
       this.turnoService.createTurno(this.turno).subscribe(
         result => {
           if (result.status == 1) {
-            resultadoService=true;
-            //this.toastr.success('Turno agregado correctamente', 'Turno Creado')
-            //this.router.navigate(["turnos-disponibles"])
-            console.log("turno guardado"+i);
+            this.toastr.success('Turno agregado correctamente', 'Turno Creado')
+
+
+            this.router.navigate(["turnos-disponibles"])
+
+            
+            //console.log("turno guardado"+i);
           }
         },
         error => {
-          resultadoService=false;
+          console.log(error)
+          alert(error)
           //this.toastr.warning(error)
         }
       )
     }
 
-    if(resultadoService){
-      this.toastr.success('Turnos registrados correctamente', 'Turnos Creados')
+    // if(resultadoService==true){
+    //   this.toastr.success('Turnos registrados correctamente', 'Turnos Creados')
       
-      this.router.navigate(["turnos-disponibles"])
+    //   this.router.navigate(["turnos-disponibles"])
      
       
-    }else{
-      this.toastr.warning('Error en registrar los Turnos ', 'Error')
-    }
+    // }else{
+    //   this.toastr.warning('Error en registrar los Turnos ', 'Error')
+    // }
   }
 
 }
