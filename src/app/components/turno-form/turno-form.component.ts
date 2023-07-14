@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+//import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Especialista } from 'src/app/models/especialista';
 import { Paciente } from 'src/app/models/paciente';
@@ -16,21 +17,28 @@ import { TurnoService } from 'src/app/services/turno.service';
 })
 export class TurnoFormComponent implements OnInit {
   turno: Turno;
-  fechaActual!:string;
+  turnoGuardado!:boolean;
+  fechaActual!: string | null;
   fechaBoolean:boolean=false;
   especialistas: Array<Especialista>;
   accion: string = "";
   pacientes: Array<Paciente>;
   cantidadTurnos!: number;
   lapso!: string;
+<<<<<<< HEAD
   today =  new Date()
    ban! :boolean
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private turnoService: TurnoService,
     private especialistaService: EspecialistaService, private pacienteService: PacienteService, private toastr: ToastrService,private pd:DatePipe) {
+=======
+  today=Date();
+  constructor(private activatedRoute: ActivatedRoute,private pd: DatePipe, private router: Router, private turnoService: TurnoService,
+    private especialistaService: EspecialistaService, private pacienteService: PacienteService, private toastr: ToastrService) {
+>>>>>>> fc6e9990e01f4adcb84622d380f478a42940589e
     this.turno = new Turno();
     this.especialistas = new Array<Especialista>();
     this.pacientes = new Array<Paciente>();
-    this.fechaActual = String(new Date().toLocaleDateString('es-ar'));
+    this.fechaActual = this.pd.transform(this.today, 'yyyy-MM-dd');
   }
 
   ngOnInit(): void {
@@ -89,8 +97,7 @@ export class TurnoFormComponent implements OnInit {
  
 
   comprobarFecha():boolean{
-    this.fechaActual = new Date().toISOString().split('T')[0];
-    console.log(new Date().toLocaleDateString('es-ar'))
+    if(this.fechaActual!=null){
     const fechaActualObj = new Date(this.fechaActual);
     const fechaIngresadaObj = new Date(this.turno.fecha);
     console.log(fechaActualObj + ' Actual')
@@ -103,6 +110,8 @@ export class TurnoFormComponent implements OnInit {
       console.log("Menor")
       return false
     }
+    }
+    return false
   }
   cargarTurno(id: string) {
     this.turnoService.getTurno(id).subscribe(
@@ -116,6 +125,8 @@ export class TurnoFormComponent implements OnInit {
       }
     )
   }
+
+
 
 
   modificarTurno() {
@@ -143,22 +154,27 @@ export class TurnoFormComponent implements OnInit {
   }
 
   guardarTurno() {
-
     // Convert the initial hour from string to Date object
     const initialHour = new Date(`1970-01-01T${this.turno.hora}`);
     // Calculate the time interval in milliseconds based on the selected lapso
     const timeInterval = parseInt(this.lapso) * 60000;
+<<<<<<< HEAD
        if(this.comprobarFecha()){
     for (let i = 0; i < this.cantidadTurnos; i++) {
 
+=======
+        if(this.comprobarFecha()){
+          let turnoGuardado = false;
+      for (let i = 0; i < this.cantidadTurnos; i++) {
+>>>>>>> fc6e9990e01f4adcb84622d380f478a42940589e
       if (i != 0) {
         const nextStartTime = new Date(initialHour.getTime() + i * timeInterval);
         const hourStr = nextStartTime.getHours().toString().padStart(2, '0');
         const minutesStr = nextStartTime.getMinutes().toString().padStart(2, '0');
-
         this.turno.hora = `${hourStr}:${minutesStr}`;
         console.log(this.turno.hora)
       }
+<<<<<<< HEAD
 
      // console.log(this.turno);
       //console.log(this.comprobarFecha());
@@ -168,15 +184,36 @@ export class TurnoFormComponent implements OnInit {
         result => {
           if (result.status == 1) {
             
+=======
+     // console.log(this.turno);
+      //console.log(this.comprobarFecha());
+      console.log("Paso")
+      this.turnoService.createTurno(this.turno).subscribe(
+        result => {
+          console.log(result.status)
+          if (result.status == 1 && !turnoGuardado) {
+            turnoGuardado = true;
+            console.log(this.turnoGuardado);
+            this.toastr.success('Turno agregado correctamente', `Turnos Creados ${this.cantidadTurnos}`)
+>>>>>>> fc6e9990e01f4adcb84622d380f478a42940589e
             //console.log("turno guardado"+i);
+          // }else if(result.status == 3){
+          //   this.turnoGuardado = false
+          //   console.log(this.turnoGuardado);
+          //   this.toastr.warning('Ya existe un turno en esa hora')
           }
         },
         error => {
           console.log(error)
-          alert(error)
-          //this.toastr.warning(error)
+          if(error.error.status === '3'){
+            console.log(this.turnoGuardado);
+            this.toastr.warning('Ya existe un turno en esa hora')
+          }else{
+          this.toastr.warning('No se pudo agregar el turno correctamente')
+          }
         }
       )
+<<<<<<< HEAD
      
     }
       this.toastr.success('Turno agregado correctamente', 'Turno Creado')
@@ -186,16 +223,12 @@ export class TurnoFormComponent implements OnInit {
       this.toastr.error("La fecha del turno no debe ser menor a la actual")
     }
   
-
-    // if(resultadoService==true){
-    //   this.toastr.success('Turnos registrados correctamente', 'Turnos Creados')
-      
-    //   this.router.navigate(["turnos-disponibles"])
-     
-      
-    // }else{
-    //   this.toastr.warning('Error en registrar los Turnos ', 'Error')
-    // }
+=======
+    }
+    }else{
+      this.toastr.error("La fecha del turno no debe ser menor a la actual")
+    }
   }
-
 }
+>>>>>>> fc6e9990e01f4adcb84622d380f478a42940589e
+

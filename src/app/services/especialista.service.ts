@@ -10,8 +10,12 @@ export class EspecialistaService {
   hostBase: string;
 
   constructor(private http: HttpClient) {
-    this.hostBase = "http://localhost:3000/api/especialista/";
+    this.hostBase = "http://3.82.255.160:3000/api/especialista/";
   }
+/*
+  constructor(private http: HttpClient) {
+    this.hostBase = "http://3.82.255.160:3000/api/especialista/";
+  }*/
 
   getEspecialistas(): Observable<any> {
     const httpOption = {
@@ -32,6 +36,21 @@ export class EspecialistaService {
     }
 
     return this.http.get(this.hostBase + id, httpOptions);
+  }
+
+  //paciente por NyA
+  getEspecialistaNA(nombre:string, apellido:string){
+    let httpOptions={
+      headers: new HttpHeaders(
+        {
+
+        }
+      ),
+      params: new HttpParams()
+      .append("nombrE",nombre)
+      .append("apellidoE",apellido)
+    }
+    return this.http.get(this.hostBase+'busquedaEspecialista',httpOptions);
   }
 
   createEspecialista(e: Especialista): Observable<any> {

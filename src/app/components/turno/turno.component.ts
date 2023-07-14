@@ -16,6 +16,7 @@ export class TurnoComponent implements OnInit {
   //misTurnos: Array<Turno>;
   pacienteService: any;
   turnoEliminar:Turno;
+  searchText = '';
   //hayTurnos: boolean = true;
 
   constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private toastr: ToastrService) {
@@ -44,8 +45,6 @@ export class TurnoComponent implements OnInit {
             Object.assign(unTurno, element);
             this.turnos.push(unTurno);
             unTurno = new Turno();
-          }else{
-            //this.hayTurnos = false;
           }
 
         });

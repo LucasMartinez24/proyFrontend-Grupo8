@@ -53,6 +53,7 @@ export class SignupComponent implements OnInit {
       } else {
         this.modifica = true;
         this.id = params['id'];
+        
         console.log(this.modifica)
       }
     });
@@ -146,16 +147,12 @@ export class SignupComponent implements OnInit {
       if (error.error.message === 'Este email ya está en uso') {
         console.log("Este email ya fue registrado");
         this.usuario.email="";
-        this.usuario.password="";
-        this.usuario.dni=""
         this.repeatedEmail=true;
         [this.loadPassword, this.loadEmail] = [true, true];
       }
       if (error.error.message === 'Este nombre de usuario ya está en uso') {
         console.log("Este nombre de usuario ya fue registrado");
         this.usuario.username="";
-        this.usuario.password="";
-        this.usuario.dni=""
         this.repeatedUsername=true;
         [this.loadPassword, this.loadUsername] = [true, true];
       }
@@ -163,8 +160,6 @@ export class SignupComponent implements OnInit {
         console.log("Tanto el email como el nombre de usuario ya estan registrados");
         this.usuario.email="";
         this.usuario.username="";
-        this.usuario.password="";
-        this.usuario.dni=""
         this.repeatedEmail=true;
         this.repeatedUsername=true;
         [this.loadPassword, this.loadEmail, this.loadUsername] = [true, true, true];
@@ -187,7 +182,7 @@ export class SignupComponent implements OnInit {
             sessionStorage.setItem("user", user.username);
             sessionStorage.setItem("userid", user.userid);
             sessionStorage.setItem("rol", JSON.stringify(user.rol));
-            sessionStorage.setItem("dni",user.dni)
+            sessionStorage.setItem("userDni",user.dni)
             //redirigimos a home o a pagina que llamo
             this.route.navigateByUrl(this.returnUrl);
           }

@@ -3,6 +3,7 @@
         TURNOS ASIGNADOS
     </div>
 
+    <input class="form-control ms-2 mt-4" type="text" placeholder="Buscar" [(ngModel)]="searchText">
     <table class="table table-bordered table-hover border-primary mt-5">
         <thead class="table-dark">
             <tr>
@@ -11,22 +12,24 @@
                 <th scope="col">Especialista</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
+                <th scope="col">Centro de Salud</th>
                 <th scope="col">Estado del turno</th>
                 <th scope="col">Operaciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let t of turnos">
+            <tr *ngFor="let t of turnos | search: searchText">
                 <td data-label="Id" scope="row">{{t._id}}</td>
                 <td data-label="Paciente">{{t.paciente?.apellido}},{{t.paciente?.nombre}}</td>
                 <td data-label="Especialista">{{t.especialista.apellido}},{{t.especialista.nombre}} - {{t.especialista.profesion}}</td>
                 <td data-label="Fecha">{{t.fecha | date: 'dd/MM/yyyy'}}</td>
                 <td data-label="Hora">{{t.hora}}</td>
+                <td data-label="Hora">{{t.centroSalud}}</td>
                 <td data-label="Estado">{{t.estado}}</td>
                 <td data-label="Operaciones">
                     <!-- <button type="button" class="btn btn-primary" (click)="modificarTurno(t)">RESERVAR TURNO</button> -->
                     <button type="button" class="btn btn-warning" (click)="modificarTurno(t)">Modificar</button>
-                    <button type="button" class="btn btn-danger" (click)="modalEliminar(t)">Eliminar</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#eliminar" class="btn btn-danger" (click)="modalEliminar(t)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
@@ -36,7 +39,7 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Esta seguro que desea eliminar a este especialista?</h1>
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Esta seguro que desea eliminar este turno?</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

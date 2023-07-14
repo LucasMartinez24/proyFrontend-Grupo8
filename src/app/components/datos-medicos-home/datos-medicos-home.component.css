@@ -77,14 +77,14 @@ input[type="checkbox"]:checked ~ .accordion-content {
     font-size: 18px;
     letter-spacing: 0.08em;
 }
-
 .container{
+    overflow-x: hidden;
     width: 100vw;
     margin-left: 5%;
     margin-top: 15vh;
     margin-right: 2%;
-    margin-bottom: 60vh;
-    height: 100vh;
+    margin-bottom: 30vh;
+    height: 90vh;
 }
 .layout {
     margin-top: 15vh;
@@ -160,6 +160,8 @@ input[type="checkbox"]:checked ~ .accordion-content {
 .bio{
     color: #949594;
     font:inherit;
+    height: auto;
+    overflow: visible;
     line-height: 28px;
     text-align: center;
     justify-content: center;
@@ -225,10 +227,17 @@ input {
 }
 @media(min-width:464px){
     .section-right{
-        margin-top: 50%;
+        margin-top: 25em;
     }
 }
 @media(max-width:464px){
+    .section-right{
+        margin-top: 20%;
+        padding-top: 5em;
+    }
+    .title-rightSection{
+        margin-top: 10%;
+    }
     .container{
         height: auto;
     }
@@ -269,6 +278,9 @@ input {
         width: 100%;
         word-wrap: break-word;
     }
+    #btnVolver{
+        margin-top: 10vh;
+    }
 }
 @media(max-widt:268px){
     .container{
@@ -287,6 +299,14 @@ input {
     .caution{
         width: 100%;
         word-wrap: break-word;
+    }
+}
+@media (max-width: 765px) and (min-width: 464px) {
+    .caution{
+        margin-top: 5vh;
+    }
+    .layout{
+        gap: 8em;
     }
 }
 .btnExcel{
@@ -337,4 +357,53 @@ input {
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+@media(max-width:992px){
+    #btnVolver{
+        margin-top: 10vh;
+    }
+}
+@media screen and (max-width: 600px) {
+    table {
+      border: 0;
+    }
+  
+    table caption {
+      font-size: 1.3em;
+    }
+    
+    table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+    
+    table tr {
+      border-bottom: 3px solid #ddd;
+      display: block;
+      margin-bottom: .625em;
+    }
+    
+    table td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: .8em;
+      text-align: right;
+    }
+    
+    table td::before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    
+    table td:last-child {
+      border-bottom: 0;
+    }
 }
