@@ -6,7 +6,7 @@
     </div>
     <br>
     <br>
-    
+
     <h5 class="ms-4">Buscar Especialista por su dni</h5>
     <div class="mb-3 ms-4" style="width:80%;">
         <input type="text" class="form-control" id="idfecha" name="fechaNac" required placeholder="Ingrese dni a buscar"
@@ -31,20 +31,21 @@
             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                 name="apellido" [(ngModel)]="apellido"> 
         </div>
-        <button type="submit" class="btn btn-primary" (click)="obtenerEspecialistaNA()">Filtrar</button>
+        <button type="submit" class="btn btn-primary" (click)="obtenerEspecialistaNA()">BUSCAR</button>
     </form>
 
     <div *ngIf="especialistaFiltro.length==0 && click==true">
-        <h2 class="bg-danger p-2 text-white text-center">No se encontraron transacciones con ese filtro</h2>
+        <h2 class="bg-danger p-2 text-white text-center">No se encontraron Especialistas con estos datos</h2>
     </div>
 
-    <table class="table table-striped table-hover mt-5" *ngIf="especialistaFiltro.length!=0">
-        <thead class="table-dark">
+    <table class="table table-bordered table-hover border-primary mt-5" *ngIf="especialistaFiltro.length!=0">
+        <thead class="table-primary">
             <tr>
                 <th scope="col">NOMBRE</th>
                 <th scope="col">APELLIDO</th>
                 <th scope="col">PROFESION</th>
                 <th scope="col">DNI</th>
+                <th scope="col">Operaciones</th>
             </tr>
         </thead>
         <tbody>
@@ -53,6 +54,11 @@
                 <td>{{t.apellido}}</td>
                 <td>{{t.profesion}}</td>
                 <td>{{t.dni}}</td>
+                <td class="d-flex justify-content-around">
+                        <button type="button" class="btn btn-warning" (click)="modificarEspecialista(t)">Modificar</button>
+                        <button type="button" class="btn btn-danger" (click)="eliminarEspecialista(t)">Eliminar</button>
+                        <!-- podria ser turnos asignados -->
+                    </td>
             </tr>
         </tbody>
     </table>

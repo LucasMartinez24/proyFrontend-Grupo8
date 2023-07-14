@@ -59,7 +59,7 @@ export class PacienteService {
   }
 
   //paciente por NyA
-  getPacienteNA(dato:string){
+  getPacienteNA(nombre:string, apellido:string){
     let httpOptions={
       headers: new HttpHeaders(
         {
@@ -67,7 +67,8 @@ export class PacienteService {
         }
       ),
       params: new HttpParams()
-      .append("dato",dato)
+      .append("nombrE",nombre)
+      .append("apellidoE",apellido)
     }
     return this.http.get(this.hostBase+'busquedaPaciente',httpOptions);
   }

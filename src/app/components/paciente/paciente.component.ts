@@ -18,6 +18,11 @@ export class PacienteComponent implements OnInit {
   pacienteDni: Array<Paciente>;
   dni!: string;
   dato!: string;
+  pacienteFiltro: Array<Paciente>;
+  filtro!: boolean;
+  click!:boolean;
+  nombre!: string;
+  apellido!: string;
   //dtOptions : DataTables.Settings = {}; 
   //dtTrigger =new Subject<any>();
 
@@ -25,6 +30,7 @@ export class PacienteComponent implements OnInit {
     private router: Router, private toastr: ToastrService) {
     this.pacientes = new Array<Paciente>();
     this.pacienteDni = new Array<Paciente>();
+    this.pacienteFiltro = new Array<Paciente>();
     this.obtenerPacientes();
   }
 
@@ -120,7 +126,7 @@ export class PacienteComponent implements OnInit {
   }
 
   obtenerPacienteNA() {
-    console.log("ENTRANDO A PACIENTE POR NOMBRE O APELLIDO");
+    /*console.log("ENTRANDO A PACIENTE POR NOMBRE O APELLIDO");
     this.pacientes = new Array<Paciente>();
     this.pacienteService.getPacienteNA(this.dato).subscribe(
       (result: any) => {
@@ -135,6 +141,19 @@ export class PacienteComponent implements OnInit {
       },
       error => {
         this.toastr.warning('Error al buscar usuario por dni', 'Error')
+      }
+    )*/
+    this.click = true;
+
+    this.pacienteFiltro = new Array<Paciente>();
+
+    this.pacienteService.getPacienteNA(this.nombre, this.apellido).subscribe(
+      (result: any) => {
+        console.log(result);
+        this.pacienteFiltro = result;
+      },
+      error => {
+        console.log(error);
       }
     )
   }
