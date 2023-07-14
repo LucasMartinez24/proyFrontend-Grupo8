@@ -109,13 +109,17 @@ constructor(private router: Router, private turnoService: TurnoService, private 
           result => {
             if (result.status == 1) {
               this.toastr.success('Turno reservado correctamente', 'Turno reservado')
-              window.location.reload();
+              setTimeout(()=>{
+                window.location.reload();
+              },3000)
             }
           },
           error => {
             if(error.status===400){
               this.toastr.warning('Usted ya reservo un turno para ese especialista en esa fecha')
-              window.location.reload();
+              setTimeout(()=>{
+                window.location.reload();
+              },3000)
             }else{
             this.toastr.warning('No se pudo reservar el turno')
             }
