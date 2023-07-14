@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -22,9 +23,10 @@ export class TurnoFormComponent implements OnInit {
   pacientes: Array<Paciente>;
   cantidadTurnos!: number;
   lapso!: string;
-
+  today =  new Date()
+   ban! :boolean
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private turnoService: TurnoService,
-    private especialistaService: EspecialistaService, private pacienteService: PacienteService, private toastr: ToastrService) {
+    private especialistaService: EspecialistaService, private pacienteService: PacienteService, private toastr: ToastrService,private pd:DatePipe) {
     this.turno = new Turno();
     this.especialistas = new Array<Especialista>();
     this.pacientes = new Array<Paciente>();
@@ -83,7 +85,9 @@ export class TurnoFormComponent implements OnInit {
         console.log(error);
       }
     )
-  }
+  } 
+ 
+
   comprobarFecha():boolean{
     this.fechaActual = new Date().toISOString().split('T')[0];
     console.log(new Date().toLocaleDateString('es-ar'))
@@ -144,6 +148,7 @@ export class TurnoFormComponent implements OnInit {
     const initialHour = new Date(`1970-01-01T${this.turno.hora}`);
     // Calculate the time interval in milliseconds based on the selected lapso
     const timeInterval = parseInt(this.lapso) * 60000;
+       if(this.comprobarFecha()){
     for (let i = 0; i < this.cantidadTurnos; i++) {
 
       if (i != 0) {
@@ -152,21 +157,17 @@ export class TurnoFormComponent implements OnInit {
         const minutesStr = nextStartTime.getMinutes().toString().padStart(2, '0');
 
         this.turno.hora = `${hourStr}:${minutesStr}`;
+        console.log(this.turno.hora)
       }
 
-      console.log(this.turno);
-      console.log(this.comprobarFecha());
-    if(this.comprobarFecha()){
+     // console.log(this.turno);
+      //console.log(this.comprobarFecha());
+ 
       console.log("Paso")
       this.turnoService.createTurno(this.turno).subscribe(
         result => {
           if (result.status == 1) {
-            this.toastr.success('Turno agregado correctamente', 'Turno Creado')
-
-
-            this.router.navigate(["turnos-disponibles"])
-
-
+            
             //console.log("turno guardado"+i);
           }
         },
@@ -176,10 +177,15 @@ export class TurnoFormComponent implements OnInit {
           //this.toastr.warning(error)
         }
       )
+     
+    }
+      this.toastr.success('Turno agregado correctamente', 'Turno Creado')
+       this.router.navigate(["turnos-disponibles"])
+
     }else{
       this.toastr.error("La fecha del turno no debe ser menor a la actual")
     }
-  }
+  
 
     // if(resultadoService==true){
     //   this.toastr.success('Turnos registrados correctamente', 'Turnos Creados')

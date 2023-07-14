@@ -21,6 +21,8 @@ export class PacienteComponent implements OnInit {
   pacientesMujer: Array<Paciente>;
   pacienteDni: Array<Paciente>;
   dni!: string;
+  nombre!: string;
+  apellido!: string;
   fecha!:string;
   //dtOptions : DataTables.Settings = {}; 
   //dtTrigger =new Subject<any>();
@@ -182,6 +184,26 @@ imprimirPdf() {
       },
       error => {
         this.toastr.warning('Error al buscar paciente por dni', 'Error')
+      }
+    )
+  }
+
+  obtenerPacienteNA() {
+    console.log("ENTRANDO A PACIENTE POR DNI");
+    this.pacientes = new Array<Paciente>();
+    this.pacienteService.getPacienteNA(this.nombre,this.apellido).subscribe(
+      (result: any) => {
+        this.pacienteDni = result;
+
+        let unPaciente = new Paciente();
+        result.forEach((element: any) => {
+          Object.assign(unPaciente, element);
+          this.pacientes.push(unPaciente);
+          unPaciente = new Paciente();
+        });
+      },
+      error => {
+        this.toastr.warning('Error al buscar paciente por nombrey apellido', 'Error')
       }
     )
   }

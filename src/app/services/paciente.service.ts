@@ -69,6 +69,21 @@ export class PacienteService {
     }
     return this.http.get(this.hostBase+'/dniOne/'+dni, httpOptions)
   }
+
+  getPacienteNA(nombre:string, apellido:string){
+    let httpOptions={
+      headers: new HttpHeaders(
+        {
+
+        }
+      ),
+      params: new HttpParams()
+      .append("nombrE",nombre)
+      .append("apellidoE",apellido)
+    }
+
+    return this.http.get(this.hostBase+"nombre"+"apellido",httpOptions);
+  }
   getPacienteById(id:string):Observable<any>{
     let httpOptions={
       headers: new HttpHeaders(
