@@ -1,7 +1,8 @@
 
 <div class="container ms-2 layout" *ngIf="!noData && !noPatient">
     <div class="section-left">
-    <h1 class="title-leftSection mt-2 mb-2">Ultimo control medico</h1>
+    <h1 class="title-leftSection mt-2 mb-2" *ngIf="!choseOther">Ultimo control medico</h1>
+    <h1 class="title-leftSection mt-2 mb-2" *ngIf="choseOther">Control medico del {{" "+this.datoMedicoVer.fecha}}</h1>
     <div class="title">
         <h4>{{datoMedicoVer.motivo}}</h4>
     </div>
@@ -10,10 +11,14 @@
         <div class="box-title">{{pacienteBuscado.nombre + '  ' + pacienteBuscado.apellido}}</div>
         <div class="box-body">
             <p class="card-title">Dni: {{' '+pacienteBuscado.dni}}</p>
+            <p class="card-title">Genero: {{' '+pacienteBuscado.genero}}</p>
             <p class="card-text">Altura: {{' '+datoMedicoVer.talla}}</p>
             <p class="card-text">Peso: {{' '+datoMedicoVer.peso}}</p>
             <p class="card-text">Tension arterial: {{' '+datoMedicoVer.tension_arterial }}</p>
             <p class="card-text">IMC: {{' '+datoMedicoVer.imc}}</p>
+            <p class="card-text">Temperatura: {{' '+datoMedicoVer.temperatura}}</p>
+            <p class="card-text">Centro de Salud: {{' '+datoMedicoVer.centroSalud}}</p>
+            <p class="card-text" *ngIf="gender">Fecha de ultima Menstruacion: {{' '+datoMedicoVer.fechaMenstruacion }}</p>
             <hr class="mt-2 mb-2">
             <div class="descripcion">
                 <p class="text-diagnostico">
@@ -34,7 +39,7 @@
             <i class='bx bx-caret-right'></i>
             </span>
         </label>
-        <div class="accordion-content">
+        <div class="accordion-content mb-4">
             <p>
             {{item.diagnostico}}
             </p>
@@ -43,7 +48,7 @@
     </ng-container>
     </div>
 </div>
-    <div class="section-right">
+    <div class="section-right mt-4">
         <h1 *ngIf="moreThan1" class="title-rightSection mt-4 mb-2">Historial de controles</h1>
         <input class="form-control" type="text" placeholder="Buscar control medico" [(ngModel)]="searchText" *ngIf="moreThan1">
         <table class="table table-bordered table-hover border-primary mt-5" *ngIf="moreThan1" >
@@ -54,6 +59,8 @@
                     <th scope="col">Nombre Completo</th>
                     <th scope="col">Fecha</th>
                     <th scope="col">Diagnostico</th>
+                    <th scope="col" *ngIf="gender">Fecha de Ultima Menstruacion</th>
+                    <th scope="col">Centro de Salud</th>
                     <th scope="col">Operaciones</th>
                 </tr>
             </thead>
@@ -64,6 +71,8 @@
                     <td>{{d.pacienteObj.nombre + ' ' + d.pacienteObj.apellido}}</td>
                     <td>{{d.fecha}}</td>
                     <td>{{d.diagnostico}}</td>
+                    <td *ngIf="gender">{{d.fechaMenstruacion}}<td>
+                    <td>{{d.centroSalud}}</td>
                     <td>
                         <button type="button" class="btnDetalle" (click)="seeData(d)">Ver control</button>
                     </td>
@@ -71,8 +80,10 @@
             </tbody>
         </table>
         <h4 class="ms-4 mt-4 caution" *ngIf="!moreThan1">No existen otros registros de este paciente</h4>
-        <button class="btnExcel" (click)="excelTable()">Descargar Excel <i class='bx bx-table bx-flip-horizontal'></i></button>
-        <button class="btnPdf" (click)="imprimirPdf()">Imprimir PDF<i class=' bx bxs-file-pdf'></i></button>
+        <button class="btnExcel" *ngIf="!gender" (click)="excelTable()">Descargar Excel <i class='bx bx-table bx-flip-horizontal'></i></button>
+        <button class="btnPdf" *ngIf="!gender" (click)="imprimirPdf()">Imprimir PDF<i class=' bx bxs-file-pdf'></i></button>
+        <button class="btnExcel" *ngIf="gender" (click)="excelTableMujer()">Descargar Excel <i class='bx bx-table bx-flip-horizontal'></i></button>
+        <button class="btnPdf" *ngIf="gender" (click)="imprimirPdfMujer()">Imprimir PDF<i class=' bx bxs-file-pdf'></i></button>
     </div>
     </div>
     <div class="sign" *ngIf="noData">
