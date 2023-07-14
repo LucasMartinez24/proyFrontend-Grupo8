@@ -32,6 +32,7 @@ header .logo{
 }
 header ul{
   position: relative;
+  z-index: 1;
 }
 header ul li{
   position: relative;
@@ -56,9 +57,11 @@ header ul li ul{
   background: #5bc3c8;
   display: none;
   padding: 0;
+  z-index: 1;
 }
 header ul li:hover > ul{
   display: block;
+  z-index: 1;
 }
 header ul li ul li{
   position: relative;

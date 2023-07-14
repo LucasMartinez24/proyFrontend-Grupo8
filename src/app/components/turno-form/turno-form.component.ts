@@ -15,6 +15,8 @@ import { TurnoService } from 'src/app/services/turno.service';
 })
 export class TurnoFormComponent implements OnInit {
   turno: Turno;
+  fechaActual!:string;
+  fechaBoolean:boolean=false;
   especialistas: Array<Especialista>;
   accion: string = "";
   pacientes: Array<Paciente>;
@@ -26,9 +28,11 @@ export class TurnoFormComponent implements OnInit {
     this.turno = new Turno();
     this.especialistas = new Array<Especialista>();
     this.pacientes = new Array<Paciente>();
+    this.fechaActual = String(new Date().toLocaleDateString('es-ar'));
   }
 
   ngOnInit(): void {
+    console.log(new Date().toISOString().split('T')[0]);
     this.activatedRoute.params.subscribe(
       params => {
 
@@ -80,7 +84,22 @@ export class TurnoFormComponent implements OnInit {
       }
     )
   }
-
+  comprobarFecha():boolean{
+    this.fechaActual = new Date().toISOString().split('T')[0];
+    console.log(new Date().toLocaleDateString('es-ar'))
+    const fechaActualObj = new Date(this.fechaActual);
+    const fechaIngresadaObj = new Date(this.turno.fecha);
+    console.log(fechaActualObj + ' Actual')
+    console.log(fechaIngresadaObj +  ' Ingresada')
+    console.log("Estableci fechas")
+    if (fechaIngresadaObj >= fechaActualObj) {
+      console.log("Mayor")
+      return true;
+    } else {
+      console.log("Menor")
+      return false
+    }
+  }
   cargarTurno(id: string) {
     this.turnoService.getTurno(id).subscribe(
       (result) => {
@@ -94,7 +113,11 @@ export class TurnoFormComponent implements OnInit {
     )
   }
 
+
   modificarTurno() {
+    this.comprobarFecha();
+    console.log(this.turno);
+  if(this.fechaBoolean){
     this.turnoService.editTurno(this.turno).subscribe(
       result => {
         if (result.status == 1) {
@@ -106,38 +129,21 @@ export class TurnoFormComponent implements OnInit {
         this.toastr.warning(error)
       }
     )
+  }else{
+      this.toastr.error('La fecha del turno no puede ser menor a la fecha actual')
+    }
   }
 
   public cancelar() {
     this.router.navigate(["turno"]);
   }
 
-  // guardarTurno() {
-  //   console.log(this.turno);
-
-  //   this.turnoService.createTurno(this.turno).subscribe(
-  //     result => {
-  //       if (result.status == 1) {
-
-  //         this.toastr.success('Turno agregado correctamente', 'Turno Creado')
-  //         //this.router.navigate(["turnos-disponibles"])
-  //         //console.log("turno guardado");
-  //       }
-  //     },
-  //     error => {
-  //       this.toastr.warning(error)
-  //     }
-  //   )
-  // }
-
   guardarTurno() {
 
     // Convert the initial hour from string to Date object
     const initialHour = new Date(`1970-01-01T${this.turno.hora}`);
-
     // Calculate the time interval in milliseconds based on the selected lapso
     const timeInterval = parseInt(this.lapso) * 60000;
-
     for (let i = 0; i < this.cantidadTurnos; i++) {
 
       if (i != 0) {
@@ -148,8 +154,10 @@ export class TurnoFormComponent implements OnInit {
         this.turno.hora = `${hourStr}:${minutesStr}`;
       }
 
-      //console.log(this.turno);
-
+      console.log(this.turno);
+      console.log(this.comprobarFecha());
+    if(this.comprobarFecha()){
+      console.log("Paso")
       this.turnoService.createTurno(this.turno).subscribe(
         result => {
           if (result.status == 1) {
@@ -168,7 +176,10 @@ export class TurnoFormComponent implements OnInit {
           //this.toastr.warning(error)
         }
       )
+    }else{
+      this.toastr.error("La fecha del turno no debe ser menor a la actual")
     }
+  }
 
     // if(resultadoService==true){
     //   this.toastr.success('Turnos registrados correctamente', 'Turnos Creados')
