@@ -19,6 +19,7 @@
             <ul>
               <li><a class="dropdown-item" [routerLink]="'turno-form/0'">Crear Turnos</a></li>
               <li><a class="dropdown-item" [routerLink]="'turno'">Listado de Turnos</a></li>
+              <li><a [routerLink]="'/turnos-disponibles'">Ver Turnos disponibles</a></li>
             </ul>
           </li>
           <li *ngIf="esAdministrador()==true"><a href="#">Gestionar Paciente<b>▼</b></a>
