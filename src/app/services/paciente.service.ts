@@ -58,6 +58,21 @@ export class PacienteService {
     return this.http.get(this.hostBase+"dni",httpOptions);
   }
 
+  //paciente por NyA
+  getPacienteNA(nombre:string, apellido:string){
+    let httpOptions={
+      headers: new HttpHeaders(
+        {
+
+        }
+      ),
+      params: new HttpParams()
+      .append("nombrE",nombre)
+      .append("apellidoE",apellido)
+    }
+    return this.http.get(this.hostBase+'busquedaPaciente',httpOptions);
+  }
+
   getOnePacienteByDni(dni:string):Observable<any>{
     let httpOptions={
       headers: new HttpHeaders(

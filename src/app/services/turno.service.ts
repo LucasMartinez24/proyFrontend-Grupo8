@@ -14,69 +14,45 @@ export class TurnoService {
 
   getTurno(id: string): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders(
-        {
-
-        }
-      ),
+      headers: new HttpHeaders(),
       params: new HttpParams()
-
-    }
+    };
 
     return this.http.get(this.hostBase + id, httpOptions);
-
   }
 
   getTurnosDisponibles(): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders(
-        {
-
-        }
-      ),
-      params: new HttpParams()
-        .append("estado", "libre")
-
-    }
+      headers: new HttpHeaders(),
+      params: new HttpParams().append("estado", "libre")
+    };
 
     return this.http.get(this.hostBase + "turnosDisponibles", httpOptions);
-
   }
-
 
   getTurnos(): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders(
-        {
-        }
-      ),
+      headers: new HttpHeaders(),
       params: new HttpParams()
-
-    }
+    };
     return this.http.get(this.hostBase, httpOptions);
   }
 
-  getMisTurnos(dni:string): Observable<any> {
+  getMisTurnos(dni: string): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders(
-        {
-        }
-      ),
-      params: new HttpParams()
-        .append("dni",dni)
-    }
-    return this.http.get(this.hostBase+"misTurnos", httpOptions);
+      headers: new HttpHeaders(),
+      params: new HttpParams().append("dni", dni)
+    };
+    return this.http.get(this.hostBase + "misTurnos", httpOptions);
   }
 
   createTurno(t: Turno): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders(
-        {
-          "Content-type": "application/json"
-        }
-      ),
+      headers: new HttpHeaders({
+        "Content-Type": "application/json"
+      }),
       params: new HttpParams()
-    }
+    };
 
     let body = JSON.stringify(t);
     console.log(body);
@@ -86,30 +62,23 @@ export class TurnoService {
 
   deleteTurno(id: string): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders(
-        {
-
-        }
-      ),
+      headers: new HttpHeaders(),
       params: new HttpParams()
-    }
+    };
 
     return this.http.delete(this.hostBase + id, httpOptions);
   }
 
   editTurno(t: Turno): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders(
-        {
-          "Content-type": "application/json"
-        }
-      ),
+      headers: new HttpHeaders({
+        "Content-Type": "application/json"
+      }),
       params: new HttpParams()
-    }
+    };
 
     let body = JSON.stringify(t);
 
     return this.http.put(this.hostBase + t._id, body, httpOptions);
   }
-
 }

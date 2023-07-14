@@ -11,6 +11,7 @@
                 <th scope="col">Especialista</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
+                <th scope="col">Centro de Salud</th>
                 <th scope="col">Estado del turno</th>
                 <th scope="col">Operaciones</th>
             </tr>
@@ -22,6 +23,7 @@
                 <td data-label="Especialista">{{t.especialista.apellido}},{{t.especialista.nombre}} - {{t.especialista.profesion}}</td>
                 <td data-label="Fecha">{{t.fecha | date: 'dd/MM/yyyy'}}</td>
                 <td data-label="Hora">{{t.hora}}</td>
+                <td data-label="Hora">{{t.centroSalud}}</td>
                 <td data-label="Estado">{{t.estado}}</td>
                 <td data-label="Operaciones">
                     <!-- <button type="button" class="btn btn-primary" (click)="modificarTurno(t)">RESERVAR TURNO</button> -->
