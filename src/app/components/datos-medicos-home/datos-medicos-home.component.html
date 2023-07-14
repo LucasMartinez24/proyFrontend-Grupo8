@@ -18,7 +18,8 @@
             <p class="card-text">IMC: {{' '+datoMedicoVer.imc}}</p>
             <p class="card-text">Temperatura: {{' '+datoMedicoVer.temperatura}}</p>
             <p class="card-text">Centro de Salud: {{' '+datoMedicoVer.centroSalud}}</p>
-            <p class="card-text" *ngIf="gender">Fecha de ultima Menstruacion: {{' '+datoMedicoVer.fechaMenstruacion }}</p>
+            <p class="card-text" *ngIf="gender">Fecha de ultima Menstruacion: {{' '+datoMedicoVer.fechaMenstruacion}}</p>
+
             <hr class="mt-2 mb-2">
             <div class="descripcion">
                 <p class="text-diagnostico">
@@ -49,6 +50,7 @@
     </div>
 </div>
     <div class="section-right mt-4">
+        <a [routerLink]="'/datosMedicos'" class="btn btn-danger p-2">Volver</a>
         <h1 *ngIf="moreThan1" class="title-rightSection mt-4 mb-2">Historial de controles</h1>
         <input class="form-control" type="text" placeholder="Buscar control medico" [(ngModel)]="searchText" *ngIf="moreThan1">
         <table class="table table-bordered table-hover border-primary mt-5" *ngIf="moreThan1" >
@@ -59,31 +61,29 @@
                     <th scope="col">Nombre Completo</th>
                     <th scope="col">Fecha</th>
                     <th scope="col">Diagnostico</th>
-                    <th scope="col" *ngIf="gender">Fecha de Ultima Menstruacion</th>
                     <th scope="col">Centro de Salud</th>
                     <th scope="col">Operaciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let d of datosMedicos | search: searchText">
-                    <td>{{d.motivo}}</td>
-                    <td>{{d.pacienteObj.dni}}</td>
-                    <td>{{d.pacienteObj.nombre + ' ' + d.pacienteObj.apellido}}</td>
-                    <td>{{d.fecha}}</td>
-                    <td>{{d.diagnostico}}</td>
-                    <td *ngIf="gender">{{d.fechaMenstruacion}}<td>
-                    <td>{{d.centroSalud}}</td>
-                    <td>
+                    <td data-label="Motivo">{{d.motivo}}</td>
+                    <td data-label="Dni">{{d.pacienteObj.dni}}</td>
+                    <td data-label="Nombre Completo">{{d.pacienteObj.nombre + ' ' + d.pacienteObj.apellido}}</td>
+                    <td data-label="Fecha Control">{{d.fecha}}</td>
+                    <td data-label="Diagnostico">{{d.diagnostico}}</td>
+                    <td data-label="Centro de Salud">{{d.centroSalud}}</td>
+                    <td data-label="Operaciones" class="d-flex justify-content-around">
                         <button type="button" class="btnDetalle" (click)="seeData(d)">Ver control</button>
                     </td>
                 </tr>
             </tbody>
         </table>
         <h4 class="ms-4 mt-4 caution" *ngIf="!moreThan1">No existen otros registros de este paciente</h4>
-        <button class="btnExcel" *ngIf="!gender" (click)="excelTable()">Descargar Excel <i class='bx bx-table bx-flip-horizontal'></i></button>
-        <button class="btnPdf" *ngIf="!gender" (click)="imprimirPdf()">Imprimir PDF<i class=' bx bxs-file-pdf'></i></button>
-        <button class="btnExcel" *ngIf="gender" (click)="excelTableMujer()">Descargar Excel <i class='bx bx-table bx-flip-horizontal'></i></button>
-        <button class="btnPdf" *ngIf="gender" (click)="imprimirPdfMujer()">Imprimir PDF<i class=' bx bxs-file-pdf'></i></button>
+        <button class="btnExcel" *ngIf="!gender && moreThan1" (click)="excelTable()">Descargar Excel <i class='bx bx-table bx-flip-horizontal'></i></button>
+        <button class="btnPdf" *ngIf="!gender && moreThan1" (click)="imprimirPdf()">Imprimir PDF<i class=' bx bxs-file-pdf'></i></button>
+        <button class="btnExcel" *ngIf="gender && moreThan1" (click)="excelTableMujer()">Descargar Excel <i class='bx bx-table bx-flip-horizontal'></i></button>
+        <button class="btnPdf" *ngIf="gender && moreThan1" (click)="imprimirPdfMujer()">Imprimir PDF<i class=' bx bxs-file-pdf'></i></button>
     </div>
     </div>
     <div class="sign" *ngIf="noData">
@@ -114,4 +114,4 @@
             </section>
         </div>
     </div>
-    <br><br><br><br><br><br>
+    <br><br>
