@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="accion!='update'">
             <label for="lapsot" class="form-label">Seleccione el lapso de tiempo entre cada turno</label>
             <!-- <input type="time" class="form-control" id="hora" name="lapso" required placeholder="Ingrese lapso"
                 [(ngModel)]="lapso" #lapsoT="ngModel"> -->
@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="accion!='update'">
             <label for="fecha" class="form-label">¿Cuántos turnos de este especialista quiere dar de alta
                 aproximadamente?</label>
             <input type="number" class="form-control" id="hora" name="cantidadTurnos" required
