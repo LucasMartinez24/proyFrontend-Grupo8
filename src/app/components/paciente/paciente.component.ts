@@ -15,6 +15,10 @@ import { Subject } from 'rxjs';
 })
 export class PacienteComponent implements OnInit {
   pacientes: Array<Paciente>;
+  pacientesAux: Array<Paciente>;
+  tipoArchivo!:string;
+  pacientesHombreOtro: Array<Paciente>;
+  pacientesMujer: Array<Paciente>;
   pacienteDni: Array<Paciente>;
   dni!: string;
   dato!: string;
@@ -23,15 +27,25 @@ export class PacienteComponent implements OnInit {
   click!:boolean;
   nombre!: string;
   apellido!: string;
+  fecha!:string;
   //dtOptions : DataTables.Settings = {}; 
   //dtTrigger =new Subject<any>();
+  choseMujer:boolean=false;
+  choseHombreOtro:boolean=false;
+  choseGeneral:boolean=false;
+  pacienteElminar:Paciente
 
   constructor(private pacienteService: PacienteService, private activatedRoute: ActivatedRoute,
     private router: Router, private toastr: ToastrService) {
     this.pacientes = new Array<Paciente>();
+    this.pacientesAux = new Array<Paciente>();
+    this.pacientesHombreOtro = new Array<Paciente>();
+    this.pacientesMujer = new Array<Paciente>();
     this.pacienteDni = new Array<Paciente>();
     this.pacienteFiltro = new Array<Paciente>();
+    this.pacienteElminar = new Paciente();
     this.obtenerPacientes();
+    this.fecha = String(new Date().toLocaleDateString('es-ar'));
   }
 
   ngOnInit(): void {
@@ -45,18 +59,59 @@ export class PacienteComponent implements OnInit {
   /*ngOnDestroy():void{
      this.dtTrigger.unsubscribe();
  }*/
-
-  imprimirPdf() {
+filterGender(){
+  this.pacientesHombreOtro = this.pacientes.filter(d => d.genero === "Hombre" || d.genero === "Otro");
+  this.pacientesMujer = this.pacientes.filter(d => d.genero === "Mujer");
+}
+excelTableGeneral() {
+  this.choseGeneral = true;
+  this.tipoArchivo = 'General'
+  this.imprimirXlsx()
+}
+excelTableHombreOtro() {
+  this.choseHombreOtro = true;
+  this.tipoArchivo = 'Hombre_u_Otro'
+  this.imprimirXlsx()
+}
+excelTableMujeres() {
+  this.choseMujer = true;
+  this.tipoArchivo = 'Mujeres'
+  this.imprimirXlsx()
+}
+pdfGeneral(){
+  this.choseGeneral = true
+  this.tipoArchivo = 'General'
+  this.imprimirPdf();
+}
+pdfHombreOtro(){
+  this.choseHombreOtro = true
+  this.tipoArchivo = 'Hombre_u_Otro'
+  this.imprimirPdf();
+}
+pdfMujeres(){
+  this.choseMujer = true;
+  this.tipoArchivo = 'Mujeres'
+  this.imprimirPdf();
+}
+imprimirPdf() {
+  if(this.choseMujer){
+    this.pacientesAux = this.pacientesMujer;
+  }else if(this.choseHombreOtro){
+    this.pacientesAux = this.pacientesHombreOtro;
+  }else if(this.choseGeneral){
+    this.pacientesAux = this.pacientes
+  }
     printJS({
-      printable: this.pacientes,
+      printable: this.pacientesAux,
       properties: [
         { field: 'dni', displayName: 'DNI' },
         { field: 'nombre', displayName: 'Nombre' },
         { field: 'apellido', displayName: 'Apellido' },
-        { field: 'fechaNac', displayName: 'Fecha de Nacimiento' }
+        { field: 'fechaNac', displayName: 'Fecha de Nacimiento' },
+        {field: 'genero', displayName:'Genero'}
       ],
       type: 'json',
-      header: `<h2 class="print-header">Pacientes Registrados</h2> <hr/>`,
+      header: `<h2 class="print-header">Pacientes ${this.tipoArchivo} Registrados dia ${this.fecha}</h2> <hr/>`,
       style: `
       .print-header{
         text-align: center;
@@ -78,13 +133,25 @@ export class PacienteComponent implements OnInit {
         color:white;
       }` ,
     })
+    this.choseGeneral = false;
+    this.choseHombreOtro = false;
+    this.choseMujer = false;
   }
   imprimirXlsx():void{
-    const worksheet= XLSX.utils.json_to_sheet(this.pacientes)//definimos hojas de trabajo y le asignamos los pacientes
+    if(this.choseMujer){
+      this.pacientesAux = this.pacientesMujer;
+    }else if(this.choseHombreOtro){
+      this.pacientesAux = this.pacientesHombreOtro;
+    }else if(this.choseGeneral){
+      this.pacientesAux = this.pacientes
+    }
+    const worksheet= XLSX.utils.json_to_sheet(this.pacientesAux)//definimos hojas de trabajo y le asignamos los pacientes
     const workbook =XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, `Pacientes Registrados`) //nombre de la hoja de excel
-    XLSX.writeFile(workbook, `ListaPacientes.xlsx`);
-
+    XLSX.writeFile(workbook, `ListaPacientes_${this.fecha}_${this.tipoArchivo}.xlsx`);
+    this.choseGeneral = false;
+    this.choseHombreOtro = false;
+    this.choseMujer = false;
   }
 
   obtenerPacientes() {
@@ -97,6 +164,7 @@ export class PacienteComponent implements OnInit {
           this.pacientes.push(unPaciente);
           unPaciente = new Paciente();
         });
+        this.filterGender()
       },
       error => {
         console.log(error);
@@ -181,7 +249,7 @@ export class PacienteComponent implements OnInit {
     this.router.navigate(["paciente-form", 0])
   }
   verControl(paciente: Paciente) {
-    this.router.navigate(['datosMedicosHome', paciente.dni])
+    this.router.navigate(['pacientesHome', paciente.dni])
   }
   generarExcel(paciente: Paciente) {
     console.log('entrando a generar excel')
@@ -192,5 +260,8 @@ export class PacienteComponent implements OnInit {
     //agregar datos al archivo de excel
     worksheet.addRow(['DNI', 'Nombre', 'Apellido', 'Fecha de Nacimiento']);
     worksheet.addRow([paciente.dni, paciente.nombre, paciente.apellido, paciente.fechaNac]);
+  }
+  modalEliminar(data:Paciente){
+    this.pacienteElminar = data;
   }
 }

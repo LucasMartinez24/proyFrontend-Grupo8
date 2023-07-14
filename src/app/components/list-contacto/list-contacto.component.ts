@@ -12,6 +12,7 @@ import { ContactoService } from 'src/app/services/contacto.service';
 })
 export class ListContactoComponent implements OnInit {
   contactos:Array<Contacto>
+  contactoEliminar!:string
   constructor(private contactoService:ContactoService , private route :Router, private toastr:ToastrService) { 
     this.contactos= new Array<Contacto>()
   }
@@ -50,5 +51,8 @@ this.contactoService.deleteContacto(id).subscribe(
 }
 agregarContacto(){
   this.route.navigate(['formcontacto/0'])
+}
+modalEliminar(data:string){
+  this.contactoEliminar = data
 }
 } 

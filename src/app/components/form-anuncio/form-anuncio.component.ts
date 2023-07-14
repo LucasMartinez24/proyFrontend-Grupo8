@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-//import { error } from 'console';
-//import { url } from 'inspector';
+import { error } from 'console';
+import { url } from 'inspector';
 import { Anuncio } from 'src/app/models/anuncio';
 import { Recurso } from 'src/app/models/recurso';
 import { AnuncioService } from 'src/app/services/anuncio.service';
@@ -30,6 +30,7 @@ export class FormAnuncioComponent implements OnInit {
    arch!:Blob
    fecha !:Date 
    can!:string
+   today = new Date()
    constructor(private anuncioService: AnuncioService,private route :Router,private storageService: StorageService,private activatedRoute: ActivatedRoute,private pd:DatePipe,private toastr:ToastrService) { 
     this.anuncio= new Anuncio()
     this.nextbutton = "guardar"
@@ -43,10 +44,7 @@ export class FormAnuncioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   // this.fechamin = new Date (new Date().getFullYear(),new Date().getMonth()-6,new Date().getMonth());
-   //this.fechaStrMin = this.pd.transform(this.fechaStrMin,"yyyy-MM-dd")!;
-    this.anuncio.fechaDesde = String(new Date().toLocaleDateString('es-ar'))
-     this.fechaStrMin = this.pd.transform(this.anuncio.fechaDesde,"yyyy-dd-MM")!
+     this.anuncio.fechaDesde = this.pd.transform(this.today,"yyyy-MM-dd")!
     this.controlador = "caja1"
    this.activatedRoute.params.subscribe(params => {
     if (params['id'] == '0') {
@@ -67,22 +65,16 @@ export class FormAnuncioComponent implements OnInit {
     this.route.navigate(['list-anuncio'])
   }
   verificar(){
-    if(this.fechaStrMin + 1 >= this.anuncio.fechaHasta){
+    if(this.anuncio.fechaDesde + 1 >= this.anuncio.fechaHasta){
       this.toastr.warning("la fecha Hasta debe ser mayor a la fecha Desde")
         this.anuncio.fechaHasta=""
     }
   }
   guardar(){
-   // if(this.fecha!=null){
-     //this.anuncio.fechaHasta= this.formatDate(String(this.fecha))}
      if(this.validarAnuncio()){
       
        console.log(this.anuncio.fechaHasta)
       this.anuncio.estado="activo"
- 
-      //this.anuncio.fechaDesde = String(new Date().toLocaleDateString('es-ar'))
-    this.anuncio.fechaDesde = this.pd.transform(this.anuncio.fechaDesde,"yyyy-dd-MM")!
-      console.log("Guardando Anuncio...");
       this.anuncioService.addAnuncio(this.anuncio).subscribe(
         result => {
           console.log(result);

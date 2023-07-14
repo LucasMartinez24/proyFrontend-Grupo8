@@ -15,6 +15,7 @@ import * as  ExcelJS from 'exceljs';
 export class EspecialistaComponent implements OnInit {
   especialistas: Array<Especialista>;
   especialistasDNI: Array<Especialista>;
+  especialistaEliminar:Especialista
   dni!: string;
   especialistaFiltro: Array<Especialista>;
   filtro!: boolean;
@@ -23,6 +24,7 @@ export class EspecialistaComponent implements OnInit {
   apellido!: string;
   constructor(private especialistaService: EspecialistaService, private router: Router, private toastr: ToastrService) {
     this.especialistas = new Array<Especialista>();
+    this.especialistaEliminar = new Especialista();
     this.especialistasDNI = new Array<Especialista>();
     this.especialistaFiltro = new Array<Especialista>();
     this.obtenerEspecialistas();
@@ -157,5 +159,8 @@ export class EspecialistaComponent implements OnInit {
     //agregar datos al archivo de excel
     worksheet.addRow(['DNI', 'Nombre', 'Apellido', 'Profesión']);
     worksheet.addRow([especialista.dni, especialista.nombre, especialista.apellido, especialista.profesion]);
+  }
+  modalEliminar(data:Especialista){
+    this.especialistaEliminar = data;
   }
 }

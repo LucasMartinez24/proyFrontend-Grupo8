@@ -26,7 +26,7 @@ export class LoginService {
         'Content-Type': 'application/json'
       })
     }
-    console.log(JSON.stringify({ username: username, password: password, email:email, rol:rol, dni:dni }))
+    //console.log(JSON.stringify({ username: username, password: password, email:email, rol:rol, dni:dni }))
     let body = JSON.stringify({ username: username, password: password, email:email, rol:rol, dni:dni });
     return this.http.post(this.hostBase, body, httpOption)
   }
@@ -56,7 +56,7 @@ export class LoginService {
       })
     }
     let body = JSON.stringify({ username: username, password: password });
-    console.log(body);
+    //console.log(body);
     return this.http.post(this.hostBase + 'login', body, httpOption);
   }
   public loginEmail(email: string, password: string): Observable<any> {
@@ -66,7 +66,7 @@ export class LoginService {
       })
     }
     let body = JSON.stringify({ email: email, password: password });
-    console.log(body);
+    //console.log(body);
     return this.http.post(this.hostBase + 'login-email', body, httpOption);
   }
   public logout() {
@@ -158,7 +158,6 @@ export class LoginService {
     }
     return false;
   }
-
   getToken(): string {
     if (sessionStorage.getItem("token") != null) {
       return sessionStorage.getItem("token")!;
@@ -173,7 +172,7 @@ export class LoginService {
       })
     }
     let body = JSON.stringify({password: password });
-    console.log(body);
+    //console.log(body);
     return this.http.post(this.hostBase + 'reset/'+token, body, httpOption);
   }
   resetAsk(email:string){
@@ -183,7 +182,7 @@ export class LoginService {
       })
     }
     let body = JSON.stringify({email:email });
-    console.log(body);
+    //console.log(body);
     return this.http.post(this.hostBase + 'reset-ask', body, httpOption);
   }
 

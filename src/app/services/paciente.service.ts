@@ -111,7 +111,6 @@ export class PacienteService {
 
     return this.http.post(this.hostBase,body,httpOptions);
   }
-
   deletePaciente(id:string):Observable<any>{
     let httpOptions={
       headers: new HttpHeaders(

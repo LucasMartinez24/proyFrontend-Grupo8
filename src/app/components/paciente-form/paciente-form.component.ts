@@ -11,11 +11,15 @@ import { PacienteService } from 'src/app/services/paciente.service';
 })
 export class PacienteFormComponent implements OnInit {
 
+  fechaActual!:string;
+  fechaBoolean:boolean=false;
   paciente = new Paciente();
   accion: string="";
 
   constructor(private pacienteService: PacienteService, private activatedRoute: ActivatedRoute, 
-    private router: Router,private toastr:ToastrService) { }
+    private router: Router,private toastr:ToastrService) { 
+    this.fechaActual = String(new Date().toLocaleDateString('es-ar'));
+    }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(
@@ -31,6 +35,20 @@ export class PacienteFormComponent implements OnInit {
     )
   }
 
+  comprobarFecha():boolean{
+    const fechaActualObj = new Date(this.fechaActual);
+    const fechaIngresadaObj = new Date(this.paciente.fechaNac);
+    console.log("Estableci fechas")
+    if (fechaIngresadaObj <= fechaActualObj) {
+      console.log("Mayor")
+      this.fechaBoolean = true
+      return true;
+    } else {
+      console.log("Menor")
+      this.fechaBoolean = false
+      return false
+    }
+  }
   
   cargarPaciente(id: string) {
     this.pacienteService.getPaciente(id).subscribe(
@@ -45,10 +63,13 @@ export class PacienteFormComponent implements OnInit {
         console.log(error);
       }
     )
-  }
+}
 
   guardarPaciente() {
     console.log(this.paciente);
+    this.comprobarFecha();
+    console.log(this.comprobarFecha())
+    if(this.fechaBoolean){
     this.pacienteService.createPaciente(this.paciente).subscribe(
       result => {
         if (result.status == 1) {
@@ -65,6 +86,9 @@ export class PacienteFormComponent implements OnInit {
         }
       }
     )
+  }else{
+    this.toastr.error('La fecha de nacimiento no puede ser mayor a la fecha actual')
+  }
 
 
   }
@@ -72,6 +96,9 @@ export class PacienteFormComponent implements OnInit {
 
   modificarPaciente() {
     console.log("Entrando a modificar paciente")
+    this.comprobarFecha();
+    console.log(this.comprobarFecha())
+    if(this.fechaBoolean){
     this.pacienteService.editPaciente(this.paciente).subscribe(
       result => {
         if (result.status == 1) {
@@ -88,6 +115,9 @@ export class PacienteFormComponent implements OnInit {
         }
       }
     )
+  }else{
+    this.toastr.error('La fecha de nacimiento no puede ser mayor a la fecha actual')
+  }
   }
 
   public cancelar() {

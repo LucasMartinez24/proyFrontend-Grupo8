@@ -101,7 +101,7 @@ const routes: Routes = [
     },
     canActivate:[VigilanteGuard]
   },
-   {
+  {
     path:'list-anuncio',component:ListAnuncioComponent,
     data:{
       rol: 'administrador'
@@ -121,6 +121,9 @@ const routes: Routes = [
       rol: 'administrador'
     },
     canActivate:[VigilanteGuard]
+  },
+  {
+    path:'turnos-disponibles',component:TurnosDisponiblesComponent,
   },
   {
     path:'list-anuncio-cliente',component:ListAnuncioClienteComponent,
@@ -164,6 +167,7 @@ const routes: Routes = [
     },
     canActivate:[VigilanteGuard]
   },
+
   {
     path:'turnos-disponibles',component:TurnosDisponiblesComponent,
   },
@@ -175,6 +179,7 @@ const routes: Routes = [
     },
     canActivate:[VigilanteGuard]
   },
+
   //lo siguiente siempre va al final
   {
     path:'**',

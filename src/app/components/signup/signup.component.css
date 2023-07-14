@@ -86,12 +86,12 @@ form {
 	text-align: center;
 }
 
-input {
+input, select {
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
-	width: 125%;
+	width: 100%;
 	z-index: 1;
 }
 p{
@@ -99,10 +99,11 @@ p{
 }
 
 .container {
+	z-index: 0;
 	display: flex;
 	align-self: center;
 	justify-self: center;
-	margin-top: 25%;
+	margin-top: 10%;
     margin-bottom: 40%;
 	background-color: #fff;
 	border-radius: 16px;

@@ -78,13 +78,13 @@
             </thead>
             <tbody>
                 <tr *ngFor="let e of especialistas">
-                    <td>{{e.dni}}</td>
-                    <td>{{e.nombre}}</td>
-                    <td>{{e.apellido}}</td>
-                    <td>{{e.profesion}}</td>
-                    <td class="d-flex justify-content-around">
+                    <td data-label="Dni">{{e.dni}}</td>
+                    <td data-label="Nombre">{{e.nombre}}</td>
+                    <td data-label="apellido">{{e.apellido}}</td>
+                    <td data-label="Profesion">{{e.profesion}}</td>
+                    <td data-label="Operaciones "  class="d-flex justify-content-around">
                         <button type="button" class="btn btn-warning" (click)="modificarEspecialista(e)">Modificar</button>
-                        <button type="button" class="btn btn-danger" (click)="eliminarEspecialista(e)">Eliminar</button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar" (click)="modalEliminar(e)">Eliminar</button>
                         <!-- podria ser turnos asignados -->
                     </td>
                 </tr>
@@ -92,4 +92,21 @@
         </table>
     </div>
 
+</div>
+<div class="modal fade" id="eliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Esta seguro que desea eliminar a este especialista?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <h4>El especialista {{especialistaEliminar.nombre + " " + especialistaEliminar.apellido}} sera eliminado</h4>
+            <button type="button" class="btn btn-danger d-flex align-self-center" (click)="eliminarEspecialista(especialistaEliminar)">Eliminar</button>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+    </div>
 </div>

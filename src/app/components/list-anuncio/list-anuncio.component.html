@@ -23,17 +23,17 @@
             </thead>
             <tbody>
                 <tr *ngFor=" let  a  of ancuncios | search:searchText">
-                    <td>{{a.titulo}}</td>
-                    <td>{{a.descripcion}}</td>
-                    <td>{{a.estado}}</td>
-                    <td>{{a.fechaDesde}}</td>
-                    <td>{{a.fechaHasta}}</td>
-                    <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="clickRecurso(a)">
+                    <td data-label="titulo">{{a.titulo}}</td>
+                    <td data-label="Descripcion"> {{a.descripcion}}</td>
+                    <td data-label="Estado">{{a.estado}}</td>
+                    <td data-label="Fecha Desde">{{a.fechaDesde}}</td>
+                    <td data-label="Fecha Hasta">{{a.fechaHasta}}</td>
+                    <td data-label="Operaciones"> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="clickRecurso(a)">
                         Recurso
                       </button>
                     <td class="d-flex justify-content-around">
                         <button type="button" class="btn btn-warning" (click)="modificarAnuncio(a._id)">Modificar</button>
-                        <button type="button" class="btn btn-danger" (click)="eliminarAnuncio(a._id)">Eliminar</button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar" (click)="modalEliminar(a._id)">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
@@ -60,7 +60,6 @@
                         <th scope="col">Descripcion</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Url</th>
-                       
                     </tr>
                 </thead>
                 <tbody>
@@ -80,3 +79,21 @@
       </div>
     </div>
   </div>
+  
+<div class="modal fade" id="eliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Esta seguro que desea eliminar a este anuncio?</h1>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <h4>El anuncio sera eliminado</h4>
+          <button type="button" class="btn btn-danger d-flex align-self-center" (click)="eliminarAnuncio(anuncioEliminar)">Eliminar</button>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+  </div>
+  </div>
+</div>

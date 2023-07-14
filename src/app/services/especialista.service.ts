@@ -14,10 +14,7 @@ export class EspecialistaService {
 /*
   constructor(private http: HttpClient) {
     this.hostBase = "http://3.82.255.160:3000/api/especialista/";
->>>>>>> c1484c80a4b093c3ce94f61043ab864f9f4f0bcc
-*/  
-}
-  
+  }
 
   getEspecialistas(): Observable<any> {
     const httpOption = {

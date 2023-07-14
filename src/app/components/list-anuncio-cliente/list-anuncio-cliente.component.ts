@@ -22,6 +22,7 @@ export class ListAnuncioClienteComponent implements OnInit {
   fecha:string
   valor :string
   rec:string
+  today = new Date()
   constructor(private  anuncioServcice:AnuncioService,private pd:DatePipe,private route:Router) { 
     this.anuncio=new Anuncio()
     this.anuncios= new Array<Anuncio>()
@@ -57,8 +58,8 @@ export class ListAnuncioClienteComponent implements OnInit {
         
       }
     )
-    this.fecha=String(new Date().toLocaleDateString('es-ar'))
-    this.fecha= this.pd.transform(this.fecha,"yyyy-dd-MM")!
+    
+    this.fecha= this.pd.transform(this.today,"yyyy-MM-dd")!
     console.log(this.fecha)
     this.anuncioServcice.getFechaAnuncios(this.fecha).subscribe(
       resul=>{

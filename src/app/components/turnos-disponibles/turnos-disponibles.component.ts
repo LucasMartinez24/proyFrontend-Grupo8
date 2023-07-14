@@ -15,11 +15,12 @@ import { TurnoService } from 'src/app/services/turno.service';
 export class TurnosDisponiblesComponent implements OnInit {
   turnos: Array<Turno>;
   turno: Turno = new Turno();
-  hayTurnos:boolean=true;
+  hayTurnos: boolean = true;
   misTurnos: Array<Turno>;
-  tengoTurnos:boolean=true;
+  tengoTurnos: boolean = true;
 
-    constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService,private toastr:ToastrService) {
+constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService, private toastr: ToastrService) {
+
     this.turnos = new Array<Turno>();
     this.misTurnos = new Array<Turno>();
 
@@ -29,8 +30,8 @@ export class TurnosDisponiblesComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  esAdmin(){
-    if(this.loginService.esAdmin()==true){
+  esAdmin() {
+    if (this.loginService.esAdmin() == true) {
       return true;
     }
     return false;
@@ -40,9 +41,9 @@ export class TurnosDisponiblesComponent implements OnInit {
     this.turnoService.getTurnosDisponibles().subscribe(
       result => {
         console.log(result);
-        if(result.length==0){
-          this.hayTurnos=false;
-        }else{
+        if (result.length == 0) {
+          this.hayTurnos = false;
+        } else {
           let unTicket = new Turno();
           result.forEach((element: any) => {
             Object.assign(unTicket, element);
@@ -62,8 +63,12 @@ export class TurnosDisponiblesComponent implements OnInit {
     this.turnoService.deleteTurno(turno._id).subscribe(
       result => {
         if (result.status == 1) {
-          alert(result.msg);
-          window.location.reload();
+
+          this.toastr.success('Turno eliminado correctamente', 'Turno Eliminado')
+
+          //setTimeout(function () {
+            window.location.reload();
+          //}, 2000); // 3000 representa el tiempo en milisegundos (3 segundos)
         }
       },
       error => {
@@ -79,16 +84,16 @@ export class TurnosDisponiblesComponent implements OnInit {
   async reservarTurno(turno: Turno) {
     this.turno = turno;
 
-    console.log("TURNO INICIAL:",this.turno)
+    console.log("TURNO INICIAL:", this.turno)
     const pacienteString = this.loginService.getUser();
-    
+
     let paciente = null;
 
     if (pacienteString !== null) {
       paciente = JSON.parse(pacienteString);
     }
 
-    console.log("PACIENTE en sesion:",paciente)
+    console.log("PACIENTE en sesion:", paciente)
 
     try {
       const result: any = await this.pacienteService.getPacienteDni(paciente.usuario.dni).toPromise();
@@ -106,13 +111,13 @@ export class TurnosDisponiblesComponent implements OnInit {
         this.turnoService.editTurno(this.turno).subscribe(
           result => {
             if (result.status == 1) {
-              this.toastr.success('Turno reservado correctamente','Turno reservado')
+              this.toastr.success('Turno reservado correctamente', 'Turno reservado')
 
               // if(paciente.rol.descripcion == "paciente"){
               //   this.router.navigate(["/home"])
               // }else{
-                //this.router.navigate(["/turnos-disponibles"])
-                window.location.reload();
+              //this.router.navigate(["/turnos-disponibles"])
+              window.location.reload();
               //}
 
             }
@@ -140,26 +145,30 @@ export class TurnosDisponiblesComponent implements OnInit {
     }
 
     this.turnoService.getMisTurnos(paciente.usuario.dni).subscribe(
-      (result)=>{
+      (result) => {
 
-        if(result.length==0){
-          this.tengoTurnos=false;
-        }else{
+        if (result.length == 0) {
+          this.tengoTurnos = false;
+        } else {
           let unTurno = new Turno();
 
           result.forEach((element: any) => {
-  
+
             if (element.paciente != null) {
               Object.assign(unTurno, element);
               this.misTurnos.push(unTurno);
               unTurno = new Turno();
             }
-  
+
           });
         }
-        
+
       }
     )
-}
+  }
+
+  darDeAltaTurnos(){
+    this.router.navigate(["/turno-form",0])
+  }
 
 }
