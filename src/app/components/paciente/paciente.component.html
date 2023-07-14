@@ -87,8 +87,8 @@
           <td data-label="Dni">{{p.dni}}</td>
           <td data-label="Nombre">{{p.nombre}}</td>
           <td data-label="Apellido">{{p.apellido}}</td>
-          <td data-label="Genero">{{p.genero}}</td>
           <td data-label="Fecha de Nacimiento">{{p.fechaNac | date: 'dd/MM/yyyy'}}</td>
+          <td data-label="Genero">{{p.genero}}</td>
           <td data-label="Operaciones" class="d-flex justify-content-around">
             <button type="button" class="btn btn-warning" (click)="modificarPaciente(p)">Modificar</button>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar"
