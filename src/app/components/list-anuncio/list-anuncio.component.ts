@@ -17,6 +17,8 @@ export class ListAnuncioComponent implements OnInit {
   ancuncios : Array<Anuncio>
   listRecurso: Array<Recurso>
   listRecrso!:Array<Recurso>
+  anuncioEliminarTitulo!:string;
+  anuncioEliminar!:string;
   searchText:string = ''
   constructor(private anuncioService:AnuncioService ,private route:Router,  private storageService: StorageService,private toastr:ToastrService ) { 
     this.ancuncios= new Array<Anuncio>()
@@ -100,7 +102,9 @@ elimarArchivo(ref : string){
   this.route.navigate(['form-anuncio/0'])
  }
 
-
+modalEliminar(data:string){
+  this.anuncioEliminar = data
+}
   }
   
 

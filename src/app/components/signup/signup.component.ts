@@ -35,6 +35,7 @@ export class SignupComponent implements OnInit {
   loadUsername:boolean=false;
   paciente!:Paciente;
   fechaActual!:string;
+  sexo!:string;
   id:string=""
   selectedRole!:Rol
   constructor(private usuarioService:LoginService, private activatedRoute:ActivatedRoute, private route:Router, private toastr:ToastrService,
@@ -128,6 +129,7 @@ export class SignupComponent implements OnInit {
       console.log(result);
       this.paciente.apellido = this.apellido; this.paciente.dni = this.usuario.dni
       this.paciente.nombre = this.nombre; this.paciente.fechaNac = this.fecha
+      this.paciente.genero = this.sexo;
       this.pacienteService.createPaciente(this.paciente).subscribe(
         result=>{
           console.log(result)
