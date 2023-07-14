@@ -23,10 +23,10 @@
         <input type="text" class="form-control form" [(ngModel)]="usuario.dni" id="dni" min="0.01" name="udni" required #dniInput="ngModel" placeholder="Ingrese su dni">
         <div *ngIf="dniInput.invalid && (dniInput.dirty || dniInput.touched)" class="alert alert-danger my-1 p-1">
             <div *ngIf="dniInput.errors?.['required']">
-                El nombre de usuario es requerido
+                El dni es requerido
             </div>
             <div *ngIf="dniInput.errors?.['min']">
-                El nombre de usuario debe ser mayor a 0
+                El dni debe ser mayor a 0
             </div>
         </div>
     </div>

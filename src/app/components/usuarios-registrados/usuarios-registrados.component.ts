@@ -48,7 +48,7 @@ export class UsuariosRegistradosComponent {
       properties: [
         { field: 'username', displayName: 'USUARIO' },
         { field: 'email', displayName: 'E-MAIL' },
-        { field: 'rol', displayName: 'ROL' },
+        { field: 'rol.descripcion', displayName: 'ROL' },
         { field: 'dni', displayName: 'DNI' }
       ],
       type: 'json',

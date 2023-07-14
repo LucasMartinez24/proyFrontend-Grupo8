@@ -1,5 +1,6 @@
 
-<div class="container ms-2 layout" *ngIf="!noData && !noPatient">
+<a [routerLink]="'/datosMedicos'" *ngIf="!noData && !noPatient" id="btnVolver" class="btn btn-danger p-2 mt-4 ms-4">Volver</a>
+<div class="container ms-1 layout" *ngIf="!noData && !noPatient">
     <div class="section-left">
     <h1 class="title-leftSection mt-2 mb-2" *ngIf="!choseOther">Ultimo control medico</h1>
     <h1 class="title-leftSection mt-2 mb-2" *ngIf="choseOther">Control medico del {{" "+this.datoMedicoVer.fecha}}</h1>
@@ -50,7 +51,7 @@
     </div>
 </div>
     <div class="section-right mt-4">
-        <a [routerLink]="'/datosMedicos'" class="btn btn-danger p-2">Volver</a>
+        <br>
         <h1 *ngIf="moreThan1" class="title-rightSection mt-4 mb-2">Historial de controles</h1>
         <input class="form-control" type="text" placeholder="Buscar control medico" [(ngModel)]="searchText" *ngIf="moreThan1">
         <table class="table table-bordered table-hover border-primary mt-5" *ngIf="moreThan1" >
@@ -108,10 +109,9 @@
                     <span class="prof mt-2">Usted no realizo ningun control en el puesto</span>
                     <div class="divider"></div>
                     <div class="bio">
-                        <a class="btnVolver" [routerLink]="'/home'">Volver</a>
+                        <a class="btnVolver"  [routerLink]="'/home'">Volver</a>
                     </div>
                 </div>
             </section>
         </div>
     </div>
-    <br><br>
