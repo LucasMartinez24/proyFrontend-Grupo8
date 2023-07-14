@@ -21,6 +21,12 @@ export class PacienteComponent implements OnInit {
   pacientesMujer: Array<Paciente>;
   pacienteDni: Array<Paciente>;
   dni!: string;
+  dato!: string;
+  pacienteFiltro: Array<Paciente>;
+  filtro!: boolean;
+  click!:boolean;
+  nombre!: string;
+  apellido!: string;
   fecha!:string;
   //dtOptions : DataTables.Settings = {}; 
   //dtTrigger =new Subject<any>();
@@ -36,6 +42,7 @@ export class PacienteComponent implements OnInit {
     this.pacientesHombreOtro = new Array<Paciente>();
     this.pacientesMujer = new Array<Paciente>();
     this.pacienteDni = new Array<Paciente>();
+    this.pacienteFiltro = new Array<Paciente>();
     this.pacienteElminar = new Paciente();
     this.obtenerPacientes();
     this.fecha = String(new Date().toLocaleDateString('es-ar'));
@@ -182,6 +189,39 @@ imprimirPdf() {
       },
       error => {
         this.toastr.warning('Error al buscar paciente por dni', 'Error')
+      }
+    )
+  }
+
+  obtenerPacienteNA() {
+    /*console.log("ENTRANDO A PACIENTE POR NOMBRE O APELLIDO");
+    this.pacientes = new Array<Paciente>();
+    this.pacienteService.getPacienteNA(this.dato).subscribe(
+      (result: any) => {
+        this.pacienteDni = result;
+
+        let unPaciente = new Paciente();
+        result.forEach((element: any) => {
+          Object.assign(unPaciente, element);
+          this.pacientes.push(unPaciente);
+          unPaciente = new Paciente();
+        });
+      },
+      error => {
+        this.toastr.warning('Error al buscar usuario por dni', 'Error')
+      }
+    )*/
+    this.click = true;
+
+    this.pacienteFiltro = new Array<Paciente>();
+
+    this.pacienteService.getPacienteNA(this.nombre, this.apellido).subscribe(
+      (result: any) => {
+        console.log(result);
+        this.pacienteFiltro = result;
+      },
+      error => {
+        console.log(error);
       }
     )
   }

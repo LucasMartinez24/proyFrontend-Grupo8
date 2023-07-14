@@ -14,6 +14,7 @@
                 <th scope="col">ESPECIALISTA</th>
                 <th scope="col">FECHA</th>
                 <th scope="col">HORA</th>
+                <th scope="col">CENTRO DE SALUD</th>
                 <th scope="col">ESTADO DEL TURNO</th>
                 <th scope="col">Operaciones</th>
             </tr>
@@ -24,6 +25,7 @@
                 <td data-label="especialista">{{t.especialista.apellido}},{{t.especialista.nombre}} - {{t.especialista.profesion}}</td>
                 <td data-label="fecha">{{t.fecha | date: 'dd/MM/yyyy'}}</td>
                 <td data-label="Hora">{{t.hora}}</td>
+                <td data-label="Hora">{{t.centroSalud}}</td>
                 <td data-label="Estado">{{t.estado}}</td>
                 <td data-label="Operaciones">
                     <button type="button" class="btn btn-primary" (click)="reservarTurno(t)">RESERVAR TURNO</button>
@@ -55,6 +57,7 @@
                 <th scope="col">Especialista</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
+                <th scope="col">Centro de Salud</th>
                 <th scope="col">Estado del turno</th>
                 
             </tr>
@@ -66,6 +69,7 @@
                 <td data-label="especialista">{{t.especialista.apellido}},{{t.especialista.nombre}} - {{t.especialista.profesion}}</td>
                 <td data-label="fecha">{{t.fecha | date: 'dd/MM/yyyy'}}</td>
                 <td data-label="hora">{{t.hora}}</td>
+                <td data-label="hora">{{t.centroSalud}}</td>
                 <td data-label="estado">{{t.estado}}</td>
                 
             </tr>
