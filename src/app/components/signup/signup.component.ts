@@ -53,6 +53,7 @@ export class SignupComponent implements OnInit {
       } else {
         this.modifica = true;
         this.id = params['id'];
+        
         console.log(this.modifica)
       }
     });
