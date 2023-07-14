@@ -121,14 +121,14 @@ export class TurnoFormComponent implements OnInit {
 
 
   modificarTurno() {
-    this.comprobarFecha();
     console.log(this.turno);
-  if(this.fechaBoolean){
+  if(this.comprobarFecha()){
     this.turnoService.editTurno(this.turno).subscribe(
       result => {
+        console.log(result)
         if (result.status == 1) {
           this.toastr.success('Turno modificado correctamente', 'Turno Modificado')
-          this.router.navigate(["turno"])
+          this.router.navigate(["turnos-disponibles"])
         }
       },
       error => {
@@ -169,6 +169,7 @@ export class TurnoFormComponent implements OnInit {
             turnoGuardado = true;
             console.log(this.turnoGuardado);
             this.toastr.success('Turno agregado correctamente', `Turnos Creados ${this.cantidadTurnos}`)
+            this.router.navigate(["turnos-disponibles"])
             //console.log("turno guardado"+i);
           // }else if(result.status == 3){
           //   this.turnoGuardado = false

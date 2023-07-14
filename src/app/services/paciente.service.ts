@@ -10,8 +10,8 @@ export class PacienteService {
   hostBase: string;
 
   constructor(private http:HttpClient) {
-    //this.hostBase = "http://3.82.255.160:3000/api/paciente/";
-    this.hostBase = "http://3.82.255.160:3000/api/paciente/";
+    //this.hostBase = "http://localhost:3000/api/paciente/";
+    this.hostBase = "http://localhost:3000/api/paciente/";
    }
 
   getPaciente(id:string):Observable<any>{

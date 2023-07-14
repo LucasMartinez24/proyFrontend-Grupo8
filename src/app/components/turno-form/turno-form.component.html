@@ -58,16 +58,17 @@
 
         <div class="mb-3" *ngIf="accion!='update'">
 
-            <label for="lapsot" class="form-label">Seleccione el lapso de tiempo entre cada turno</label>
+            <label for="lapsot" class="form-label">ingrese lapso de tiempo entre cada turno (minutos)</label>
             <!-- <input type="time" class="form-control" id="hora" name="lapso" required placeholder="Ingrese lapso"
                 [(ngModel)]="lapso" #lapsoT="ngModel"> -->
-            <select class="form-select" id="lapsot" name="lapso" [(ngModel)]="lapso" required
+            <input type="number" class="form-control" id="lapsot" name="lapso" #lapsoT="ngModel" [(ngModel)]="lapso" required>
+            <!-- <select class="form-select" id="lapsot" name="lapso" [(ngModel)]="lapso" required
                 #lapsoT="ngModel">
                 <option value="10">10 minutos</option>
                 <option value="15">15 minutos</option>
                 <option value="30">30 minutos</option>
                 <option value="60">1 hora</option>
-            </select>
+            </select> -->
 
             <div *ngIf="lapsoT.invalid && (lapsoT.dirty || lapsoT.touched)" class="alert alert-danger">
                 <div *ngIf="lapsoT.errors?.['required']">
