@@ -1,6 +1,5 @@
-<div class="m-5 d-flex justify-content-center align-items-center align-items-center">
-
-    <form class="m-5 w-50 text-white p-3 formstyle" #turnoForm="ngForm">
+<div class="mt-4 mb-4 d-flex justify-content-center align-items-center align-items-center">
+    <form class="text-white p-3 formstyle" #turnoForm="ngForm">
         <h3 class="text-center">Dar de Alta Turnos de Un Especialista</h3>
         <div class="mb-3">
             <label for="espectador" class="form-label text-white">Especialista:</label>
@@ -72,7 +71,7 @@
         </div>
         <div class="mb-3">
             <label for="precio" class="form-label">Estado: </label>
-            <input type="text" class="form-control" id="estado" required name="estado" [(ngModel)]="turno.estado"
+            <input type="text" disabled class="form-control" id="estado" required name="estado" [(ngModel)]="turno.estado"
                 #precio="ngModel">
         </div>
 

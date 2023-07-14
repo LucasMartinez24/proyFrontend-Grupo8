@@ -1,5 +1,5 @@
 <header>
-  <a href="#" class="logo">Centro de Salud <br> "Los Huaycos"</a>
+  <a href="#" class="logo">Centro de Salud <br> "Los Huaicos"</a>
   <div class="menuToggle" (click)="toggleMenu()"></div>
   <nav>
     <ul>
@@ -38,10 +38,9 @@
         </ul>
       </li>
       <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/list-anuncio-cliente">Anuncios</a></li>
-      <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/calendarVisitante">Calendario de Actividades</a>
+      <li *ngIf="esAdministrador()==false"><a routerLink="/calendarVisitante">Calendario de Actividades</a>
       </li>
-      <li *ngIf="loginService.userLoggedIn() && !bothLogin"><a [routerLink]="'turnos-disponibles'">Ver Turnos
-          disponibles</a></li>
+      <li ><a [routerLink]="'/turnos-disponibles'">Ver Turnos disponibles</a></li>
       <li *ngIf="esPaciente()"><a [routerLink]="'/datosMedicosHome/'+loginService.userLoggedDNI()">Mis Controles</a></li>
       <li class="logins">
         <a routerLink="/login" style="color: black;" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !esAmbas() ">Iniciar Sesion</a>
