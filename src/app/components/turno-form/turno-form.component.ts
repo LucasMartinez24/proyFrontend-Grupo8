@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 //import * as moment from 'moment';
@@ -16,20 +17,20 @@ import { TurnoService } from 'src/app/services/turno.service';
 })
 export class TurnoFormComponent implements OnInit {
   turno: Turno;
-  fechaActual!:string;
+  fechaActual!: string | null;
   fechaBoolean:boolean=false;
   especialistas: Array<Especialista>;
   accion: string = "";
   pacientes: Array<Paciente>;
   cantidadTurnos!: number;
   lapso!: string;
-
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private turnoService: TurnoService,
+  today=Date();
+  constructor(private activatedRoute: ActivatedRoute,private pd: DatePipe, private router: Router, private turnoService: TurnoService,
     private especialistaService: EspecialistaService, private pacienteService: PacienteService, private toastr: ToastrService) {
     this.turno = new Turno();
     this.especialistas = new Array<Especialista>();
     this.pacientes = new Array<Paciente>();
-    this.fechaActual = String(new Date().toLocaleDateString('es-ar'));
+    this.fechaActual = this.pd.transform(this.today, 'yyyy-MM-dd');
   }
 
   ngOnInit(): void {
@@ -86,8 +87,7 @@ export class TurnoFormComponent implements OnInit {
     )
   }
   comprobarFecha():boolean{
-    this.fechaActual = new Date().toISOString().split('T')[0];
-    console.log(new Date().toLocaleDateString('es-ar'))
+    if(this.fechaActual!=null){
     const fechaActualObj = new Date(this.fechaActual);
     const fechaIngresadaObj = new Date(this.turno.fecha);
     console.log(fechaActualObj + ' Actual')
@@ -100,6 +100,8 @@ export class TurnoFormComponent implements OnInit {
       console.log("Menor")
       return false
     }
+    }
+    return false
   }
   cargarTurno(id: string) {
     this.turnoService.getTurno(id).subscribe(
@@ -185,10 +187,10 @@ export class TurnoFormComponent implements OnInit {
 
     // if(resultadoService==true){
     //   this.toastr.success('Turnos registrados correctamente', 'Turnos Creados')
-      
+
     //   this.router.navigate(["turnos-disponibles"])
-     
-      
+
+
     // }else{
     //   this.toastr.warning('Error en registrar los Turnos ', 'Error')
     // }
