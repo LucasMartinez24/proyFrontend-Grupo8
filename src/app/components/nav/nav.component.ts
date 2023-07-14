@@ -1,7 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { ActivatedRoute, NavigationEnd, Router, ActivatedRouteSnapshot } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  ActivatedRouteSnapshot,
+} from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { VigilanteGuard } from 'src/app/vigilante.guard';
@@ -10,24 +21,23 @@ import { GooService } from 'src/app/services/goo.service';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.css'],
 })
-export class NavComponent implements OnInit{
+export class NavComponent implements OnInit {
   toggleMenu() {
     const header = document.querySelector('header');
-    if(header !=null){
+    if (header != null) {
       header.classList.toggle('active');
     }
   }
-
 
   logout() {
     this.loginService.logout();
   }
   stickyHeader = false;
   activo: boolean = false;
-  bothLogin:boolean=false;
-  isUserVerified!:boolean;
+  bothLogin: boolean = false;
+  isUserVerified!: boolean;
   activeRoute: string = '';
   //NAVBAR
   @HostListener('window:scroll', [])
@@ -36,62 +46,62 @@ export class NavComponent implements OnInit{
   }
   @ViewChild('menuIcon') menuIcon!: ElementRef;
   @ViewChild('navmenu') navmenu!: ElementRef;
-  userStatus!:boolean;
+  userStatus!: boolean;
   constructor(
     private readonly oAuthService: OAuthService,
     public loginService: LoginService,
     private router: Router,
     private http: HttpClient,
-    private esAdmin:VigilanteGuard,
-    private activatedRoute:ActivatedRoute,
+    private esAdmin: VigilanteGuard,
+    private activatedRoute: ActivatedRoute,
     private googleService: GooService
-  ) {
-
-  }
+  ) {}
   ngOnInit(): void {
     this.isUserVerified = this.loginService.getUserStatus();
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.activeRoute = event.url;
-        console.log(this.activeRoute)
+        // Borra la clase 'active' del header
+        const header = document.querySelector('header');
+        if(header!=null){
+          header.classList.remove('active');
+        }
       }
     });
 
     console.log(this.esLoggedGoogle());
     console.log(this.bothLogin);
-    console.log(this.loginService.userLoggedIn())
+    console.log(this.loginService.userLoggedIn());
   }
-  esLoggedGoogle(){
+  esLoggedGoogle() {
     return this.loginService.userLoggedInGoogle();
-
   }
-  esAmbas(){
-    return this.googleService.bothLogin()
+  esAmbas() {
+    return this.googleService.bothLogin();
   }
-  esAdministrador(){
+  esAdministrador() {
     return this.loginService.esAdmin();
   }
-  esPaciente(){
+  esPaciente() {
     return this.loginService.esPaciente();
   }
-  esVisitante(){
+  esVisitante() {
     return this.loginService.esVisitante();
   }
-  logOutComponent(){
-    this.logout()
-    this.router.navigate(['/home'])
+  logOutComponent() {
+    this.logout();
+    this.router.navigate(['/home']);
   }
-  logoutGoogle(){
+  logoutGoogle() {
     this.oAuthService.logOut();
-    sessionStorage.clear()
-    this.router.navigate(['/home'])
+    sessionStorage.clear();
+    this.router.navigate(['/home']);
   }
-  bothLogOut(){
-  this.logout();
-  console.log("primer logout")
-  this.logoutGoogle();
-  this.bothLogin = false;
-  console.log("Segundo logout")
+  bothLogOut() {
+    this.logout();
+    console.log('primer logout');
+    this.logoutGoogle();
+    this.bothLogin = false;
+    console.log('Segundo logout');
   }
 }
