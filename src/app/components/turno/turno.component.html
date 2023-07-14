@@ -17,13 +17,13 @@
         </thead>
         <tbody>
             <tr *ngFor="let t of turnos">
-                <th scope="row">{{t._id}}</th>
-                <td>{{t.paciente?.apellido}},{{t.paciente?.nombre}}</td>
-                <td>{{t.especialista.apellido}},{{t.especialista.nombre}} - {{t.especialista.profesion}}</td>
-                <td>{{t.fecha | date: 'dd/MM/yyyy'}}</td>
-                <td>{{t.hora}}</td>
-                <td>{{t.estado}}</td>
-                <td>
+                <td data-label="Id" scope="row">{{t._id}}</td>
+                <td data-label="Paciente">{{t.paciente?.apellido}},{{t.paciente?.nombre}}</td>
+                <td data-label="especialista">{{t.especialista.apellido}},{{t.especialista.nombre}} - {{t.especialista.profesion}}</td>
+                <td data-label="fecha">{{t.fecha | date: 'dd/MM/yyyy'}}</td>
+                <td data-label="hora">{{t.hora}}</td>
+                <td data-label="estado">{{t.estado}}</td>
+                <td data-label="Operaciones">
                     <!-- <button type="button" class="btn btn-primary" (click)="modificarTurno(t)">RESERVAR TURNO</button> -->
                     <button type="button" class="btn btn-warning" (click)="modificarTurno(t)">MODIFICAR TURNO</button>
                     <button type="button" class="btn btn-danger" (click)="eliminarTurno(t)">ELIMINAR TURNO</button>
