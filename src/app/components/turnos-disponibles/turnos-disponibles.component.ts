@@ -61,8 +61,12 @@ export class TurnosDisponiblesComponent implements OnInit {
     this.turnoService.deleteTurno(ticket._id).subscribe(
       result => {
         if (result.status == 1) {
-          alert(result.msg);
-          window.location.reload();
+          
+          this.toastr.success('Turno eliminado correctamente','Turno Eliminado')
+          
+          setTimeout(function () {
+            window.location.reload();
+          }, 2000); // 3000 representa el tiempo en milisegundos (3 segundos)
         }
       },
       error => {

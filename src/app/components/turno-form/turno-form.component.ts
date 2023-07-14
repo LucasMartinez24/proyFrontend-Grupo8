@@ -18,6 +18,9 @@ export class TurnoFormComponent implements OnInit {
   especialistas: Array<Especialista>;
   accion: string = "";
   pacientes: Array<Paciente>;
+  cantidadTurnos!: number;
+  lapso!: string;
+
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private turnoService: TurnoService,
     private especialistaService: EspecialistaService, private pacienteService: PacienteService, private toastr: ToastrService) {
     this.turno = new Turno();
@@ -91,25 +94,6 @@ export class TurnoFormComponent implements OnInit {
     )
   }
 
-  guardarTurno() {
-
-    this.turno.paciente = null;
-
-    console.log(this.turno);
-
-    this.turnoService.createTurno(this.turno).subscribe(
-      result => {
-        if (result.status == 1) {
-          this.toastr.success('Turno agregado correctamente','Turno Creado')
-          this.router.navigate(["turnos-disponibles"])
-        }
-      },
-      error => {
-        this.toastr.warning(error)
-      }
-    )
-  }
-
   modificarTurno() {
     this.turnoService.editTurno(this.turno).subscribe(
       result => {
@@ -126,6 +110,72 @@ export class TurnoFormComponent implements OnInit {
 
   public cancelar() {
     this.router.navigate(["turno"]);
+  }
+
+  // guardarTurno() {
+  //   console.log(this.turno);
+
+  //   this.turnoService.createTurno(this.turno).subscribe(
+  //     result => {
+  //       if (result.status == 1) {
+
+  //         this.toastr.success('Turno agregado correctamente', 'Turno Creado')
+  //         //this.router.navigate(["turnos-disponibles"])
+  //         //console.log("turno guardado");
+  //       }
+  //     },
+  //     error => {
+  //       this.toastr.warning(error)
+  //     }
+  //   )
+  // }
+
+  guardarTurno() {
+    let resultadoService;
+
+    // Convert the initial hour from string to Date object
+    const initialHour = new Date(`1970-01-01T${this.turno.hora}`);
+
+    // Calculate the time interval in milliseconds based on the selected lapso
+    const timeInterval = parseInt(this.lapso) * 60000;
+
+    for (let i = 0; i < this.cantidadTurnos; i++) {
+
+      if (i != 0) {
+        const nextStartTime = new Date(initialHour.getTime() + i * timeInterval);
+        const hourStr = nextStartTime.getHours().toString().padStart(2, '0');
+        const minutesStr = nextStartTime.getMinutes().toString().padStart(2, '0');
+
+        this.turno.hora = `${hourStr}:${minutesStr}`;
+      }
+
+      console.log(this.turno);
+
+      this.turnoService.createTurno(this.turno).subscribe(
+        result => {
+          if (result.status == 1) {
+            resultadoService=true;
+            //this.toastr.success('Turno agregado correctamente', 'Turno Creado')
+            //this.router.navigate(["turnos-disponibles"])
+            console.log("turno guardado"+i);
+          }
+        },
+        error => {
+          resultadoService=false;
+          //this.toastr.warning(error)
+        }
+      )
+    }
+
+    if(resultadoService){
+      this.toastr.success('Turnos registrados correctamente', 'Turnos Creados')
+      
+      this.router.navigate(["turnos-disponibles"])
+     
+      
+    }else{
+      this.toastr.warning('Error en registrar los Turnos ', 'Error')
+    }
   }
 
 }

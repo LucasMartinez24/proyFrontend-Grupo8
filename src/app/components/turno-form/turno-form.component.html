@@ -1,17 +1,18 @@
-<div class="m-5 d-flex justify-content-center align-items-center">
+<div class="m-5 d-flex justify-content-center align-items-center align-items-center">
 
-    <!--FORM-->
-    <form class="m-5 w-50 formulario-azul text-white p-3 formstyle" #turnoForm="ngForm">
-        <h3 class="text-center">Dar de Alta un  Turno</h3>
+    <form class="m-5 w-50 text-white p-3 formstyle" #turnoForm="ngForm">
+        <h3 class="text-center">Dar de Alta Turnos de Un Especialista</h3>
         <div class="mb-3">
             <label for="espectador" class="form-label text-white">Especialista:</label>
             <select class="form-select" id="especialista" name="especialista" [(ngModel)]="turno.especialista" required
                 #especialista="ngModel">
-                <option *ngFor="let especialista of especialistas" [ngValue]="especialista">{{especialista.apellido}},
+                <option *ngFor="let especialista of especialistas" [ngValue]="especialista">
+                    {{especialista.apellido}},
                     {{especialista.nombre}} - Profesión: {{especialista.profesion}}</option>
             </select>
-            <!-- validacion -->
-            <div *ngIf="especialista.invalid && (especialista.dirty || especialista.touched)" class="alert alert-danger">
+
+            <div *ngIf="especialista.invalid && (especialista.dirty || especialista.touched)"
+                class="alert alert-danger">
                 <div *ngIf="especialista.errors?.['required']">
                     Debe seleccionar un especialista.
                 </div>
@@ -21,7 +22,7 @@
             <label for="fecha" class="form-label">Fecha:</label>
             <input type="date" class="form-control" id="fecha" name="fecha" required
                 placeholder="Ingrese fecha del turno" [(ngModel)]="turno.fecha" #fecha="ngModel">
-            <!-- validacion -->
+
             <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)" class="alert alert-danger">
                 <div *ngIf="fecha.errors?.['required']">
                     Debe ingresar fecha del turno a registrar.
@@ -29,21 +30,52 @@
             </div>
         </div>
         <div class="mb-3">
-            <label for="fecha" class="form-label">Hora:</label>
-            <input type="time" class="form-control" id="hora" name="hora" required
-                placeholder="Ingrese fecha del turno" [(ngModel)]="turno.hora" #hora="ngModel">
-            <!-- validacion -->
-            <div *ngIf="hora.invalid && (hora.dirty || hora.touched)" class="alert alert-danger">
-                <div *ngIf="hora.errors?.['required']">
+            <label for="hora" class="form-label">Hora de Inicio:</label>
+            <input type="time" class="form-control" id="hora" name="hora" required placeholder="Ingrese fecha del turno"
+                [(ngModel)]="turno.hora" #horaI="ngModel">
+
+            <div *ngIf="horaI.invalid && (horaI.dirty || horaI.touched)" class="alert alert-danger">
+                <div *ngIf="horaI.errors?.['required']">
                     Debe ingresar hora del turno a registrar.
                 </div>
             </div>
         </div>
         <div class="mb-3">
-            <label for="precio" class="form-label">Estado: </label>
-            <input type="text" class="form-control" id="estado" required name="estado" [(ngModel)]="turno.estado" #precio="ngModel">
+            <label for="lapsot" class="form-label">Seleccione el lapso de tiempo entre cada turno</label>
+            <!-- <input type="time" class="form-control" id="hora" name="lapso" required placeholder="Ingrese lapso"
+                [(ngModel)]="lapso" #lapsoT="ngModel"> -->
+            <select class="form-select" id="lapsot" name="lapso" [(ngModel)]="lapso" required
+                #lapsoT="ngModel">
+                <option value="10">10 minutos</option>
+                <option value="15">15 minutos</option>
+                <option value="30">30 minutos</option>
+                <option value="60">1 hora</option>
+            </select>
+
+            <div *ngIf="lapsoT.invalid && (lapsoT.dirty || lapsoT.touched)" class="alert alert-danger">
+                <div *ngIf="lapsoT.errors?.['required']">
+                    Debe ingresar el lapso de tiempo entre cada turno
+                </div>
+            </div>
         </div>
-        
+        <div class="mb-3">
+            <label for="fecha" class="form-label">¿Cuántos turnos de este especialista quiere dar de alta
+                aproximadamente?</label>
+            <input type="number" class="form-control" id="hora" name="cantidadTurnos" required
+                placeholder="Ingrese cantidad" [(ngModel)]="cantidadTurnos" #cantidad="ngModel">
+
+            <div *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)" class="alert alert-danger">
+                <div *ngIf="cantidad.errors?.['required']">
+                    Debe ingresar la cantidad.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="precio" class="form-label">Estado: </label>
+            <input type="text" class="form-control" id="estado" required name="estado" [(ngModel)]="turno.estado"
+                #precio="ngModel">
+        </div>
+
 
         <button *ngIf="accion=='new'" type="submit" class="btn btn-warning" (click)="guardarTurno()"
             [disabled]="turnoForm.invalid">Registrar Turno</button>
@@ -51,5 +83,5 @@
             Turno</button>
         <button type="submit" class="btn btn-danger ms-2" (click)="cancelar()">Cancelar</button>
     </form>
-    <!--FORM-->
+
 </div>
