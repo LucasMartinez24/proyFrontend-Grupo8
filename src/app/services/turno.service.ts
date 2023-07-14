@@ -9,6 +9,7 @@ import { Turno } from '../models/turno';
 export class TurnoService {
   hostBase: string;
   constructor(private http: HttpClient) {
+    //3.82.255.160:
     this.hostBase = "http://3.82.255.160:3000/api/turno/";
   }
 

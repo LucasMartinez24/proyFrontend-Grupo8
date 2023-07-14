@@ -55,12 +55,10 @@ export class ListAnuncioComponent implements OnInit {
  }
  public eliminarAnuncio(id :string){
   this.listRecrso= new Array<Recurso>()
-    this.anuncioService.getAnuncios().subscribe(
+    this.anuncioService.getAnuncioId(id).subscribe(
       result=>{
-       // console.log(result[0])
-         this.listRecrso=result[0].recursos
-         // console.log(this.listRecrso , "esto es")
-         // console.log(this.listRecrso[0].referencia)
+  
+         this.listRecrso=result.recursos
           for(let i= 0;i < this.listRecrso.length; i++){
             console.log(this.listRecrso[i])
              if(this.listRecrso[i].tipo != "url"){

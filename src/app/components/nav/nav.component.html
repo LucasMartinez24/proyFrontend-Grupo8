@@ -39,6 +39,7 @@
           </li>
           <li><a href="#">Gestionar Anuncios<b>▼</b></a>
             <ul>
+
               <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio">Tabla y Creación de Anuncios</a></li>
               <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio-cliente">Visualizar Anuncios</a></li>
             </ul>

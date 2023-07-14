@@ -20,18 +20,42 @@
                   <th scope="col">Email</th>
                   <th scope="col">Rol</th>
                   <th scope="col">DNI</th>
+                  <th scope="col">Operaciones</th>
               </tr>
           </thead>
           <tbody>
               <tr *ngFor="let p of usuarios">
-                  <td>{{p.username}}</td>
-                  <td>{{p.email}}</td>
-                  <td>{{p.rol}}</td>
-                  <td>{{p.dni}}</td>
-
+                  <td data-label="Username">{{p.username}}</td>
+                  <td data-label="Email">{{p.email}}</td>
+                  <td data-label="Rol">{{p.rol.descripcion}}</td>
+                  <td data-label="Dni">{{p.dni}}</td>
+                  <td data-label="Operaciones" class="d-flex justify-content-around">
+                    <!--<button type="button" class="btn btn-warning" (click)="modificarUsuario(p)">Modificar</button>-->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar"
+                    (click)="modalEliminar(p)">Eliminar</button>
+                  </td>
               </tr>
           </tbody>
       </table>
   </div>
 </div>
-  
+<div class="modal fade" id="eliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Esta seguro que desea eliminar este usuario?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>El usuario {{usuarioEliminar.username + " con rol " + usuarioEliminar.rol.descripcion}} sera eliminado</h4>
+        <button type="button" class="btn btn-danger d-flex align-self-center"
+          (click)="eliminarUsuario(usuarioEliminar)">Eliminar</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

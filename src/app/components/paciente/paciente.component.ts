@@ -249,7 +249,7 @@ imprimirPdf() {
     this.router.navigate(["paciente-form", 0])
   }
   verControl(paciente: Paciente) {
-    this.router.navigate(['pacientesHome', paciente.dni])
+    this.router.navigate(['datosMedicosHome', paciente.dni])
   }
   generarExcel(paciente: Paciente) {
     console.log('entrando a generar excel')
