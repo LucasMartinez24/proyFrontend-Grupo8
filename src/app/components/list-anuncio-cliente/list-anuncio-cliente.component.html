@@ -1,10 +1,18 @@
-<br><br><br><br>
+
+<div class="contenedor">
+  <p>¡Anuncio</p>
+    <ul>
+<li>Nuevo!</li>
+<li>Nuevo!</li>
+        <li>Nuevo!</li>
+    </ul>
+</div>
+
+<br><br><br><br><br><br>
 
 <div class="container">
-<div class="card mb-3" style="max-width: 1000px;">
-  <div class="card-headerv text-dark text-center bg-warning ">
-    !!NUEVO!!
-  </div>
+<div class="card mb-3 card-principal" style="max-width: 1000px;">
+ 
   <div class="row g-0">
     <div class="col-md-6 mb-md-0 p-md-4">
       <div *ngIf="valor == 'no'">
@@ -26,9 +34,13 @@
      
     <div class="col-md-6 ">
       <div class="card-body">
-        <h3 class="blog-card-caption card-title">{{anuncio.titulo}}</h3>
-        <p class="card-text">{{anuncio.descripcion}} </p>
-        <p class="card-text"><small class="text-muted">Fecha disponible: {{anuncio.fechaHasta}}</small></p>
+        <br>
+        <h1 class="blog-card-caption card-title">{{anuncio.titulo}}</h1>
+        <br>
+
+        <h2 >{{anuncio.descripcion}} </h2>
+        <br>
+        <h4>Fecha disponible: {{anuncio.fechaHasta}}</h4>
         <button class="btn btn-primary" (click)="verAnuncion1()" >ver anuncio </button>
       </div>
     </div>
@@ -41,7 +53,7 @@
 <div class="container">
   <div class="row">
    
-    <div class="col-md-4" *ngFor=" let  a  of anuncios">
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" *ngFor=" let  a  of anuncios">
        
        <div class="blog-card blog-card-blog">
         

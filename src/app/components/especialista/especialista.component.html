@@ -26,11 +26,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let e of especialistas">
-                    <td>{{e.dni}}</td>
-                    <td>{{e.nombre}}</td>
-                    <td>{{e.apellido}}</td>
-                    <td>{{e.profesion}}</td>
-                    <td class="d-flex justify-content-around">
+                    <td data-label="Dni">{{e.dni}}</td>
+                    <td data-label="Nombre">{{e.nombre}}</td>
+                    <td data-label="apellido">{{e.apellido}}</td>
+                    <td data-label="Profesion">{{e.profesion}}</td>
+                    <td data-label="Operaciones "  class="d-flex justify-content-around">
                         <button type="button" class="btn btn-warning" (click)="modificarEspecialista(e)">Modificar</button>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar" (click)="modalEliminar(e)">Eliminar</button>
                         <!-- podria ser turnos asignados -->

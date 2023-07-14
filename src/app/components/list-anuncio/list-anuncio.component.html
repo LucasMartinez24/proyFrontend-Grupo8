@@ -23,12 +23,12 @@
             </thead>
             <tbody>
                 <tr *ngFor=" let  a  of ancuncios | search:searchText">
-                    <td>{{a.titulo}}</td>
-                    <td>{{a.descripcion}}</td>
-                    <td>{{a.estado}}</td>
-                    <td>{{a.fechaDesde}}</td>
-                    <td>{{a.fechaHasta}}</td>
-                    <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="clickRecurso(a)">
+                    <td data-label="titulo">{{a.titulo}}</td>
+                    <td data-label="Descripcion"> {{a.descripcion}}</td>
+                    <td data-label="Estado">{{a.estado}}</td>
+                    <td data-label="Fecha Desde">{{a.fechaDesde}}</td>
+                    <td data-label="Fecha Hasta">{{a.fechaHasta}}</td>
+                    <td data-label="Operaciones"> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="clickRecurso(a)">
                         Recurso
                       </button>
                     <td class="d-flex justify-content-around">
