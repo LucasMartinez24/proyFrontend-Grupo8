@@ -196,6 +196,6 @@ export class GooService {
       })
     }
     let body = JSON.stringify({email:email});
-    return this._http.post('http://lccalhost:3000/api/usuario/' +'gmail', body, httpOption);
+    return this._http.post('http://localhost:3000/api/usuario/' +'gmail', body, httpOption);
   }
 }
