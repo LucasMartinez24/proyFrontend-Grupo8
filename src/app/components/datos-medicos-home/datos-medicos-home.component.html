@@ -18,7 +18,7 @@
             <p class="card-text">IMC: {{' '+datoMedicoVer.imc}}</p>
             <p class="card-text">Temperatura: {{' '+datoMedicoVer.temperatura}}</p>
             <p class="card-text">Centro de Salud: {{' '+datoMedicoVer.centroSalud}}</p>
-            <p class="card-text" *ngIf="gender">Fecha de ultima Menstruacion: {{' '+datoMedicoVer.fechaMenstruacion | date}}</p>
+            <p class="card-text" *ngIf="gender">Fecha de ultima Menstruacion: {{' '+datoMedicoVer.fechaMenstruacion | date: 'dd/MM/yyyy'}}</p>
             <hr class="mt-2 mb-2">
             <div class="descripcion">
                 <p class="text-diagnostico">
@@ -59,6 +59,7 @@
                     <th scope="col">Nombre Completo</th>
                     <th scope="col">Fecha</th>
                     <th scope="col">Diagnostico</th>
+                    <th scope="col" *ngIf="gender">Fecha de Ultima Menstruacion</th>
                     <th scope="col">Centro de Salud</th>
                     <th scope="col">Operaciones</th>
                 </tr>
@@ -70,6 +71,7 @@
                     <td>{{d.pacienteObj.nombre + ' ' + d.pacienteObj.apellido}}</td>
                     <td>{{d.fecha}}</td>
                     <td>{{d.diagnostico}}</td>
+                    <td *ngIf="gender">{{d.fechaMenstruacion}}<td>
                     <td>{{d.centroSalud}}</td>
                     <td>
                         <button type="button" class="btnDetalle" (click)="seeData(d)">Ver control</button>
