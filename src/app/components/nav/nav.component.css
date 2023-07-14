@@ -73,13 +73,19 @@ header ul li ul li ul{
 @media (max-width:900px) {
   header{
     padding: 10px 20px;
+    z-index: 100000;
   }
   header nav{
+    z-index: 100000;
     position: absolute;
     width: 100%;
-    top: 66px;
+    top: 96px;
     left: 0;
     background: #5bc3c8;
+    display: none;
+  }
+  header.active nav{
+    display: initial;
   }
   header nav ul li{
     width: 100%;
@@ -121,5 +127,12 @@ header ul li ul li ul{
     height: 3px;
     background: #fff;
     transform: translateY(8px);
+  }
+  header.active .menuToggle::before{
+    transform: rotate(45deg);
+    box-shadow: 0 0 #fff;
+  }
+  header.active .menuToggle::after{
+    transform: rotate(-45deg);
   }
 }
