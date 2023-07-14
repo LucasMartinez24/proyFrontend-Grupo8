@@ -171,4 +171,8 @@ constructor(private router: Router, private turnoService: TurnoService, private 
     this.router.navigate(["/turno-form",0])
   }
 
+  esAdministrador(){
+    return this.loginService.esAdmin();
+  }
+
 }
