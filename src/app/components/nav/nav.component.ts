@@ -13,7 +13,12 @@ import { GooService } from 'src/app/services/goo.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit{
-
+  toggleMenu() {
+    const header = document.querySelector('header');
+    if(header !=null){
+      header.classList.toggle('active');
+    }
+  }
 
 
   logout() {
@@ -31,7 +36,6 @@ export class NavComponent implements OnInit{
   }
   @ViewChild('menuIcon') menuIcon!: ElementRef;
   @ViewChild('navmenu') navmenu!: ElementRef;
-  private routerSubscription: Subscription;
   userStatus!:boolean;
   constructor(
     private readonly oAuthService: OAuthService,
@@ -42,11 +46,7 @@ export class NavComponent implements OnInit{
     private activatedRoute:ActivatedRoute,
     private googleService: GooService
   ) {
-    this.routerSubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.resetClasses();
-      }
-    });
+
   }
   ngOnInit(): void {
     this.isUserVerified = this.loginService.getUserStatus();
@@ -87,39 +87,11 @@ export class NavComponent implements OnInit{
     sessionStorage.clear()
     this.router.navigate(['/home'])
   }
-  ngOnDestroy() {
-    this.routerSubscription.unsubscribe();
-  }
-
-  toggleMenu() {
-    const iconElement = document.querySelector('i');
-    const buttonElement = document.querySelector('.navMenu');
-    if (iconElement && buttonElement) {
-      if (this.activo == false) {
-        iconElement.classList.replace('bx-menu', 'bx-x-circle');
-        buttonElement.classList.add('open');
-        this.activo = true;
-      } else {
-          iconElement.classList.replace('bx-x-circle', 'bx-menu');
-          buttonElement.classList.remove('open');
-          this.activo = false;
-      }
-    }
-  }
-
   bothLogOut(){
   this.logout();
   console.log("primer logout")
   this.logoutGoogle();
   this.bothLogin = false;
   console.log("Segundo logout")
-  }
-  resetClasses() {
-    const iconElement = document.querySelector('i');
-    const buttonElement = document.querySelector('.navMenu');
-    if (iconElement && buttonElement) {
-      iconElement.classList.replace('bx-x-circle', 'bx-menu');
-      buttonElement.classList.remove('open');
-    }
   }
 }
