@@ -50,10 +50,10 @@
                     </div>
                   </div>
               
-                <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-lg"  (click)="guardar()" *ngIf="nextbutton=='guardar'" [disabled]="anuncioForm.invalid"> Siguiente</button>
-                    <button type="button" class="btn btn-primary btn-lg"  (click)="modificarAnuncio1()" *ngIf="nextbutton=='modificar'"> Siguiente</button>
-                    <button type="button" class="btn btn-primary btn-lg"  (click)="cancelarVolver()" *ngIf="can=='yes'"> Cancelar</button>
+                <div class="text-center d-flex justify-content-around">
+                    <button type="button" class="btn btn-primary  btn-lg"  (click)="guardar()" *ngIf="nextbutton=='guardar'" [disabled]="anuncioForm.invalid"> Siguiente</button>
+                    <button type="button" class="btn btn-primary  btn-lg"  (click)="modificarAnuncio1()" *ngIf="nextbutton=='modificar'"> Siguiente</button>
+                    <button type="button" class="btn btn-primary  btn-lg"  (click)="cancelarVolver()" *ngIf="can=='yes'"> Cancelar</button>
                 </div>
             </form>
         </div>
@@ -62,9 +62,12 @@
 
 <!--<div  *ngIf="controlador =='caja2'">  -->
 <div class="container" *ngIf="controlador =='caja2'">
-    <h1 class="text-center">Registrar Anuncio </h1>
-    <button type="button" class="btn btn-primary btn-lg"  (click)="tipourl()" > url </button>
-    <button type="button" class="btn btn-primary btn-lg"  (click)="tipoarchivo()"> archivo</button>
+    <h1 class="text-center ">Registrar Anuncio </h1>
+    <div class="text-center d-flex justify-content-around" >
+     <button type="button" class="btn btn-primary  btn-lg"  (click)="tipourl()" > url </button>
+    <button type="button" class="btn btn-primary  btn-lg"  (click)="tipoarchivo()"> archivo</button>
+    </div>
+  
     <div *ngIf="tipo=='url'">
         <div class="mb-3">
             <label class="form-label">Ingrese titulo</label>
@@ -164,10 +167,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let recurso of listRecurso">
-            <td>{{recurso.titulo}}</td>
-            <td>{{recurso.tipo}}</td>
-            <td>{{recurso.descripcion}}</td>
-            <td>{{recurso.url}}</td>
+            <td data-label="titulo">{{recurso.titulo}}</td>
+            <td data-label="tipo">{{recurso.tipo}}</td>
+            <td data-label="descripcion">{{recurso.descripcion}}</td>
+            <td data-label="url">{{recurso.url}}</td>
             <td>
                 <button type="button" class="btn btn-danger btn-sm" (click)="eliminarRecurso(recurso)">
                     Borrar
@@ -181,8 +184,11 @@
    </div>
       <br>
       <br>
-   <button type="button" class="btn btn-primary btn-lg"  (click)="volver()" > Volver </button>
-    <button type="button" class="btn btn-primary btn-lg"  (click)="finalizar()"> Finalizar</button>
+      <div class="text-center d-flex justify-content-around">
+  <button type="button" class="btn btn-primary d-flex justify-content-around btn-lg"  (click)="volver()" > Volver </button>
+    <button type="button" class="btn btn-primary d-flex justify-content-around btn-lg"  (click)="finalizar()"> Finalizar</button>
+      </div>
+ 
 </div>
 
 

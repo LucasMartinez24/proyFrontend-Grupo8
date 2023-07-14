@@ -154,6 +154,7 @@ if(this.tipo == "url"){
       console.log(result);
       if (result.status == 1) {
         this.toastr.success('Recurso agregado correctamente','Recurso Agregado')
+        this.recurso= new Recurso();
         this.anuncioService.getAnuncioId(this.id).subscribe(
 
           result=>{
@@ -232,6 +233,7 @@ subirFirebase(){
               console.log(result);
               if (result.status == 1) {
                 this.toastr.success('Recurso agregado correctamente','Recurso Agregado')
+                this.recurso= new Recurso();
                 this.anuncioService.getAnuncioId(this.id).subscribe(
         
                   result=>{

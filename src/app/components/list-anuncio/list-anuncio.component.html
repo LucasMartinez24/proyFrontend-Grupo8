@@ -54,23 +54,23 @@
         </div>
         <div class="modal-body">
             <table class="table table-bordered table-hover border-primary mt-5" >
-                <thead class="table-primary">
-                    <tr>
-                        <th scope="col">Titulo</th>
-                        <th scope="col">Descripcion</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Url</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor=" let  a  of listRecurso">
-                        <td>{{a.titulo}}</td>
-                        <td>{{a.descripcion}}</td>
-                        <td>{{a.tipo}}</td>
-                        <td>{{a.url}}</td>
-                      
-                    </tr>
-                </tbody>
+              <thead >
+                <tr>
+                    <th scope="col">TITULO</th>
+                    <th scope="col">TIPO</th>
+                    <th scope="col">URL</th>
+                   
+                </tr>
+            </thead>
+            <tbody >
+                <tr *ngFor=" let  a  of listRecurso">
+                    <td data-label="Titulo" >{{a.titulo}}</td>
+                    <td data-label="Tipo">{{a.tipo}}</td>
+                    <td data-label="Url"><a [href]="a.url" target="_blank">Url</a> </td>
+                  
+                </tr>
+            </tbody>
+
             </table>
         </div>
         <div class="modal-footer">
