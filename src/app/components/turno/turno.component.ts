@@ -61,7 +61,7 @@ export class TurnoComponent implements OnInit {
     this.turnoService.deleteTurno(ticket._id).subscribe(
       result => {
         if (result.status == 1) {
-          this.toastr.warning('Paciente eliminado correctamente', 'Paciente Eliminado')
+          this.toastr.success('Turno eliminado correctamente', 'Turno Eliminado')
           window.location.reload();
         }
       },
