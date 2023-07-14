@@ -115,7 +115,7 @@ header ul li ul li ul{
     align-items: center;
   }
   .menuToggle::before {
-    transition: all 0.5s ease-in; 
+    transition: all 0.3s ease-in; 
     content: "";
     position: absolute;
     width: 100%;
@@ -125,7 +125,7 @@ header ul li ul li ul{
     box-shadow: 0 8px #fff;
   }
   .menuToggle::after{
-    transition: all 0.5s ease-in; 
+    transition: all 0.3s ease-in; 
     content: "";
     position: absolute;
     width: 100%;
