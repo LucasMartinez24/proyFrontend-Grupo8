@@ -4,16 +4,17 @@
   <nav>
     <ul>
       <li><a routerLink="/inicio">Inicio</a></li>
-      <li *ngIf="esAdministrador()==true"><a href="#">Gestionar Usuarios<b>▼</b></a>
-        <ul>
-          <li ><a routerLink="/usuarios">Visualizar Usuarios Registrados</a></li>
-          <li ><a routerLink="/signUp/0">Crear un usuario</a></li>
-        </ul>
-      </li>
+
       <li *ngIf="esAdministrador()==true"><a routerLink="/calendar">Crear un evento</a></li>
-      
+
       <li *ngIf="esAdministrador()==true"><a href="#">Gestionar <b>▼</b></a>
         <ul>
+          <li *ngIf="esAdministrador()==true"><a href="#">Gestionar Usuarios<b>▼</b></a>
+            <ul>
+              <li><a routerLink="/usuarios">Visualizar Usuarios Registrados</a></li>
+              <li><a routerLink="/signUp/0">Crear un usuario</a></li>
+            </ul>
+          </li>
           <li><a href="#">Gestionar Especialistas <b>▼</b></a>
             <ul>
               <li><a class="dropdown-item" [routerLink]="'especialista-form/0'">Crear Especialista</a></li>
@@ -31,30 +32,38 @@
             <ul>
               <li><a class="dropdown-item" [routerLink]="'paciente-form/0'">Crear Paciente</a></li>
               <li><a class="dropdown-item" [routerLink]="'paciente'">Listado de Pacientes</a></li>
-              <li><a class="dropdown-item" [routerLink]="'datosMedicos-form/0'">Crear datos medicos</a></li>
-              <li><a class="dropdown-item" [routerLink]="'datosMedicos'">Listado de Datos medicos</a></li>
-              <li><a class="dropdown-item" [routerLink]="'/datosMedicosHome/'">Mis Controles</a></li>
+              <li><a class="dropdown-item" [routerLink]="'datosMedicos-form/0'">Crear datos Médicos</a></li>
+              <li><a class="dropdown-item" [routerLink]="'datosMedicos'">Listado de Datos Médicos</a></li>
+              <li><a class="dropdown-item" [routerLink]="'/datosMedicosHome/'">Mis Controles Médicos</a></li>
             </ul>
           </li>
           <li><a href="#">Gestionar Anuncios<b>▼</b></a>
             <ul>
-              <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio">Lista y creacion de Anuncio</a></li>
-              <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio-cliente">Anuncio</a></li>
+              <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio">Tabla y Creación de Anuncios</a></li>
+              <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio-cliente">Visualizar Anuncios</a></li>
             </ul>
           </li>
         </ul>
       </li>
-      <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/list-anuncio-cliente">Anuncios</a></li>
+      <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/list-anuncio-cliente">Ver Anuncios</a></li>
       <li *ngIf="esAdministrador()==false"><a routerLink="/calendarVisitante">Calendario de Actividades</a>
       </li>
       <li><a routerLink="/list-anuncio-cliente">Ver Anuncios</a></li>
       <li *ngIf="esPaciente()==true"><a [routerLink]="'/turnos-disponibles'">Ver Turnos disponibles</a></li>
-      <li *ngIf="esPaciente()"><a [routerLink]="'/datosMedicosHome/'+loginService.userLoggedDNI()">Mis Controles</a></li>
+      <li *ngIf="esPaciente()"><a [routerLink]="'/datosMedicosHome/'+loginService.userLoggedDNI()">Mis Controles</a>
+      </li>
       <li class="logins">
-        <a routerLink="/login" style="color: black;" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !esAmbas() ">Iniciar Sesion</a>
-        <a (click)="logOutComponent()" class="logout" *ngIf="loginService.userLoggedIn() && !esAmbas()"><p>Cerrar Sesion</p></a>
-        <a (click)="logoutGoogle()" class="logout" *ngIf="esLoggedGoogle()  && !esAmbas()"><p>Cerrar Sesion</p></a>
-        <a (click)="bothLogOut()" class="logout" *ngIf="esAmbas()"><p>Cerrar Sesion</p></a>
+        <a routerLink="/login" style="color: black;" class="login"
+          *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !esAmbas() ">Iniciar Sesion</a>
+        <a (click)="logOutComponent()" class="logout" *ngIf="loginService.userLoggedIn() && !esAmbas()">
+          <p>Cerrar Sesion</p>
+        </a>
+        <a (click)="logoutGoogle()" class="logout" *ngIf="esLoggedGoogle()  && !esAmbas()">
+          <p>Cerrar Sesion</p>
+        </a>
+        <a (click)="bothLogOut()" class="logout" *ngIf="esAmbas()">
+          <p>Cerrar Sesion</p>
+        </a>
       </li>
     </ul>
   </nav>
