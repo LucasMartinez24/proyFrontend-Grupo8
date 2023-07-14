@@ -18,6 +18,7 @@ export class TurnosDisponiblesComponent implements OnInit {
   hayTurnos: boolean = true;
   misTurnos: Array<Turno>;
   tengoTurnos: boolean = true;
+  searchText = '';
 
 constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService, private toastr: ToastrService) {
 

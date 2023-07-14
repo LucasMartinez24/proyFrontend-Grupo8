@@ -10,10 +10,10 @@
 
 <br><br><br><br><br><br>
 
-<div class="container">
+<div class="container col-md-12">
 <div class="card mb-3 card-principal" style="max-width: 1000px;">
  
-  <div class="row g-0">
+  <div class="row g-0 col-md-12">
     <div class="col-md-6 mb-md-0 p-md-4">
       <div *ngIf="valor == 'no'">
           <div  *ngIf="recurso.tipo == 'imagen'">
@@ -32,10 +32,10 @@
       
     
      
-    <div class="col-md-6 ">
+    <div class="col-md-6  mb-4 d-flex cardMain">
       <div class="card-body">
         <br>
-        <h1 class="blog-card-caption card-title">{{anuncio.titulo}}</h1>
+        <h1 class=" titleMain">{{anuncio.titulo}}</h1>
         <br>
 
         <h2 >{{anuncio.descripcion}} </h2>

@@ -13,6 +13,7 @@ import * as printJS from 'print-js';
   styleUrls: ['./datos-medicos-home.component.css']
 })
 export class DatosMedicosHomeComponent implements OnInit {
+  
   datosMedicos!:Array<DatosMedicos>;
   datosMedicosAux!:Array<DatosMedicos>;
   datoMedicoReciente!:DatosMedicos;
@@ -37,6 +38,7 @@ export class DatosMedicosHomeComponent implements OnInit {
       this.datoMedicoReciente = new DatosMedicos();
       this.datoMedicoVer = new DatosMedicos();
       this.fecha = String(new Date().toLocaleDateString('es-ar'));
+      window.scrollTo(0, 0);
     }
 
   ngOnInit(): void {
