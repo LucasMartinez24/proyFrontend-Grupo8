@@ -142,7 +142,7 @@ export class TurnoFormComponent implements OnInit {
   }
 
   guardarTurno() {
-    let resultadoService;
+
     // Convert the initial hour from string to Date object
     const initialHour = new Date(`1970-01-01T${this.turno.hora}`);
     // Calculate the time interval in milliseconds based on the selected lapso
@@ -169,7 +169,7 @@ export class TurnoFormComponent implements OnInit {
 
             this.router.navigate(["turnos-disponibles"])
 
-            
+
             //console.log("turno guardado"+i);
           }
         },

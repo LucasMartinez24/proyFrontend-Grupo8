@@ -54,7 +54,7 @@ header ul li ul{
   position: absolute;
   left: 0;
   width: 200px;
-  background: #5bc3c8;
+  background: #3d3d3d;
   display: none;
   padding: 0;
   z-index: 1;
@@ -103,7 +103,7 @@ header ul li ul li ul{
     left: 0;
   }
   header nav ul li:hover ul li{
-    background: #6dc2c2;
+    background: #3d3d3d;
   }
   .menuToggle{
     position: relative;
@@ -114,7 +114,8 @@ header ul li ul li ul{
     justify-content: center;
     align-items: center;
   }
-  .menuToggle::before{
+  .menuToggle::before {
+    transition: all 0.3s ease-in;
     content: "";
     position: absolute;
     width: 100%;
@@ -124,6 +125,7 @@ header ul li ul li ul{
     box-shadow: 0 8px #fff;
   }
   .menuToggle::after{
+    transition: all 0.3s ease-in;
     content: "";
     position: absolute;
     width: 100%;
