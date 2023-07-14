@@ -1,5 +1,5 @@
 <header>
-  <a href="#" class="logo">Centro de Salud <br> "Los Huaycos"</a>
+  <a href="#" class="logo">Centro de Salud <br> "Los Huaicos"</a>
   <div class="menuToggle" (click)="toggleMenu()"></div>
   <nav>
     <ul>
@@ -31,17 +31,17 @@
           </li>
           <li><a href="#">Gestionar Anuncios<b>▼</b></a>
             <ul>
-              <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio">Lista de Anuncio</a></li>
-              <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio-cliente">Anuncio</a></li>
+              <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio">Gestionar de Anuncio</a></li>
+              <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio-cliente">Ver Anuncios</a></li>
             </ul>
           </li>
         </ul>
       </li>
       <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/list-anuncio-cliente">Anuncios</a></li>
-      <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/calendarVisitante">Calendario de Actividades</a>
+      <li *ngIf="esAdministrador()==false"><a routerLink="/calendarVisitante">Calendario de Actividades</a>
       </li>
-      <li *ngIf="loginService.userLoggedIn() && !bothLogin"><a [routerLink]="'turnos-disponibles'">Ver Turnos
-          disponibles</a></li>
+      <li><a routerLink="/list-anuncio-cliente">Ver Anuncios</a></li>
+      <li *ngIf="esPaciente()==true"><a [routerLink]="'/turnos-disponibles'">Ver Turnos disponibles</a></li>
       <li *ngIf="esPaciente()"><a [routerLink]="'/datosMedicosHome/'+loginService.userLoggedDNI()">Mis Controles</a></li>
       <li class="logins">
         <a routerLink="/login" style="color: black;" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !esAmbas() ">Iniciar Sesion</a>

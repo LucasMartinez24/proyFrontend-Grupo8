@@ -3,6 +3,7 @@ import { Evento } from 'src/app/models/evento';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { GooService } from 'src/app/services/goo.service';
 import { ToastrService } from 'ngx-toastr';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-calendar',
@@ -43,7 +44,7 @@ export class CalendarComponent implements OnInit {
 
 
   constructor(private gooService: GooService, private toastr: ToastrService,
-    private readonly oAuthService: OAuthService) {
+    private readonly oAuthService: OAuthService, private loginService:LoginService) {
     this.event = new Evento();
     this.event.kind = 'calendar@event';
     this.event.status = 'confirmed';
@@ -114,10 +115,17 @@ export class CalendarComponent implements OnInit {
       (error) => {
         console.log(error);
         if (error.status == '401') {
-          alert("debe loguearse para crear un evento en el calendario")
+          this.toastr.error("Debe loguearse para crear un evento en el calendario")
         }
       }
     );
+  }
+  esLoggedGoogle(){
+    return this.loginService.userLoggedInGoogle();
+
+  }
+  esAmbas(){
+    return this.gooService.bothLogin()
   }
   //METODO interno que se utiliza para obtener el formato
   //que se requiere en la API de google Calendar. Ej. 2022-06-20T17:04:00-03:00

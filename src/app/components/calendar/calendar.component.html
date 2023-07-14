@@ -1,7 +1,7 @@
 
 <section class="container">
   <div class="buttons">
-    <button type="button" *ngIf="!logged" (click)="login()">01 login</button>
+    <button type="button" *ngIf="!esAmbas() && !esLoggedGoogle()" (click)="login()">Login</button>
   </div>
   <form class="containerForm m-3 p-3 e">
     <div class="form-group">
@@ -18,7 +18,7 @@
         <input id="to" class="form-control" type="datetime-local" [(ngModel)]="toDate" name="to" />
       </div>
     </div>
-    <button class="btn btn-primary m-3" type="button" (click)="crearEvento()">04 Crear Evento</button>
+    <button class="btn btn-primary m-3" type="button" (click)="crearEvento()">Crear Evento</button>
   </form>
 
   <div class="d-flex justify-content-center align-items-center mb-4 calendar-Box">

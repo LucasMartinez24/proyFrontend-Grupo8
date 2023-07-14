@@ -11,14 +11,14 @@ export class LoginService {
   hostBase: string;
 
   constructor(private http: HttpClient, private gooService:GooService) {
-    this.hostBase = "http://3.82.255.160:3000/api/usuario/"
+    this.hostBase = "http://localhost:3000/api/usuario/"
   }
   public getRoles():Observable<any>{
     const httpOption = {
       headers: new HttpHeaders({
       })
     }
-    return this.http.get('http://3.82.255.160:3000/api/rol/', httpOption)
+    return this.http.get('http://localhost:3000/api/rol/', httpOption)
   }
   public signUp(username:string, password:string, email:string, rol:string, dni:string):Observable<any>{
     const httpOption = {
@@ -26,7 +26,7 @@ export class LoginService {
         'Content-Type': 'application/json'
       })
     }
-    console.log(JSON.stringify({ username: username, password: password, email:email, rol:rol, dni:dni }))
+    //console.log(JSON.stringify({ username: username, password: password, email:email, rol:rol, dni:dni }))
     let body = JSON.stringify({ username: username, password: password, email:email, rol:rol, dni:dni });
     return this.http.post(this.hostBase, body, httpOption)
   }
@@ -36,7 +36,7 @@ export class LoginService {
       })
     }
 
-    return this.http.get('http://3.82.255.160:3000/api/usuario/confirm/'+token, httpOption)
+    return this.http.get('http://localhost:3000/api/usuario/confirm/'+token, httpOption)
 
   }
   loginEmailGoogle(email:string):Observable<any>{
@@ -51,12 +51,12 @@ export class LoginService {
   public login(username: string, password: string): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
-        'access-control-allow-origin': 'http://3.82.255.160',
+        'access-control-allow-origin': 'http://localhost',
         'Content-Type': 'application/json'
       })
     }
     let body = JSON.stringify({ username: username, password: password });
-    console.log(body);
+    //console.log(body);
     return this.http.post(this.hostBase + 'login', body, httpOption);
   }
   public loginEmail(email: string, password: string): Observable<any> {
@@ -66,7 +66,7 @@ export class LoginService {
       })
     }
     let body = JSON.stringify({ email: email, password: password });
-    console.log(body);
+    //console.log(body);
     return this.http.post(this.hostBase + 'login-email', body, httpOption);
   }
   public logout() {
@@ -158,7 +158,6 @@ export class LoginService {
     }
     return false;
   }
-
   getToken(): string {
     if (sessionStorage.getItem("token") != null) {
       return sessionStorage.getItem("token")!;
@@ -173,7 +172,7 @@ export class LoginService {
       })
     }
     let body = JSON.stringify({password: password });
-    console.log(body);
+    //console.log(body);
     return this.http.post(this.hostBase + 'reset/'+token, body, httpOption);
   }
   resetAsk(email:string){
@@ -183,7 +182,7 @@ export class LoginService {
       })
     }
     let body = JSON.stringify({email:email });
-    console.log(body);
+    //console.log(body);
     return this.http.post(this.hostBase + 'reset-ask', body, httpOption);
   }
 
