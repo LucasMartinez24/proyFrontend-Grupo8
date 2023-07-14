@@ -16,15 +16,15 @@ export class PacienteFormComponent implements OnInit {
   paciente = new Paciente();
   accion: string="";
 
-  constructor(private pacienteService: PacienteService, private activatedRoute: ActivatedRoute, 
-    private router: Router,private toastr:ToastrService) { 
+  constructor(private pacienteService: PacienteService, private activatedRoute: ActivatedRoute,
+    private router: Router,private toastr:ToastrService) {
     this.fechaActual = String(new Date().toLocaleDateString('es-ar'));
     }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(
       params => {
-        
+
         if (params['id'] == '0') {
           this.accion = "new";
         } else {
@@ -39,6 +39,8 @@ export class PacienteFormComponent implements OnInit {
     const fechaActualObj = new Date(this.fechaActual);
     const fechaIngresadaObj = new Date(this.paciente.fechaNac);
     console.log("Estableci fechas")
+    console.log("fecha actual"+fechaActualObj );
+    console.log("Fechanac"+fechaIngresadaObj)
     if (fechaIngresadaObj <= fechaActualObj) {
       console.log("Mayor")
       this.fechaBoolean = true
@@ -49,7 +51,7 @@ export class PacienteFormComponent implements OnInit {
       return false
     }
   }
-  
+
   cargarPaciente(id: string) {
     this.pacienteService.getPaciente(id).subscribe(
       (result) => {
@@ -106,7 +108,7 @@ export class PacienteFormComponent implements OnInit {
           this.router.navigate(["paciente"])
         }
       },
-      error => {        
+      error => {
           if(error.status===449){
             this.toastr.error("Ya existe un paciente con ese dni")
             this.paciente.dni=""
