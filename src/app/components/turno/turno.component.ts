@@ -44,8 +44,6 @@ export class TurnoComponent implements OnInit {
             Object.assign(unTurno, element);
             this.turnos.push(unTurno);
             unTurno = new Turno();
-          }else{
-            //this.hayTurnos = false;
           }
 
         });
