@@ -45,10 +45,9 @@
           </li>
         </ul>
       </li>
-      <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/list-anuncio-cliente">Ver Anuncios</a></li>
+      <li *ngIf="esAdministrador()!=true"><a routerLink="/list-anuncio-cliente">Ver Anuncios</a></li>
       <li *ngIf="esAdministrador()==false"><a routerLink="/calendarVisitante">Calendario de Actividades</a>
       </li>
-      <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/list-anuncio-cliente">Ver Anuncios</a></li>
       <li *ngIf="esPaciente()==true"><a [routerLink]="'/turnos-disponibles'">Ver Turnos disponibles</a></li>
       <li *ngIf="esPaciente()"><a [routerLink]="'/datosMedicosHome/'+loginService.userLoggedDNI()">Mis Controles</a>
       </li>

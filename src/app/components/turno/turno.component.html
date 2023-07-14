@@ -28,7 +28,7 @@
                 <td data-label="Operaciones">
                     <!-- <button type="button" class="btn btn-primary" (click)="modificarTurno(t)">RESERVAR TURNO</button> -->
                     <button type="button" class="btn btn-warning" (click)="modificarTurno(t)">Modificar</button>
-                    <button type="button" class="btn btn-danger" (click)="modalEliminar(t)">Eliminar</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#eliminar" class="btn btn-danger" (click)="modalEliminar(t)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
