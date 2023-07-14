@@ -17,6 +17,8 @@ export class UsuariosRegistradosComponent {
   usuarios: Array<Usuario>;
   usuarioDni: Array<Usuario>;
   dni!: string;
+  usuarioEliminar:Usuario;
+  modifica!:boolean;
   //dtOptions : DataTables.Settings = {}; 
   //dtTrigger =new Subject<any>();
 
@@ -24,6 +26,7 @@ export class UsuariosRegistradosComponent {
     private router: Router, private toastr: ToastrService) {
     this.usuarios = new Array<Usuario>();
     this.usuarioDni = new Array<Usuario>();
+    this.usuarioEliminar = new Usuario();
     this.obtenerUsuarios();
   }
 
@@ -84,8 +87,10 @@ export class UsuariosRegistradosComponent {
     console.log("entrando a obtener pacientes")
     this.usuarioService.getUsuarios().subscribe(
       result => {
+
         let unUsuario = new Usuario();
         result.forEach((element: any) => {
+          console.log(element.rol.descripcion)
           Object.assign(unUsuario, element);
           this.usuarios.push(unUsuario);
           unUsuario = new Usuario();
@@ -117,6 +122,25 @@ export class UsuariosRegistradosComponent {
       }
     )
   }
+  modalEliminar(data:Usuario){
+    this.usuarioEliminar = data;
+  }
 
-
+  modificarUsuario(usuario: Usuario) {
+    console.log(usuario);
+    this.router.navigate(["signUp", usuario._id]);
+  }
+  eliminarUsuario(usuario: Usuario) {
+    this.usuarioService.deleteUsuario(usuario._id).subscribe(
+      result => {
+        if (result.status == 1) {
+          this.toastr.warning('Usuario eliminado correctamente', 'Usuario Eliminado')
+          window.location.reload();
+        }
+      },
+      error => {
+        this.toastr.warning('Error al buscar usuario por dni', 'Error')
+      }
+    )
+  }
 }
