@@ -68,8 +68,8 @@
                 <td data-label="Hora">{{t.centroSalud}}</td>
                 <td data-label="Estado">{{t.estado}}</td>
                 <td data-label="Operaciones">
-                    <button type="button" class="btn btn-primary" (click)="reservarTurno(t)">Reservar turno</button>
-                    <!-- <button type="button" class="btn btn-warning" (click)="modificarTurno(t)">MODIFICAR TURNO</button>-->
+                    <button type="button" class="btn btn-primary" *ngIf="esAdmin()==false" (click)="reservarTurno(t)">Reservar turno</button>
+                    <button type="button" class="btn btn-warning" *ngIf="esAdmin()==true" (click)="modificarTurno(t)">Modificar turno</button>
                     <button *ngIf="esAdmin()==true" type="button" class="btn btn-danger" (click)="eliminarTurno(t)">Eliminar turno</button> 
                 </td>
             </tr>
