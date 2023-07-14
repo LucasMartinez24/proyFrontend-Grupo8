@@ -20,6 +20,7 @@ export class DatosmedicosFormComponent implements OnInit{
   pacientesAux: Paciente[] = [];
   filterText: string = '';
   myDropDown!: string;
+  gender!:boolean;
   modifica!:boolean
   existOther:boolean = false
   filtroPacientes!:string;
@@ -59,8 +60,26 @@ export class DatosmedicosFormComponent implements OnInit{
       this.addMedicalData();
     }
   }
+  verificarFormato() {
+    // Usamos una expresión regular para verificar el formato
+    var formatoValido = /^\d{2,3}\/\d{2,3}$/;
+    
+    // Verificamos si el texto cumple con el formato
+    if (formatoValido.test(this.datoMedico.tension_arterial)) {
+      var partes = this.datoMedico.tension_arterial.split('/');
+      var valor1 = parseInt(partes[0]);
+      var valor2 = parseInt(partes[1]);
+      
+      // Verificamos si los valores están en el rango válido
+      if (valor1 >= 0 && valor1 <= 200 && valor2 >= 0 && valor2 <= 200) {
+        return true; // El formato y los valores son válidos
+      }
+    }
+    
+    return false; // El formato o los valores son inválidos
+  }
   isSelected(){
-    console.log(this.datoMedico.paciente)
+    console.log(this.datoMedico.paciente + ' adsadd')
     let cont:number=0;
     this.selectedPaciente = false
     if(this.datoMedico.paciente != '' && !this.selectedPaciente && cont===0){
@@ -77,6 +96,12 @@ export class DatosmedicosFormComponent implements OnInit{
         console.log(result)
         this.datoMedico.pacienteObj = result
         this.getLatestMedicalData();
+        if(result.genero === 'Mujer'){
+          this.gender = true;
+        }else{
+          this.gender = false;
+          this.datoMedico.fechaMenstruacion = "No registra";
+        }
       },
       error=>{
         console.log(error)
@@ -100,6 +125,7 @@ export class DatosmedicosFormComponent implements OnInit{
   
   onChangeofOptions(newGov:any) {
     console.log(newGov);
+    this.isSelected()
   }
   searchData(id:string){
     this.datosMedicosService.getDatosMedicosId(id).subscribe(
@@ -107,6 +133,11 @@ export class DatosmedicosFormComponent implements OnInit{
         console.log(result);
         this.datoMedico = result;
         this.datoMedico.pacienteObj = result.paciente
+        if(result.genero === 'Mujer'){
+          this.gender = true;
+        }else{
+          this.gender = false;
+        }
         console.log(this.datoMedico.pacienteObj.dni)
       },
       error=>{
@@ -167,9 +198,10 @@ export class DatosmedicosFormComponent implements OnInit{
   addMedicalData() {
     this.datoMedico.imc = +(this.datoMedico.peso / ((this.datoMedico.talla / 100) ** 2)).toFixed(3);
     console.log(this.datoMedico.paciente)
+    if(this.verificarFormato()){
     this.datosMedicosService.addDatosMedicos(this.datoMedico.motivo, this.datoMedico.paciente,this.datoMedico.fecha,
       this.datoMedico.peso, this.datoMedico.imc, this.datoMedico.talla, this.datoMedico.tension_arterial,
-      this.datoMedico.diagnostico).subscribe(
+      this.datoMedico.diagnostico, this.datoMedico.temperatura, this.datoMedico.fechaMenstruacion,this.datoMedico.centroSalud).subscribe(
       result=>{
         if(result.status == 1){
           this.datoMedico.idDatoMedico = result._id;
@@ -183,13 +215,16 @@ export class DatosmedicosFormComponent implements OnInit{
         this.toastr.error(error)
       }
     )
+  }else{
+    this.toastr.error("La tension arterial no cumple con el formato solicitado")
+  }
 }
   modifyMedicalData(){
     this.datoMedico.imc = +(this.datoMedico.peso / ((this.datoMedico.talla / 100) ** 2)).toFixed(3);
     console.log('Entro a modificar' + this.id)
     this.datosMedicosService.editDatosMedicos(this.id,this.datoMedico.motivo, this.datoMedico.paciente,this.datoMedico.fecha,
       this.datoMedico.peso, this.datoMedico.imc, this.datoMedico.talla, this.datoMedico.tension_arterial,
-      this.datoMedico.diagnostico).subscribe(
+      this.datoMedico.diagnostico, this.datoMedico.temperatura, this.datoMedico.fechaMenstruacion,this.datoMedico.centroSalud).subscribe(
       result=>{
         if(result.status == 1){
           this.toastr.success('Editado Correctamente')

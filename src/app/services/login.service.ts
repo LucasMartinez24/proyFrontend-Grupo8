@@ -158,7 +158,6 @@ export class LoginService {
     }
     return false;
   }
-
   getToken(): string {
     if (sessionStorage.getItem("token") != null) {
       return sessionStorage.getItem("token")!;

@@ -15,12 +15,14 @@ export class TurnoComponent implements OnInit {
   turnos: Array<Turno>;
   //misTurnos: Array<Turno>;
   pacienteService: any;
+  turnoEliminar:Turno;
   //hayTurnos: boolean = true;
 
   constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private toastr: ToastrService) {
     this.turnos = new Array<Turno>();
     //this.misTurnos = new Array<Turno>();
     this.obtenerTurnos();
+    this.turnoEliminar = new Turno();
     //this.obtenerMisTurnos();
   }
 
@@ -76,7 +78,9 @@ export class TurnoComponent implements OnInit {
   esAdministrador() {
     return this.loginService.esAdmin();
   }
-
+  modalEliminar(data:Turno){
+    this.turnoEliminar = data
+  }
   //   obtenerMisTurnos() {
   //     this.misTurnos = new Array<Turno>();
   //     const pacienteString = this.loginService.getUser();

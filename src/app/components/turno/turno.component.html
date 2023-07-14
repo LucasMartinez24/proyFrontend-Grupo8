@@ -26,12 +26,29 @@
                 <td  class="d-flex justify-content-around">
                     <!-- <button type="button" class="btn btn-primary" (click)="modificarTurno(t)">RESERVAR TURNO</button> -->
                     <button type="button" class="btn btn-warning" (click)="modificarTurno(t)">Modificar</button>
-                    <button type="button" class="btn btn-danger" (click)="eliminarTurno(t)">Eliminar</button>
+                    <button type="button" class="btn btn-danger" (click)="modalEliminar(t)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
+    <div class="modal fade" id="eliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Esta seguro que desea eliminar a este especialista?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>El turno para  {{turnoEliminar.especialista.apellido + " " + turnoEliminar.especialista.nombre}} sera eliminado</h4>
+                <button type="button" class="btn btn-danger d-flex align-self-center" (click)="eliminarTurno(turnoEliminar)">Eliminar</button>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        </div>
+    </div>
     <!-- <div *ngIf="hayTurnos==false" class="mt-5">
         <h2 class="bg-danger p-2 text-white text-center ">NO HAY TURNOS DISPONIBLES POR EL MOMENTO</h2>
     </div> -->

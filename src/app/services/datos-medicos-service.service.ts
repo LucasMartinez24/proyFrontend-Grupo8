@@ -12,7 +12,8 @@ export class DatosMedicosServiceService {
     this.urlBase = "http://localhost:3000/api/datosMedicos/";
   }
   addDatosMedicos(motivo:string, pacienteId:string, fecha:string, peso:number,
-    imc:number, talla:number, tension_arterial:number, diagnostico:string):Observable<any>{
+    imc:number, talla:number, tension_arterial:string, diagnostico:string, temperatura:number, fechaMenstruacion:string,
+    centroSalud:string):Observable<any>{
     const dataMedic = {
       motivo:motivo,
       paciente:pacienteId,
@@ -21,7 +22,10 @@ export class DatosMedicosServiceService {
       imc:imc,
       talla:talla,
       tension_arterial:tension_arterial,
-      diagnostico:diagnostico
+      diagnostico:diagnostico,
+      temperatura:temperatura,
+      fechaMenstruacion:fechaMenstruacion,
+      centroSalud:centroSalud
     }
       let httpOptions={
       headers: new HttpHeaders(
@@ -35,7 +39,8 @@ export class DatosMedicosServiceService {
     return this._http.post(this.urlBase, body, httpOptions)
   }
   editDatosMedicos(id:string,motivo:string, pacienteId:string, fecha:string, peso:number,
-    imc:number, talla:number, tension_arterial:number, diagnostico:string):Observable<any>{
+    imc:number, talla:number, tension_arterial:string, diagnostico:string, temperatura:number, fechaMenstruacion:string,
+    centroSalud:string):Observable<any>{
     const dataMedic = {
       motivo:motivo,
       paciente:pacienteId,
@@ -44,7 +49,10 @@ export class DatosMedicosServiceService {
       imc:imc,
       talla:talla,
       tension_arterial:tension_arterial,
-      diagnostico:diagnostico
+      diagnostico:diagnostico,
+      temperatura:temperatura,
+      fechaMenstruacion:fechaMenstruacion,
+      centroSalud:centroSalud
     }
       let httpOptions={
       headers: new HttpHeaders(

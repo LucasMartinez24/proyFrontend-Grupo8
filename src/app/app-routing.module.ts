@@ -87,7 +87,7 @@ const routes: Routes = [
     data:{
       rol: 'administrador'
     },
-    //canActivate:[VigilanteGuard]
+    canActivate:[VigilanteGuard]
   },
   {
     path:'calendarVisitante',
@@ -100,7 +100,7 @@ const routes: Routes = [
     },
     canActivate:[VigilanteGuard]
   },
-   {
+  {
     path:'list-anuncio',component:ListAnuncioComponent,
     data:{
       rol: 'administrador'
@@ -120,6 +120,9 @@ const routes: Routes = [
       rol: 'administrador'
     },
     canActivate:[VigilanteGuard]
+  },
+  {
+    path:'turnos-disponibles',component:TurnosDisponiblesComponent,
   },
   {
     path:'list-anuncio-cliente',component:ListAnuncioClienteComponent,
@@ -162,9 +165,6 @@ const routes: Routes = [
       rol: 'administrador'
     },
     canActivate:[VigilanteGuard]
-  },
-  {
-    path:'turnos-disponibles',component:TurnosDisponiblesComponent,
   },
   //lo siguiente siempre va al final
   {

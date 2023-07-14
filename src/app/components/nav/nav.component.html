@@ -40,8 +40,7 @@
       <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/list-anuncio-cliente">Anuncios</a></li>
       <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/calendarVisitante">Calendario de Actividades</a>
       </li>
-      <li *ngIf="loginService.userLoggedIn() && !bothLogin"><a [routerLink]="'turnos-disponibles'">Ver Turnos
-          disponibles</a></li>
+      <li ><a [routerLink]="'/turnos-disponibles'">Ver Turnos disponibles</a></li>
       <li *ngIf="esPaciente()"><a [routerLink]="'/datosMedicosHome/'+loginService.userLoggedDNI()">Mis Controles</a></li>
       <li class="logins">
         <a routerLink="/login" class="login" *ngIf="!loginService.userLoggedIn() && !esLoggedGoogle() && !esAmbas() ">Login</a>

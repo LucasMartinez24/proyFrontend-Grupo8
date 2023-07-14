@@ -217,15 +217,38 @@ input {
     margin-bottom: 4%;
 }
 .caution{
+    margin-top: 10%;
     margin-right: 8vw;
-    width: 80vw;
+    width:100%;
     word-wrap: normal;
 }
-}@media(max-widt:430px){
+}
+@media(min-width:464px){
+    .section-right{
+        margin-top: 50%;
+    }
+}
+@media(max-width:464px){
+    .container{
+        height: auto;
+    }
     .section-left{
-        width: 100%;
+        margin-top: 2em;
     }
     .section-right{
+        margin-bottom: 8vh;
+    }
+    .caution{
+        display: none;
+    }
+}
+@media(max-width:430px){
+    .section-left{
+        width: 100%;
+        margin-bottom: 10%;
+    }
+    .section-right{
+        margin-top: 50%;
         width: 100%;
     }
     .container{
@@ -242,8 +265,9 @@ input {
         margin-bottom: 2%;
     }
     .caution{
-        width: 80vw;
-        word-wrap: normal;
+        margin-top: 15%;
+        width: 100%;
+        word-wrap: break-word;
     }
 }
 @media(max-widt:268px){
@@ -261,8 +285,8 @@ input {
         margin-bottom: 20%;
     }
     .caution{
-        width: 80vw;
-        word-wrap: normal;
+        width: 100%;
+        word-wrap: break-word;
     }
 }
 .btnExcel{

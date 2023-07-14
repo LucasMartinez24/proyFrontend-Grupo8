@@ -63,7 +63,20 @@
                 </div>
           </div>
       </div>
-
+      <div class="mb-3 ms-2" [ngClass]="{'is-invalid': sexoInput.invalid && (sexoInput.dirty || sexoInput.touched)}">
+        <label for="sexo">Genero</label>
+        <select name="genero" id="genero" aria-label="select genero" [(ngModel)]="paciente.genero" class="form-select select-scrollable" required #sexoInput="ngModel">
+            <option value="" disabled selected>Seleccione un genero</option>
+            <option value="Mujer">Mujer</option>
+            <option value="Hombre">Hombre</option>
+            <option value="Otro">Otro</option>
+        </select>
+        <div *ngIf="sexoInput.invalid && (sexoInput.dirty || sexoInput.touched)" class="alert alert-danger my-1 p-1">
+            <div *ngIf="sexoInput.errors?.['required']">
+                El genero es requerido
+            </div>
+        </div>
+      </div>
           
         <button *ngIf="accion=='new'" type="submit" class="btn btn-success" (click)="guardarPaciente()" [disabled]="pacienteForm.invalid">Registrar Paciente</button>
           <button *ngIf="accion=='update'" type="submit" class="btn btn-warning" (click)="modificarPaciente()">Modificar Paciente</button>  
