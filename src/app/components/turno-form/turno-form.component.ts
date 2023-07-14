@@ -15,6 +15,8 @@ import { TurnoService } from 'src/app/services/turno.service';
 })
 export class TurnoFormComponent implements OnInit {
   turno: Turno;
+  fechaActual!:string;
+  fechaBoolean:boolean=false;
   especialistas: Array<Especialista>;
   accion: string = "";
   pacientes: Array<Paciente>;
@@ -23,6 +25,7 @@ export class TurnoFormComponent implements OnInit {
     this.turno = new Turno();
     this.especialistas = new Array<Especialista>();
     this.pacientes = new Array<Paciente>();
+    this.fechaActual = String(new Date().toLocaleDateString('es-ar'));
   }
 
   ngOnInit(): void {
@@ -77,7 +80,20 @@ export class TurnoFormComponent implements OnInit {
       }
     )
   }
-
+  comprobarFecha():boolean{
+    const fechaActualObj = new Date(this.fechaActual);
+    const fechaIngresadaObj = new Date(this.turno.fecha);
+    console.log("Estableci fechas")
+    if (fechaIngresadaObj >= fechaActualObj) {
+      console.log("Mayor")
+      this.fechaBoolean = true
+      return true;
+    } else {
+      console.log("Menor")
+      this.fechaBoolean = false
+      return false
+    }
+  }
   cargarTurno(id: string) {
     this.turnoService.getTurno(id).subscribe(
       (result) => {
@@ -94,9 +110,9 @@ export class TurnoFormComponent implements OnInit {
   guardarTurno() {
 
     this.turno.paciente = null;
-
+    this.comprobarFecha();
     console.log(this.turno);
-
+  if(this.fechaBoolean){
     this.turnoService.createTurno(this.turno).subscribe(
       result => {
         if (result.status == 1) {
@@ -108,9 +124,15 @@ export class TurnoFormComponent implements OnInit {
         this.toastr.warning(error)
       }
     )
+  }else{
+    this.toastr.error('La fecha del turno no puede ser menor a la fecha actual')
   }
+}
 
   modificarTurno() {
+    this.comprobarFecha();
+    console.log(this.turno);
+  if(this.fechaBoolean){
     this.turnoService.editTurno(this.turno).subscribe(
       result => {
         if (result.status == 1) {
@@ -122,6 +144,9 @@ export class TurnoFormComponent implements OnInit {
         this.toastr.warning(error)
       }
     )
+  }else{
+      this.toastr.error('La fecha del turno no puede ser menor a la fecha actual')
+    }
   }
 
   public cancelar() {

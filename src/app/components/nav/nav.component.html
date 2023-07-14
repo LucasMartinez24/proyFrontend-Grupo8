@@ -38,7 +38,7 @@
         </ul>
       </li>
       <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/list-anuncio-cliente">Anuncios</a></li>
-      <li *ngIf="esVisitante()==true || esPaciente()"><a routerLink="/calendarVisitante">Calendario de Actividades</a>
+      <li *ngIf="esAdministrador()==false"><a routerLink="/calendarVisitante">Calendario de Actividades</a>
       </li>
       <li ><a [routerLink]="'/turnos-disponibles'">Ver Turnos disponibles</a></li>
       <li *ngIf="esPaciente()"><a [routerLink]="'/datosMedicosHome/'+loginService.userLoggedDNI()">Mis Controles</a></li>
