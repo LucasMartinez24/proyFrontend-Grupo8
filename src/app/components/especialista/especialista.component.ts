@@ -17,10 +17,16 @@ export class EspecialistaComponent implements OnInit {
   especialistasDNI: Array<Especialista>;
   especialistaEliminar:Especialista
   dni!: string;
+  especialistaFiltro: Array<Especialista>;
+  filtro!: boolean;
+  click!:boolean;
+  nombre!: string;
+  apellido!: string;
   constructor(private especialistaService: EspecialistaService, private router: Router, private toastr: ToastrService) {
     this.especialistas = new Array<Especialista>();
     this.especialistaEliminar = new Especialista();
     this.especialistasDNI = new Array<Especialista>();
+    this.especialistaFiltro = new Array<Especialista>();
     this.obtenerEspecialistas();
   }
 
@@ -62,6 +68,23 @@ export class EspecialistaComponent implements OnInit {
       }
     )
   }
+
+  obtenerEspecialistaNA(){
+    this.click = true;
+
+    this.especialistaFiltro = new Array<Especialista>();
+
+    this.especialistaService.getEspecialistaNA(this.nombre, this.apellido).subscribe(
+      (result: any) => {
+        console.log(result);
+        this.especialistaFiltro = result;
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
 
   eliminarEspecialista(e: Especialista) {
     this.especialistaService.deleteEspecialista(e._id).subscribe(

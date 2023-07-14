@@ -47,6 +47,7 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 import { TurnosDisponiblesComponent } from './components/turnos-disponibles/turnos-disponibles.component';
 import { NavComponent } from './components/nav/nav.component';
+import { UsuariosRegistradosComponent } from './components/usuarios-registrados/usuarios-registrados.component';
 
 //datatable
 //import { DataTablesModule } from "angular-datatables";
@@ -87,7 +88,8 @@ registerLocaleData(localeEsAr);
 
     ContactoComponent,
     TurnosDisponiblesComponent,
-    NavComponent
+    NavComponent,
+    UsuariosRegistradosComponent
 
   ],
   imports:[

@@ -94,7 +94,7 @@
         <div class="mb-3">
             <label for="basic-url" class="form-label">Ingrese URL</label>
           
-              <span class="input-group-text" >https://example.com/users/</span>
+              <span class="input-group-text" >https://Ejemplo.com</span>
               <input type="text" class="form-control"  name="url"  [(ngModel)]="recurso.url" required #url="ngModel" >
               <div *ngIf="url.invalid && (url.dirty || url.touched)" class="alert alert-danger">
                 
@@ -151,6 +151,7 @@
     <div *ngIf="archivoElec == 'documento'">
         <input type="file" accept=".pdf" (change)="convertirBase64($event)">
     </div>
+    <br>
     <button type="button" class="btn btn-primary btn-lg"  (click)="addRecursoP()" > guardar </button>
    </div>
    <!--    <div *ngIf="list=='activa'">-->
