@@ -10,4 +10,5 @@ export class Turno {
     paciente: Paciente | null = null;
     especialista: Especialista=new Especialista();
     estado!:string;
+    centroSalud!: string;
 }

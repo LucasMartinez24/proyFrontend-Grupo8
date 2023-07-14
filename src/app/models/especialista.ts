@@ -4,4 +4,5 @@ export class Especialista {
     apellido!: string;
     profesion!: string;
     dni!: string;
+    centroSalud!: string;
 }
