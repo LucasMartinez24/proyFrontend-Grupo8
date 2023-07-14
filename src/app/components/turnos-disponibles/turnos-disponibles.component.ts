@@ -19,15 +19,16 @@ export class TurnosDisponiblesComponent implements OnInit {
   misTurnos: Array<Turno>;
   tengoTurnos: boolean = true;
 
-  constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService, private toastr: ToastrService) {
+constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService, private toastr: ToastrService) {
+
     this.turnos = new Array<Turno>();
     this.misTurnos = new Array<Turno>();
+
     this.obtenerTurnos();
     this.obtenerMisTurnos();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   esAdmin() {
     if (this.loginService.esAdmin() == true) {
@@ -53,12 +54,13 @@ export class TurnosDisponiblesComponent implements OnInit {
       },
       error => {
         this.toastr.warning(error)
+
       }
-    )
+    );
   }
 
-  eliminarTurno(ticket: Turno) {
-    this.turnoService.deleteTurno(ticket._id).subscribe(
+  eliminarTurno(turno: Turno) {
+    this.turnoService.deleteTurno(turno._id).subscribe(
       result => {
         if (result.status == 1) {
 
@@ -72,11 +74,11 @@ export class TurnosDisponiblesComponent implements OnInit {
       error => {
         this.toastr.warning(error)
       }
-    )
+    );
   }
 
-  modificarTurno(ticket: Turno) {
-    this.router.navigate(["turno-form", ticket._id])
+  modificarTurno(turno: Turno) {
+    this.router.navigate(['turno-form', turno._id]);
   }
 
   async reservarTurno(turno: Turno) {

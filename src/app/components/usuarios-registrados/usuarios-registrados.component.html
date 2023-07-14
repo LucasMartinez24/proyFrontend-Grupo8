@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="buttons" style="padding-left: 5%;">
+      <button type="button" class="btnPdf ms-2" (click)="imprimirPdf()">Imprimir PDF <i class=' bx bxs-file-pdf'></i></button>
+      <button type="button" class="btnExcel ms-2" (click)="imprimirXlsx()">Descargar Excel  <i class='bx bx-table bx-flip-horizontal' ></i></button>
+    </div>
+<br>
+<br>
+    <h5 class="ms-4">Buscar Usuario registrado con dni</h5>
+    <div class="mb-3 ms-4" style="width:80%;">
+      <input type="text" class="form-control" id="idfecha" name="fechaNac" required
+          placeholder="Ingrese dni de usuario a buscar" [(ngModel)]="dni" (ngModelChange)="obtenerUsuarioDni()">
+  </div>
+
+  <div style="padding: 3%;">
+      <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"-->
+      <table class="table table-bordered table-hover border-primary mt-5" >
+          <thead class="table-primary">
+              <tr>
+                  <th scope="col">Usuarios</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Rol</th>
+                  <th scope="col">DNI</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let p of usuarios">
+                  <td>{{p.username}}</td>
+                  <td>{{p.email}}</td>
+                  <td>{{p.rol}}</td>
+                  <td>{{p.dni}}</td>
+
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
+  
