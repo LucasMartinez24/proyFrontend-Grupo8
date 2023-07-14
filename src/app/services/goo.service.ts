@@ -6,7 +6,7 @@ import { authCodeFlowConfig } from './../sso.config';
 //import { Console } from 'console';
 //import { LoginService } from './login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuComponent } from '../components/menu/menu.component';
+import { NavComponent } from '../components/nav/nav.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -196,6 +196,6 @@ export class GooService {
       })
     }
     let body = JSON.stringify({email:email});
-    return this._http.post('http://localhost:3000/api/usuario/' +'gmail', body, httpOption);
+    return this._http.post('http://3.82.255.160:3000/api/usuario/' +'gmail', body, httpOption);
   }
 }
