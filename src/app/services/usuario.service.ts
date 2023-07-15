@@ -10,7 +10,7 @@ export class UsuarioService {
   hostBase: string;
 
   constructor(private http:HttpClient) {
-    this.hostBase = "http://3.82.255.160:3000/api/usuario/";
+    this.hostBase = "http://localhost:3000/api/usuario/";
    }
 
   //todos los pacientes
