@@ -38,8 +38,8 @@ export class EspecialistaService {
     return this.http.get(this.hostBase + id, httpOptions);
   }
 
-  //paciente por NyA
-  getEspecialistaNA(nombre:string, apellido:string){
+   //especialista por NyA
+   getEspecialistaN(nombre:string){
     let httpOptions={
       headers: new HttpHeaders(
         {
@@ -48,10 +48,23 @@ export class EspecialistaService {
       ),
       params: new HttpParams()
       .append("nombrE",nombre)
+    }
+    return this.http.get(this.hostBase+"nombre",httpOptions);
+  }
+
+  getEspecialistaA(apellido:string){
+    let httpOptions={
+      headers: new HttpHeaders(
+        {
+
+        }
+      ),
+      params: new HttpParams()
       .append("apellidoE",apellido)
     }
-    return this.http.get(this.hostBase+'busquedaEspecialista',httpOptions);
+    return this.http.get(this.hostBase+"apellido",httpOptions);
   }
+
 
   createEspecialista(e: Especialista): Observable<any> {
     let httpOptions = {

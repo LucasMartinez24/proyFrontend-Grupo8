@@ -15,6 +15,8 @@ import * as  ExcelJS from 'exceljs';
 export class EspecialistaComponent implements OnInit {
   especialistas: Array<Especialista>;
   especialistasDNI: Array<Especialista>;
+  especialistaA: Array<Especialista>;
+  especialistaN: Array<Especialista>;
   especialistaEliminar:Especialista
   dni!: string;
   especialistaFiltro: Array<Especialista>;
@@ -26,6 +28,8 @@ export class EspecialistaComponent implements OnInit {
     this.especialistas = new Array<Especialista>();
     this.especialistaEliminar = new Especialista();
     this.especialistasDNI = new Array<Especialista>();
+    this.especialistaA = new Array<Especialista>();
+    this.especialistaN = new Array<Especialista>();
     this.especialistaFiltro = new Array<Especialista>();
     this.obtenerEspecialistas();
   }
@@ -50,13 +54,14 @@ export class EspecialistaComponent implements OnInit {
 
 
   obtenerEspecialistaPorDNI() {
+     this.especialistas = new Array<Especialista>();
     console.log("ENTRANDO A especialista POR DNI");
-    this.especialistas = new Array<Especialista>();
     this.especialistaService.getEspecialistaPorDNI(this.dni).subscribe(
       (result: any) => {
-        this.especialistasDNI = result;
-        let e = new Especialista();
+        this.especialistas = new Array<Especialista>();
+        //this.especialistasDNI = result;
         result.forEach((element: any) => {
+          let e = new Especialista();
           Object.assign(e, element);
           this.especialistas.push(e);
           e = new Especialista();
@@ -69,21 +74,48 @@ export class EspecialistaComponent implements OnInit {
     )
   }
 
-  obtenerEspecialistaNA(){
-    this.click = true;
-
-    this.especialistaFiltro = new Array<Especialista>();
-
-    this.especialistaService.getEspecialistaNA(this.nombre, this.apellido).subscribe(
-      (result: any) => {
-        console.log(result);
-        this.especialistaFiltro = result;
-      },
-      error => {
-        console.log(error);
-      }
-    )
-  }
+ 
+  obtenerEspecialistaA() {
+    console.log("ENTRANDO A PACIENTE POR APELLIDO");
+    this.especialistas = new Array<Especialista>();
+     this.especialistaService.getEspecialistaA(this.apellido).subscribe(
+       (result: any) => {
+        this.especialistas = new Array<Especialista>();
+         //this.especialistas = result;
+           console.log(result)
+          result.forEach((element: any) => {
+          let unEspecialista = new Especialista();
+           Object.assign(unEspecialista, element);
+           this.especialistas.push(unEspecialista);
+         });
+         console.log("SALIENDO  DE   especialista POR APELLIDO");
+       },
+       error => {
+         this.toastr.warning('Error al buscar paciente por apellido', 'Error')
+       }
+     )
+    
+   }
+ 
+   obtenerEspecialistaN() {
+       console.log("ENTRANDO A PACIENTE POR NOMBRE");
+     this.especialistas = new Array<Especialista>();
+     this.especialistaService.getEspecialistaN(this.nombre).subscribe(
+       (result: any) => {
+        this.especialistas = new Array<Especialista>();
+         //this.especialistaN = result;
+         result.forEach((element: any) => {
+          let unEspecialista = new Especialista();
+           Object.assign(unEspecialista, element);
+           this.especialistas.push(unEspecialista);
+         });
+         console.log("SALIENDO  DE   especialista POR NOMBRE");
+       },
+       error => {
+         this.toastr.warning('Error al buscar paciente por nombre', 'Error')
+       }
+     )
+   }
 
 
   eliminarEspecialista(e: Especialista) {
