@@ -2,8 +2,13 @@
     <div class="m-5 p-3 text-center fw-bold h1 bg-info bg-opacity-10 border border-info border-start-0 rounded-end">
         TURNOS ASIGNADOS
     </div>
+    <form class="p-3 bg-success">
+        <div class="mb-3">
+            <label class="form-label fw-bold text-white" for="exampleInputEmail1">Buscar turnos por especialista</label>
+            <input class="form-control ms-2 mt-4" type="text" placeholder="Buscar Especialista" id="exampleInputEmail1" [(ngModel)]="searchText">
+        </div>
+    </form>
 
-    <input class="form-control ms-2 mt-4" type="text" placeholder="Buscar" [(ngModel)]="searchText">
     <table class="table table-bordered table-hover border-primary mt-5">
         <thead class="table-dark">
             <tr>
@@ -21,7 +26,8 @@
             <tr *ngFor="let t of turnos | search: searchText">
                 <td data-label="Id" scope="row">{{t._id}}</td>
                 <td data-label="Paciente">{{t.paciente?.apellido}},{{t.paciente?.nombre}}</td>
-                <td data-label="Especialista">{{t.especialista.apellido}},{{t.especialista.nombre}} - {{t.especialista.profesion}}</td>
+                <td data-label="Especialista">{{t.especialista.apellido}},{{t.especialista.nombre}} -
+                    {{t.especialista.profesion}}</td>
                 <td data-label="Fecha">{{t.fecha | date: 'dd/MM/yyyy'}}</td>
                 <td data-label="Hora">{{t.hora}}</td>
                 <td data-label="Hora">{{t.centroSalud}}</td>
@@ -29,27 +35,32 @@
                 <td data-label="Operaciones">
                     <!-- <button type="button" class="btn btn-primary" (click)="modificarTurno(t)">RESERVAR TURNO</button> -->
                     <button type="button" class="btn btn-warning" (click)="modificarTurno(t)">Modificar</button>
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#eliminar" class="btn btn-danger" (click)="modalEliminar(t)">Eliminar</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#eliminar" class="btn btn-danger"
+                        (click)="modalEliminar(t)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <div class="modal fade" id="eliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="eliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Esta seguro que desea eliminar este turno?</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">¿Esta seguro que desea eliminar este turno?
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>El turno para {{turnoEliminar.especialista.apellido + " " + turnoEliminar.especialista.nombre}}
+                        sera eliminado</h4>
+                    <button type="button" class="btn btn-danger d-flex align-self-center"
+                        (click)="eliminarTurno(turnoEliminar)">Eliminar</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <h4>El turno para  {{turnoEliminar.especialista.apellido + " " + turnoEliminar.especialista.nombre}} sera eliminado</h4>
-                <button type="button" class="btn btn-danger d-flex align-self-center" (click)="eliminarTurno(turnoEliminar)">Eliminar</button>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
         </div>
     </div>
     <!-- <div *ngIf="hayTurnos==false" class="mt-5">
@@ -57,4 +68,3 @@
     </div> -->
 
 </div>
-

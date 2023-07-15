@@ -160,6 +160,7 @@ export class DatosmedicosFormComponent implements OnInit{
       },
       error => {
         console.log(error);
+        this.toastr.warning("error en obtener todos los pacientes");
       }
     )
   }

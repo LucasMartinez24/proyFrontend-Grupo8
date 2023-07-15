@@ -20,6 +20,8 @@ export class PacienteComponent implements OnInit {
   pacientesHombreOtro: Array<Paciente>;
   pacientesMujer: Array<Paciente>;
   pacienteDni: Array<Paciente>;
+  pacienteA: Array<Paciente>;
+  pacienteN: Array<Paciente>;
   dni!: string;
   dato!: string;
   pacienteFiltro: Array<Paciente>;
@@ -42,6 +44,8 @@ export class PacienteComponent implements OnInit {
     this.pacientesHombreOtro = new Array<Paciente>();
     this.pacientesMujer = new Array<Paciente>();
     this.pacienteDni = new Array<Paciente>();
+    this.pacienteN = new Array<Paciente>();
+    this.pacienteA = new Array<Paciente>();
     this.pacienteFiltro = new Array<Paciente>();
     this.pacienteElminar = new Paciente();
     this.obtenerPacientes();
@@ -193,12 +197,12 @@ imprimirPdf() {
     )
   }
 
-  obtenerPacienteNA() {
-    /*console.log("ENTRANDO A PACIENTE POR NOMBRE O APELLIDO");
+  obtenerPacienteA() {
+   console.log("ENTRANDO A PACIENTE POR NOMBRE");
     this.pacientes = new Array<Paciente>();
-    this.pacienteService.getPacienteNA(this.dato).subscribe(
+    this.pacienteService.getPacienteA(this.apellido).subscribe(
       (result: any) => {
-        this.pacienteDni = result;
+        this.pacienteA = result;
 
         let unPaciente = new Paciente();
         result.forEach((element: any) => {
@@ -208,20 +212,29 @@ imprimirPdf() {
         });
       },
       error => {
-        this.toastr.warning('Error al buscar usuario por dni', 'Error')
+        this.toastr.warning('Error al buscar paciente por apellido', 'Error')
       }
-    )*/
-    this.click = true;
+    )
+  }
 
-    this.pacienteFiltro = new Array<Paciente>();
+  obtenerPacienteN() {
 
-    this.pacienteService.getPacienteNA(this.nombre, this.apellido).subscribe(
+      console.log("ENTRANDO A PACIENTE POR NOMBRE");
+    this.pacientes = new Array<Paciente>();
+    this.pacienteService.getPacienteN(this.nombre).subscribe(
       (result: any) => {
-        console.log(result);
-        this.pacienteFiltro = result;
+        this.pacienteN = result;
+
+        let unPaciente = new Paciente();
+        result.forEach((element: any) => {
+          
+          Object.assign(unPaciente, element);
+          this.pacientes.push(unPaciente);
+          unPaciente = new Paciente();
+        });
       },
       error => {
-        console.log(error);
+        this.toastr.warning('Error al buscar paciente por nombre', 'Error')
       }
     )
   }
@@ -230,7 +243,7 @@ imprimirPdf() {
     this.pacienteService.deletePaciente(paciente._id).subscribe(
       result => {
         if (result.status == 1) {
-          this.toastr.warning('Paciente eliminado correctamente', 'Paciente Eliminado')
+          this.toastr.success('Paciente eliminado correctamente', 'Paciente Eliminado')
           window.location.reload();
         }
       },
