@@ -2,7 +2,7 @@
 
     
 
-<div class="bg-secondary-subtle p-3 mt-5">
+<div class="bg-secondary-subtle p-3 mt-5" *ngIf="esAdministrador()!=true">
     <div class="m-5 p-3 text-center fw-bold h1 bg-info bg-opacity-10 border border-info border-start-0 rounded-end">
         MIS TURNOS
     </div>
@@ -46,7 +46,6 @@
         TURNOS DISPONIBLES
     </div>
 
-    <input class="form-control ms-2 mt-4" type="text" placeholder="Buscar" [(ngModel)]="searchText">
     <table class="table table-bordered table-hover border-primary mt-5" *ngIf="hayTurnos==true">
         <thead class="table-dark">
             <tr>
@@ -60,7 +59,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let t of turnos | search:searchText">
+            <tr *ngFor="let t of turnos">
                 <td data-label="Id" scope="row">{{t._id}}</td>
                 <td data-label="especialista">{{t.especialista.apellido}},{{t.especialista.nombre}} - {{t.especialista.profesion}}</td>
                 <td data-label="fecha">{{t.fecha | date: 'dd/MM/yyyy'}}</td>
@@ -68,9 +67,9 @@
                 <td data-label="Hora">{{t.centroSalud}}</td>
                 <td data-label="Estado">{{t.estado}}</td>
                 <td data-label="Operaciones">
-                    <button type="button" class="btn btn-primary" *ngIf="esAdmin()==false" (click)="reservarTurno(t)">Reservar turno</button>
-                    <button type="button" class="btn btn-warning" *ngIf="esAdmin()==true" (click)="modificarTurno(t)">Modificar turno</button>
-                    <button *ngIf="esAdmin()==true" type="button" class="btn btn-danger" (click)="eliminarTurno(t)">Eliminar turno</button> 
+                    <button type="button" class="btn btn-primary" *ngIf="esAdministrador()==false" (click)="reservarTurno(t)">Reservar turno</button>
+                    <button type="button" class="btn btn-warning" *ngIf="esAdministrador()==true" (click)="modificarTurno(t)">Modificar turno</button>
+                    <button *ngIf="esAdministrador()==true" type="button" class="btn btn-danger" (click)="eliminarTurno(t)">Eliminar turno</button> 
                 </td>
             </tr>
         </tbody>

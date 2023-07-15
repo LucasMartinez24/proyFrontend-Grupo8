@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { concatAll } from 'rxjs';
 import { Turno } from 'src/app/models/turno';
 import { LoginService } from 'src/app/services/login.service';
 import { TurnoService } from 'src/app/services/turno.service';
@@ -13,29 +14,29 @@ import { TurnoService } from 'src/app/services/turno.service';
 })
 export class TurnoComponent implements OnInit {
   turnos: Array<Turno>;
-  //misTurnos: Array<Turno>;
   pacienteService: any;
   turnoEliminar:Turno;
   searchText = '';
-  //hayTurnos: boolean = true;
+  hayTurnos: boolean = true;
 
   constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private toastr: ToastrService) {
     this.turnos = new Array<Turno>();
-    //this.misTurnos = new Array<Turno>();
     this.obtenerTurnos();
     this.turnoEliminar = new Turno();
-    //this.obtenerMisTurnos();
   }
 
   ngOnInit(): void {
   }
 
   obtenerTurnos() {
+    let contarTurnosSinPacientes = 0;
     this.turnos = new Array<Turno>();
 
     this.turnoService.getTurnos().subscribe(
       result => {
         console.log(result);
+
+        
 
         let unTurno = new Turno();
 
@@ -45,9 +46,15 @@ export class TurnoComponent implements OnInit {
             Object.assign(unTurno, element);
             this.turnos.push(unTurno);
             unTurno = new Turno();
+          }else{
+            contarTurnosSinPacientes++;
           }
 
         });
+
+        if(contarTurnosSinPacientes == result.length){
+          this.hayTurnos=false;
+        }
 
       },
       error => {
@@ -80,30 +87,5 @@ export class TurnoComponent implements OnInit {
   modalEliminar(data:Turno){
     this.turnoEliminar = data
   }
-  //   obtenerMisTurnos() {
-  //     this.misTurnos = new Array<Turno>();
-  //     const pacienteString = this.loginService.getUser();
-  //     let paciente = null;
-
-  //     if (pacienteString !== null) {
-  //       paciente = JSON.parse(pacienteString);
-  //     }
-
-  //     this.turnoService.getMisTurnos(paciente.usuario.dni).subscribe(
-  //       (result)=>{
-  //         let unTurno = new Turno();
-
-  //         result.forEach((element: any) => {
-
-  //           if (element.paciente != null) {
-  //             Object.assign(unTurno, element);
-  //             this.misTurnos.push(unTurno);
-  //             unTurno = new Turno();
-  //           }
-
-  //         });
-  //       }
-  //     )
-  // }
 
 }

@@ -9,7 +9,7 @@
 
       <li *ngIf="esAdministrador()==true"><a href="#">Gestionar <b>▼</b></a>
         <ul>
-          <li *ngIf="esAdministrador()==true"><a href="#">Gestionar Usuarios<b>▼</b></a>
+          <li><a href="#">Gestionar Usuarios<b>▼</b></a>
             <ul>
               <li><a routerLink="/usuarios">Visualizar Usuarios Registrados</a></li>
               <li><a routerLink="/signUp/0">Crear un usuario</a></li>
@@ -24,11 +24,11 @@
           <li><a href="#">Gestionar Turnos <b>▼</b></a>
             <ul>
               <li><a class="dropdown-item" [routerLink]="'turno-form/0'">Crear Turnos</a></li>
-              <li><a class="dropdown-item" [routerLink]="'turno'">Listado de Turnos</a></li>
+              <li><a class="dropdown-item" [routerLink]="'turno'">Listado de Turnos Asignados</a></li>
               <li><a [routerLink]="'/turnos-disponibles'">Ver Turnos disponibles</a></li>
             </ul>
           </li>
-          <li *ngIf="esAdministrador()==true"><a href="#">Gestionar Paciente<b>▼</b></a>
+          <li><a href="#">Gestionar Paciente<b>▼</b></a>
             <ul>
               <li><a class="dropdown-item" [routerLink]="'paciente-form/0'">Crear Paciente</a></li>
               <li><a class="dropdown-item" [routerLink]="'paciente'">Listado de Pacientes</a></li>
@@ -40,8 +40,8 @@
           <li><a href="#">Gestionar Anuncios<b>▼</b></a>
             <ul>
 
-              <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio">Tabla y Creación de Anuncios</a></li>
-              <li *ngIf="esAdministrador()==true"><a routerLink="/list-anuncio-cliente">Visualizar Anuncios</a></li>
+              <li ><a routerLink="/list-anuncio">Tabla y Creación de Anuncios</a></li>
+              <li ><a routerLink="/list-anuncio-cliente">Visualizar Anuncios</a></li>
             </ul>
           </li>
         </ul>

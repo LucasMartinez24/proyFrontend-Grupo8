@@ -84,27 +84,27 @@ export class UsuariosRegistradosComponent {
   }
 
   obtenerUsuarios() {
-    console.log("entrando a obtener pacientes")
+    //console.log("entrando a obtener usuarios")
     this.usuarioService.getUsuarios().subscribe(
       result => {
-
+        //console.log(result)
         let unUsuario = new Usuario();
         result.forEach((element: any) => {
-          console.log(element.rol.descripcion)
+          //console.log(element.rol.descripcion)
           Object.assign(unUsuario, element);
           this.usuarios.push(unUsuario);
           unUsuario = new Usuario();
         });
       },
       error => {
-        console.log(error);
+        console.log("SE ENCONTRÓ ERROR: ",error);
       }
     )
   }
 
 
   obtenerUsuarioDni() {
-    console.log("ENTRANDO A PACIENTE POR DNI");
+    console.log("ENTRANDO A USUARIO POR DNI");
     this.usuarios = new Array<Usuario>();
     this.usuarioService.getUsuarioDni(this.dni).subscribe(
       (result: any) => {
@@ -117,8 +117,9 @@ export class UsuariosRegistradosComponent {
           unUsuario = new Usuario();
         });
       },
-      error => {
-        this.toastr.warning('Error al buscar paciente por dni', 'Error')
+      (error:any) => {
+        console.log(error)
+        //this.toastr.warning('Error al buscar Usuario por dni', 'Error')
       }
     )
   }

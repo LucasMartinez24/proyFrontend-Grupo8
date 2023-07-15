@@ -18,9 +18,8 @@ export class TurnosDisponiblesComponent implements OnInit {
   hayTurnos: boolean = true;
   misTurnos: Array<Turno>;
   tengoTurnos: boolean = true;
-  searchText = '';
 
-constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService, private toastr: ToastrService) {
+  constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService, private toastr: ToastrService) {
 
     this.turnos = new Array<Turno>();
     this.misTurnos = new Array<Turno>();
@@ -29,19 +28,12 @@ constructor(private router: Router, private turnoService: TurnoService, private 
     this.obtenerMisTurnos();
   }
 
-  ngOnInit(): void {}
-
-  esAdmin() {
-    if (this.loginService.esAdmin() == true) {
-      return true;
-    }
-    return false;
-  }
+  ngOnInit(): void { }
 
   obtenerTurnos() {
     this.turnoService.getTurnosDisponibles().subscribe(
       result => {
-        console.log(result);
+        //console.log(result);
         if (result.length == 0) {
           this.hayTurnos = false;
         } else {
@@ -68,7 +60,7 @@ constructor(private router: Router, private turnoService: TurnoService, private 
           this.toastr.success('Turno eliminado correctamente', 'Turno Eliminado')
 
           //setTimeout(function () {
-            window.location.reload();
+          window.location.reload();
           //}, 2000); // 3000 representa el tiempo en milisegundos (3 segundos)
         }
       },
@@ -109,19 +101,19 @@ constructor(private router: Router, private turnoService: TurnoService, private 
           result => {
             if (result.status == 1) {
               this.toastr.success('Turno reservado correctamente', 'Turno reservado')
-              setTimeout(()=>{
+              setTimeout(() => {
                 window.location.reload();
-              },3000)
+              }, 3000)
             }
           },
           error => {
-            if(error.status===400){
+            if (error.status === 400) {
               this.toastr.warning('Usted ya reservo un turno para ese especialista en esa fecha')
-              setTimeout(()=>{
+              setTimeout(() => {
                 window.location.reload();
-              },3000)
-            }else{
-            this.toastr.warning('No se pudo reservar el turno')
+              }, 3000)
+            } else {
+              this.toastr.warning('No se pudo reservar el turno')
             }
           }
         )
@@ -134,42 +126,51 @@ constructor(private router: Router, private turnoService: TurnoService, private 
   }
 
   obtenerMisTurnos() {
-    this.misTurnos = new Array<Turno>();
-    const pacienteString = this.loginService.getUser();
-    let paciente = null;
+    if (this.esAdministrador() != true) {
+      this.misTurnos = new Array<Turno>();
+      const pacienteString = this.loginService.getUser();
+      let paciente = null;
 
-    if (pacienteString !== null) {
-      paciente = JSON.parse(pacienteString);
-    }
-    console.log(paciente.usuario.dni)
-    this.turnoService.getMisTurnos(paciente.usuario.dni).subscribe(
-      (result) => {
-
-        if (result.length == 0) {
-          this.tengoTurnos = false;
-        } else {
-          let unTurno = new Turno();
-
-          result.forEach((element: any) => {
-
-            if (element.paciente != null) {
-              Object.assign(unTurno, element);
-              this.misTurnos.push(unTurno);
-              unTurno = new Turno();
-            }
-
-          });
-        }
-
+      if (pacienteString !== null) {
+        paciente = JSON.parse(pacienteString);
       }
-    )
+
+      console.log(paciente.usuario.dni)
+
+
+      this.turnoService.getMisTurnos(paciente.usuario.dni).subscribe(
+        (result) => {
+
+          if (result.length == 0) {
+            this.tengoTurnos = false;
+          } else {
+            let unTurno = new Turno();
+
+            result.forEach((element: any) => {
+
+              if (element.paciente != null) {
+                Object.assign(unTurno, element);
+                this.misTurnos.push(unTurno);
+                unTurno = new Turno();
+              }
+
+            });
+          }
+
+        },
+        (error: any) => {
+          console.log("error en el service: ", error);
+        }
+      )
+    }
+
   }
 
-  darDeAltaTurnos(){
-    this.router.navigate(["/turno-form",0])
+  darDeAltaTurnos() {
+    this.router.navigate(["/turno-form", 0])
   }
 
-  esAdministrador(){
+  esAdministrador() {
     return this.loginService.esAdmin();
   }
 

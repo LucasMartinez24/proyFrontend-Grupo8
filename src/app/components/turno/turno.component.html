@@ -2,14 +2,14 @@
     <div class="m-5 p-3 text-center fw-bold h1 bg-info bg-opacity-10 border border-info border-start-0 rounded-end">
         TURNOS ASIGNADOS
     </div>
-    <form class="p-3 bg-success">
+    <form class="p-3 bg-success"  *ngIf="hayTurnos==true">
         <div class="mb-3">
             <label class="form-label fw-bold text-white" for="exampleInputEmail1">Buscar turnos por especialista</label>
-            <input class="form-control ms-2 mt-4" type="text" placeholder="Buscar Especialista" id="exampleInputEmail1" [(ngModel)]="searchText">
+            <input class="form-control ms-2 mt-4" type="text" placeholder="Buscar Especialista" id="exampleInputEmail1" name="searchText" [(ngModel)]="searchText">
         </div>
     </form>
 
-    <table class="table table-bordered table-hover border-primary mt-5">
+    <table class="table table-bordered table-hover border-primary mt-5" *ngIf="hayTurnos==true">
         <thead class="table-dark">
             <tr>
                 <th scope="col">IDTURNO</th>
@@ -42,6 +42,10 @@
         </tbody>
     </table>
 
+    <div *ngIf="hayTurnos==false" class="mt-5">
+        <h2 class="bg-danger p-2 text-white text-center ">NO HAY TURNOS ASIGNADOS POR EL MOMENTO</h2>
+    </div>
+
     <div class="modal fade" id="eliminar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -63,8 +67,6 @@
             </div>
         </div>
     </div>
-    <!-- <div *ngIf="hayTurnos==false" class="mt-5">
-        <h2 class="bg-danger p-2 text-white text-center ">NO HAY TURNOS DISPONIBLES POR EL MOMENTO</h2>
-    </div> -->
+    
 
 </div>

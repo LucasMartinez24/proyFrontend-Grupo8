@@ -141,7 +141,7 @@ export class TurnoFormComponent implements OnInit {
   }
 
   public cancelar() {
-    this.router.navigate(["turno"]);
+    this.router.navigate(["turnos-disponibles"]);
   }
 
   guardarTurno() {
