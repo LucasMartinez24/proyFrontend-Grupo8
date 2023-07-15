@@ -18,6 +18,7 @@ export class TurnosDisponiblesComponent implements OnInit {
   hayTurnos: boolean = true;
   misTurnos: Array<Turno>;
   tengoTurnos: boolean = true;
+  searchText = '';
 
 constructor(private router: Router, private turnoService: TurnoService, private loginService: LoginService, private pacienteService: PacienteService, private toastr: ToastrService) {
 
@@ -99,31 +100,29 @@ constructor(private router: Router, private turnoService: TurnoService, private 
       const result: any = await this.pacienteService.getPacienteDni(paciente.usuario.dni).toPromise();
 
       const pacienteAgregar = result["0"];
-
-      //console.log("TURNO FINAL:", pacienteAgregar);
-
+      console.log(pacienteAgregar)
       if (pacienteAgregar != null) {
         this.turno.estado = "reservado";
         this.turno.paciente = pacienteAgregar;
-
-        //console.log("TURNO FINAL:", this.turno);
-
+        console.log(this.turno.paciente, this.turno.estado)
         this.turnoService.editTurno(this.turno).subscribe(
           result => {
             if (result.status == 1) {
               this.toastr.success('Turno reservado correctamente', 'Turno reservado')
-
-              // if(paciente.rol.descripcion == "paciente"){
-              //   this.router.navigate(["/home"])
-              // }else{
-              //this.router.navigate(["/turnos-disponibles"])
-              window.location.reload();
-              //}
-
+              setTimeout(()=>{
+                window.location.reload();
+              },3000)
             }
           },
           error => {
-            this.toastr.warning(error)
+            if(error.status===400){
+              this.toastr.warning('Usted ya reservo un turno para ese especialista en esa fecha')
+              setTimeout(()=>{
+                window.location.reload();
+              },3000)
+            }else{
+            this.toastr.warning('No se pudo reservar el turno')
+            }
           }
         )
       }
@@ -132,7 +131,6 @@ constructor(private router: Router, private turnoService: TurnoService, private 
       console.error("Error al obtener los datos del paciente:", error);
       throw error;
     }
-
   }
 
   obtenerMisTurnos() {
@@ -143,7 +141,7 @@ constructor(private router: Router, private turnoService: TurnoService, private 
     if (pacienteString !== null) {
       paciente = JSON.parse(pacienteString);
     }
-
+    console.log(paciente.usuario.dni)
     this.turnoService.getMisTurnos(paciente.usuario.dni).subscribe(
       (result) => {
 

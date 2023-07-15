@@ -203,6 +203,8 @@ button {
     background-size: 50.5% calc(var(--_p,0%)/2 + .5%);
     outline-offset: .1em;
     transition: background-size .4s, background-position 0s .4s;
+    height: auto;
+    width: auto;
   }
   button:hover {
     --_p: 100%;
@@ -233,4 +235,7 @@ button {
     font-weight: bold;  
     border: none;
   }
-  a{text-decoration:none; color:inherit;}
+  a{
+    text-decoration:none; 
+    color:inherit;
+}

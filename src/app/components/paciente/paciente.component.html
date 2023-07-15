@@ -13,29 +13,23 @@
     <input type="text" class="form-control" id="idfecha" name="fechaNac" required
       placeholder="Ingrese dni de paciente a buscar" [(ngModel)]="dni" (ngModelChange)="obtenerPacienteDni()">
   </div>
+  <h5 class="ms-4">Buscar Paciente ya registrado con nombre</h5>
+  <div class="mb-3 ms-4" style="width:80%;">
+    <input type="text" class="form-control" id="idfecha" name="fechaNac" required
+      placeholder="Ingrese dni de paciente a buscar" [(ngModel)]="nombre" (ngModelChange)="obtenerPacienteN()">
+  </div>
+  <h5 class="ms-4">Buscar Paciente ya registrado con apellido</h5>
+  <div class="mb-3 ms-4" style="width:80%;">
+    <input type="text" class="form-control" id="idfecha" name="fechaNac" required
+      placeholder="Ingrese dni de paciente a buscar" [(ngModel)]="apellido" (ngModelChange)="obtenerPacienteA()">
+  </div>
   <!--<h5 class="ms-4">Buscar Paciente ya registrado con nombre o apellido</h5>
     <div class="mb-3 ms-4" style="width:80%;">
       <input type="text" class="form-control" id="idfecha" name="fechaNac" required
           placeholder="Ingrese nombre o apellido de paciente a buscar" [(ngModel)]="dato" (ngModelChange)="obtenerPacienteNA()">
   </div>-->
-  <button type="button" class="btn btn-warning w-100 mt-3" (click)="filtro=true">BUSCAR POR NOMBRE Y APELLIDO</button>
-
-  <div *ngIf="filtro==true">
-    <form class="p-3 m-3 bg-success-subtle">
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Ingresar Nombre a Buscar:</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nombre"
-          [(ngModel)]="nombre">
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Ingresar Apellido a Buscar:</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="apellido"
-          [(ngModel)]="apellido">
-      </div>
-      <button type="submit" class="btn btn-primary" (click)="obtenerPacienteNA()">BUSCAR</button>
-    </form>
-
-    <div *ngIf="pacienteFiltro.length==0 && click==true">
+ 
+    <!--<div *ngIf="pacienteFiltro.length==0 && click==true">
       <h2 class="bg-danger p-2 text-white text-center">No se encontraron pacientes con esos datos</h2>
     </div>
 
@@ -65,7 +59,7 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </div>-->
 
 
 
@@ -87,8 +81,8 @@
           <td data-label="Dni">{{p.dni}}</td>
           <td data-label="Nombre">{{p.nombre}}</td>
           <td data-label="Apellido">{{p.apellido}}</td>
-          <td data-label="Genero">{{p.genero}}</td>
           <td data-label="Fecha de Nacimiento">{{p.fechaNac | date: 'dd/MM/yyyy'}}</td>
+          <td data-label="Genero">{{p.genero}}</td>
           <td data-label="Operaciones" class="d-flex justify-content-around">
             <button type="button" class="btn btn-warning" (click)="modificarPaciente(p)">Modificar</button>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar"

@@ -48,7 +48,7 @@ export class UsuariosRegistradosComponent {
       properties: [
         { field: 'username', displayName: 'USUARIO' },
         { field: 'email', displayName: 'E-MAIL' },
-        { field: 'rol', displayName: 'ROL' },
+        { field: 'rol.descripcion', displayName: 'ROL' },
         { field: 'dni', displayName: 'DNI' }
       ],
       type: 'json',
@@ -134,7 +134,7 @@ export class UsuariosRegistradosComponent {
     this.usuarioService.deleteUsuario(usuario._id).subscribe(
       result => {
         if (result.status == 1) {
-          this.toastr.warning('Usuario eliminado correctamente', 'Usuario Eliminado')
+          this.toastr.success('Usuario eliminado correctamente', 'Usuario Eliminado')
           window.location.reload();
         }
       },
