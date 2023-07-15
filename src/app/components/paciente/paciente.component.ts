@@ -182,10 +182,10 @@ imprimirPdf() {
     this.pacientes = new Array<Paciente>();
     this.pacienteService.getPacienteDni(this.dni).subscribe(
       (result: any) => {
-        this.pacienteDni = result;
-
-        let unPaciente = new Paciente();
+        this.pacientes = new Array<Paciente>();
+        //this.pacienteDni = result;
         result.forEach((element: any) => {
+          let unPaciente = new Paciente();
           Object.assign(unPaciente, element);
           this.pacientes.push(unPaciente);
           unPaciente = new Paciente();
@@ -202,10 +202,11 @@ imprimirPdf() {
     this.pacientes = new Array<Paciente>();
     this.pacienteService.getPacienteA(this.apellido).subscribe(
       (result: any) => {
-        this.pacienteA = result;
+        this.pacientes = new Array<Paciente>();
+       // this.pacienteA = result;
 
-        let unPaciente = new Paciente();
         result.forEach((element: any) => {
+          let unPaciente = new Paciente();
           Object.assign(unPaciente, element);
           this.pacientes.push(unPaciente);
           unPaciente = new Paciente();
@@ -223,11 +224,11 @@ imprimirPdf() {
     this.pacientes = new Array<Paciente>();
     this.pacienteService.getPacienteN(this.nombre).subscribe(
       (result: any) => {
-        this.pacienteN = result;
+        this.pacientes = new Array<Paciente>();
+        //this.pacienteN = result;
 
-        let unPaciente = new Paciente();
         result.forEach((element: any) => {
-          
+          let unPaciente = new Paciente();
           Object.assign(unPaciente, element);
           this.pacientes.push(unPaciente);
           unPaciente = new Paciente();
