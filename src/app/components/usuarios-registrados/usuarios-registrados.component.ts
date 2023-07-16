@@ -13,13 +13,13 @@ import * as XLSX from 'xlsx';
 })
 export class UsuariosRegistradosComponent {
 
-  
+
   usuarios: Array<Usuario>;
   usuarioDni: Array<Usuario>;
   dni!: string;
   usuarioEliminar:Usuario;
   modifica!:boolean;
-  //dtOptions : DataTables.Settings = {}; 
+  //dtOptions : DataTables.Settings = {};
   //dtTrigger =new Subject<any>();
 
   constructor(private usuarioService: UsuarioService, private activatedRoute: ActivatedRoute,
@@ -87,14 +87,8 @@ export class UsuariosRegistradosComponent {
     //console.log("entrando a obtener usuarios")
     this.usuarioService.getUsuarios().subscribe(
       result => {
-        //console.log(result)
-        let unUsuario = new Usuario();
-        result.forEach((element: any) => {
-          //console.log(element.rol.descripcion)
-          Object.assign(unUsuario, element);
-          this.usuarios.push(unUsuario);
-          unUsuario = new Usuario();
-        });
+        console.log(result)
+        this.usuarios=result
       },
       error => {
         console.log("SE ENCONTRÓ ERROR: ",error);
